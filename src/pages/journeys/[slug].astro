@@ -1,0 +1,817 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import TourCard from '../../components/TourCard.astro';
+import { href } from '../../lib/paths';
+import { formatIndicative, islandLabels, tours, type Tour } from '../../data/tours';
+
+export function getStaticPaths() {
+  return tours.map((tour) => ({ params: { slug: tour.slug }, props: { tour } }));
+}
+
+// Props are inferred from `getStaticPaths`; the alias keeps the intent visible.
+const { tour }: { tour: Tour } = Astro.props;
+
+const others = tours.filter((other) => other.slug !== tour.slug);
+
+// Never ask the pipeline to upscale: the scene crops are between 760px and
+// 1000px wide, so the candidate widths are derived from the source instead.
+const heroWidths = [0.45, 0.7, 1].map((factor) => Math.round(tour.image.width * factor));
+
+const specs = [
+  { term: 'Season', value: tour.season, detail: tour.seasonMonths },
+  { term: 'Duration', value: tour.durationLabel, detail: tour.region },
+  { term: 'Terrain', value: tour.terrain },
+  { term: 'Party size', value: tour.partySize },
+  { term: 'Accommodation', value: tour.accommodation, detail: tour.accommodationDetail },
+  { term: 'Guiding', value: tour.guidingIntensity },
+];
+
+const fitnessSteps = [1, 2, 3, 4, 5] as const;
+const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel}`;
+---
+
+<Base
+  title={tour.name}
+  description={`${tour.tagline} — ${tour.summary} A fictional journey on the Harry's Hunts demonstration site.`}
+  pageId="journey"
+  padTop={false}
+>
+  <!-- ------------------------------------------------------------- hero -->
+  <section class="hh-jhero hh-on-dark" aria-labelledby="journey-title" data-testid="journey-hero">
+    <Image
+      class="hh-jhero__image"
+      src={tour.image}
+      alt={tour.imageAlt}
+      widths={heroWidths}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hh-jhero__scrim"></div>
+
+    <div class="hh-container hh-jhero__content">
+      <p class="hh-jhero__crumbs">
+        <a href={href('/journeys/')}>The journeys</a>
+        <span><span aria-hidden="true">&mdash;</span> {tour.region}</span>
+      </p>
+      <span class:list={['hh-badge', 'hh-jhero__badge']} data-testid="journey-island">
+        {islandLabels[tour.island]}
+      </span>
+      <p class="hh-jhero__eyebrow">{tour.categoryLabel}</p>
+      <h1 id="journey-title" data-testid="journey-title">{tour.name}</h1>
+      <p class="hh-jhero__tagline">{tour.tagline}</p>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------- story and spec rail -->
+  <section class="hh-section" aria-labelledby="story-title">
+    <div class="hh-container hh-jlayout">
+      <div class="hh-jmain">
+        <header class="hh-jmain__head">
+          <p class="hh-eyebrow">The journey</p>
+          <h2 id="story-title">What this one actually is</h2>
+          <p class="hh-lede hh-jmain__summary">{tour.summary}</p>
+        </header>
+
+        <div class="hh-prose hh-stack-m" data-testid="journey-story">
+          {tour.story.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+
+        <!-- ------------------------------------------------------ effort -->
+        <div class="hh-fitness" data-testid="journey-fitness">
+          <h3 class="hh-fitness__title">Effort and fitness</h3>
+          <div class="hh-fitness__gauge">
+            <div class="hh-fitness__scale" role="img" aria-label={fitnessDescription}>
+              {
+                fitnessSteps.map((step) => (
+                  <span
+                    class:list={['hh-fitness__step', step <= tour.fitness && 'is-on']}
+                    data-testid={`fitness-step-${step}`}
+                    data-on={step <= tour.fitness ? 'true' : 'false'}
+                  />
+                ))
+              }
+            </div>
+            <p class="hh-fitness__reading">
+              <strong class="hh-num">{tour.fitness} of 5</strong>
+              <span>{tour.fitnessLabel}</span>
+            </p>
+          </div>
+          <p class="hh-fitness__guidance">{tour.fitnessGuidance}</p>
+        </div>
+      </div>
+
+      <!-- ------------------------------------------------------ spec rail -->
+      <aside class="hh-jrail" aria-labelledby="rail-title" data-testid="journey-rail">
+        <div class="hh-jrail__inner">
+          <h2 id="rail-title" class="hh-jrail__title">At a glance</h2>
+
+          <dl class="hh-jrail__specs">
+            {
+              specs.map((spec) => (
+                <div>
+                  <dt>{spec.term}</dt>
+                  <dd>
+                    {spec.value}
+                    {spec.detail && <span class="hh-jrail__detail">{spec.detail}</span>}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+
+          <p class="hh-jrail__price" data-testid="journey-price">
+            <span class="hh-jrail__pricelabel">Indicative from</span>
+            <strong class="hh-num">{formatIndicative(tour.indicativeFrom)}</strong>
+            <span class="hh-jrail__priceunit">per guest</span>
+          </p>
+          <p class="hh-jrail__pricenote">
+            An indicative planning figure, not a quote. Nothing on this site is priced, held or
+            bookable.
+          </p>
+
+          <a class="hh-button hh-button--block" href={href(`/book/?journey=${tour.slug}`)}>
+            Plan this journey
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- itinerary -->
+  <section class="hh-section hh-section--sunken" aria-labelledby="itinerary-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">Shape of the week</p>
+          <h2 id="itinerary-title">Day by day</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          Written as an intention rather than a timetable. Weather, ground and animal condition move
+          it around, and the guide makes that call.
+        </p>
+      </header>
+
+      <ol class="hh-timeline hh-reveal" data-testid="journey-itinerary">
+        {
+          tour.days.map((day) => (
+            <li class="hh-timeline__item">
+              <p class="hh-timeline__label">{day.label}</p>
+              <h3 class="hh-timeline__title">{day.title}</h3>
+              <p class="hh-timeline__detail">{day.detail}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------- what is included -->
+  <section class="hh-section" aria-labelledby="included-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">The arrangement</p>
+          <h2 id="included-title">What the figure covers</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          Set out plainly so there is nothing to discover later. Licensing, insurance and freight sit
+          outside every journey we run.
+        </p>
+      </header>
+
+      <div class="hh-lists hh-reveal">
+        <div class="hh-list hh-list--in" data-testid="journey-included">
+          <h3 class="hh-list__title" id="included-heading">What&rsquo;s included</h3>
+          <ul aria-labelledby="included-heading">
+            {
+              tour.included.map((entry) => (
+                <li>
+                  <span class="hh-list__marker" aria-hidden="true">
+                    &check;
+                  </span>
+                  <span>{entry}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="hh-list hh-list--out" data-testid="journey-not-included">
+          <h3 class="hh-list__title" id="excluded-heading">Not included</h3>
+          <ul aria-labelledby="excluded-heading">
+            {
+              tour.notIncluded.map((entry) => (
+                <li>
+                  <span class="hh-list__marker" aria-hidden="true">
+                    &ndash;
+                  </span>
+                  <span>{entry}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="hh-notice hh-lists__notice hh-reveal" data-testid="journey-demo-notice">
+        <span>
+          <strong>Nothing here is bookable.</strong> This journey, its inclusions and its indicative figure
+          are written for a demonstration site. No availability exists, no enquiry is transmitted and
+          no payment can be taken.
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- cta -->
+  <section class="hh-section hh-section--inverse hh-on-dark" aria-labelledby="journey-cta-title">
+    <div class="hh-container hh-jcta hh-reveal" data-testid="journey-cta">
+      <div>
+        <p class="hh-eyebrow">Next step</p>
+        <h2 id="journey-cta-title">Start the planner with {tour.name} already in it.</h2>
+        <p class="hh-lede">
+          The planner walks through island, season, party and guiding intensity, then writes the week
+          back to you as a summary. In this demonstration it stops at the summary &mdash; nothing is
+          sent and nothing is held.
+        </p>
+      </div>
+      <div class="hh-jcta__actions">
+        <a
+          class="hh-button hh-button--on-dark"
+          href={href(`/book/?journey=${tour.slug}`)}
+          data-testid="journey-cta-book"
+        >
+          Plan this journey
+        </a>
+        <a class="hh-button hh-button--outline-dark" href={href('/shop/')}>Browse the field kit</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------- other journeys -->
+  <section class="hh-section hh-section--sunken" aria-labelledby="others-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">The rest of the catalogue</p>
+          <h2 id="others-title">Other journeys</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          Four remaining, across both islands. Several guests run two in a single trip.
+        </p>
+      </header>
+
+      <div class="hh-othergrid hh-reveal" data-testid="journey-others">
+        {
+          others.map((other) => (
+            <div class="hh-othergrid__item" data-testid={`other-tour-${other.slug}`}>
+              <TourCard
+                tour={other}
+                sizes="(min-width: 72rem) 17rem, (min-width: 44rem) 44vw, 92vw"
+              />
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="hh-sectionfoot hh-reveal">
+        <a class="hh-button hh-button--secondary" href={href('/journeys/')}>
+          Back to the catalogue
+        </a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ------------------------------------------------------------------ hero */
+  .hh-jhero {
+    position: relative;
+    display: grid;
+    align-items: end;
+    min-height: min(72svh, 40rem);
+    padding-block: var(--hh-space-3xl) var(--hh-space-2xl);
+    overflow: clip;
+    background: var(--hh-forest-950);
+    isolation: isolate;
+  }
+
+  .hh-jhero :global(.hh-jhero__image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  .hh-jhero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(
+        to top,
+        rgb(8 18 13 / 0.94) 0%,
+        rgb(8 18 13 / 0.74) 38%,
+        rgb(8 18 13 / 0.28) 72%,
+        rgb(8 18 13 / 0.42) 100%
+      ),
+      linear-gradient(to right, rgb(8 18 13 / 0.55), transparent 68%);
+  }
+
+  .hh-jhero__content {
+    position: relative;
+    max-width: 48rem;
+    margin-inline: 0;
+  }
+
+  .hh-jhero__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: var(--hh-space-m);
+    font-size: var(--hh-step--2);
+    letter-spacing: var(--hh-tracking-wide);
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--hh-bone-100) 72%, transparent);
+  }
+
+  .hh-jhero__crumbs a {
+    color: var(--hh-brass-300);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--hh-brass-300) 55%, transparent);
+  }
+
+  .hh-jhero__crumbs a:hover {
+    color: var(--hh-bone-50);
+  }
+
+  .hh-jhero__badge {
+    border-color: var(--hh-brass-300);
+    color: var(--hh-bone-50);
+    background: color-mix(in srgb, var(--hh-forest-950) 55%, transparent);
+    backdrop-filter: blur(4px);
+  }
+
+  .hh-jhero__eyebrow {
+    margin-top: var(--hh-space-s);
+    font-size: var(--hh-step--2);
+    font-weight: 500;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-brass-300);
+  }
+
+  .hh-jhero__content h1 {
+    margin-top: var(--hh-space-2xs);
+    font-size: var(--hh-step-5);
+    color: var(--hh-bone-50);
+    text-shadow: 0 2px 30px rgb(8 18 13 / 0.5);
+  }
+
+  .hh-jhero__tagline {
+    margin-top: var(--hh-space-s);
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-2);
+    font-style: italic;
+    color: var(--hh-bone-200);
+  }
+
+  /* ------------------------------------------------------ layout and rail */
+  .hh-jlayout {
+    display: grid;
+    gap: var(--hh-space-2xl);
+    align-items: start;
+  }
+
+  .hh-jmain__head {
+    margin-bottom: var(--hh-space-l);
+  }
+
+  .hh-jmain__head h2 {
+    margin-top: var(--hh-space-xs);
+    font-size: var(--hh-step-3);
+  }
+
+  .hh-jmain__summary {
+    margin-top: var(--hh-space-s);
+    max-width: var(--hh-measure);
+  }
+
+  .hh-prose {
+    max-width: var(--hh-measure);
+    color: var(--hh-ink-muted);
+  }
+
+  @media (min-width: 64rem) {
+    .hh-jlayout {
+      grid-template-columns: minmax(0, 1fr) 21rem;
+      gap: var(--hh-space-3xl);
+    }
+
+    .hh-jrail__inner {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+
+  .hh-jrail__inner {
+    padding: var(--hh-space-m);
+    background: var(--hh-surface-raised);
+    border: 1px solid var(--hh-line);
+    border-top: 3px solid var(--hh-forest-800);
+    border-radius: var(--hh-radius-m);
+    box-shadow: var(--hh-shadow-s);
+  }
+
+  .hh-jrail__title {
+    font-size: var(--hh-step-2);
+    margin-bottom: var(--hh-space-s);
+  }
+
+  .hh-jrail__specs {
+    display: grid;
+    gap: var(--hh-space-s);
+    margin: 0 0 var(--hh-space-m);
+  }
+
+  .hh-jrail__specs div {
+    padding-top: var(--hh-space-2xs);
+    border-top: 1px solid var(--hh-line);
+  }
+
+  .hh-jrail__specs dt {
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+    margin-bottom: 0.2rem;
+  }
+
+  .hh-jrail__specs dd {
+    margin: 0;
+    font-size: var(--hh-step--1);
+    line-height: 1.45;
+  }
+
+  .hh-jrail__detail {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-jrail__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding-top: var(--hh-space-s);
+    border-top: 1px solid var(--hh-line);
+  }
+
+  .hh-jrail__pricelabel {
+    width: 100%;
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-jrail__price strong {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-3);
+    line-height: 1;
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-jrail__priceunit {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-jrail__pricenote {
+    margin-block: var(--hh-space-2xs) var(--hh-space-m);
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-subtle);
+  }
+
+  /* --------------------------------------------------------- fitness meter */
+  .hh-fitness {
+    margin-top: var(--hh-space-xl);
+    max-width: var(--hh-measure);
+    padding: var(--hh-space-m);
+    background: var(--hh-surface-sunken);
+    border-left: 3px solid var(--hh-brass-500);
+    border-radius: 0 var(--hh-radius-m) var(--hh-radius-m) 0;
+  }
+
+  .hh-fitness__title {
+    font-size: var(--hh-step-1);
+    margin-bottom: var(--hh-space-s);
+  }
+
+  .hh-fitness__gauge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--hh-space-s);
+  }
+
+  .hh-fitness__scale {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .hh-fitness__step {
+    width: 2.4rem;
+    height: 0.65rem;
+    border: 1px solid var(--hh-forest-800);
+    border-radius: var(--hh-radius-xs);
+    background: transparent;
+  }
+
+  .hh-fitness__step.is-on {
+    background: var(--hh-forest-800);
+  }
+
+  .hh-fitness__reading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-fitness__reading strong {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-fitness__guidance {
+    margin-top: var(--hh-space-s);
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  /* --------------------------------------------------------- section head */
+  .hh-sectionhead {
+    display: grid;
+    gap: var(--hh-space-s);
+    align-items: end;
+    margin-bottom: var(--hh-space-xl);
+  }
+
+  .hh-sectionhead > div > h2 {
+    margin-top: var(--hh-space-2xs);
+  }
+
+  .hh-sectionhead__aside {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+    max-width: 42ch;
+  }
+
+  @media (min-width: 56rem) {
+    .hh-sectionhead {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--hh-space-2xl);
+    }
+
+    .hh-sectionhead__aside {
+      justify-self: end;
+      text-align: right;
+    }
+  }
+
+  .hh-sectionfoot {
+    margin-top: var(--hh-space-xl);
+    text-align: center;
+  }
+
+  /* ----------------------------------------------------------- itinerary */
+  /* Gap stays at zero so the vertical rule reads as one continuous line. */
+  .hh-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .hh-timeline__item {
+    position: relative;
+    padding-left: var(--hh-space-l);
+    padding-bottom: var(--hh-space-l);
+    border-left: 1px solid var(--hh-line-strong);
+  }
+
+  .hh-timeline__item:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+  }
+
+  .hh-timeline__item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.35rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    translate: -50% 0;
+    border-radius: 50%;
+    background: var(--hh-surface-sunken);
+    border: 2px solid var(--hh-brass-600);
+  }
+
+  .hh-timeline__item:last-child::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.35rem;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--hh-line-strong), transparent);
+  }
+
+  .hh-timeline__label {
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-timeline__title {
+    margin-block: var(--hh-space-3xs) var(--hh-space-2xs);
+    font-size: var(--hh-step-2);
+  }
+
+  .hh-timeline__detail {
+    max-width: var(--hh-measure);
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  @media (min-width: 56rem) {
+    .hh-timeline {
+      margin-left: var(--hh-space-s);
+    }
+
+    .hh-timeline__item {
+      display: grid;
+      grid-template-columns: 9rem minmax(0, 1fr);
+      column-gap: var(--hh-space-l);
+      align-items: start;
+      padding-left: var(--hh-space-xl);
+    }
+
+    .hh-timeline__label {
+      grid-row: span 2;
+      padding-top: 0.35rem;
+    }
+
+    .hh-timeline__title {
+      margin-top: 0;
+    }
+  }
+
+  /* -------------------------------------------------- included / excluded */
+  .hh-lists {
+    display: grid;
+    gap: var(--hh-space-l);
+  }
+
+  @media (min-width: 52rem) {
+    .hh-lists {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--hh-space-2xl);
+    }
+  }
+
+  .hh-list__title {
+    padding-bottom: var(--hh-space-2xs);
+    margin-bottom: var(--hh-space-s);
+    border-bottom: 2px solid var(--hh-forest-800);
+    font-size: var(--hh-step-1);
+  }
+
+  .hh-list--out .hh-list__title {
+    border-bottom-color: var(--hh-line-strong);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--hh-space-xs);
+  }
+
+  .hh-list li {
+    display: grid;
+    grid-template-columns: 1.4rem minmax(0, 1fr);
+    gap: 0.5rem;
+    font-size: var(--hh-step--1);
+  }
+
+  .hh-list__marker {
+    display: grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    font-size: var(--hh-step--1);
+    line-height: 1;
+  }
+
+  .hh-list--in .hh-list__marker {
+    background: color-mix(in srgb, var(--hh-forest-600) 16%, transparent);
+    color: var(--hh-forest-700);
+  }
+
+  .hh-list--out .hh-list__marker {
+    background: color-mix(in srgb, var(--hh-charcoal-900) 8%, transparent);
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-list--out li span:last-child {
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-lists__notice {
+    margin-top: var(--hh-space-xl);
+  }
+
+  /* ------------------------------------------------------------------ cta */
+  .hh-jcta {
+    display: grid;
+    gap: var(--hh-space-l);
+    align-items: center;
+  }
+
+  .hh-jcta h2 {
+    margin-block: var(--hh-space-2xs) var(--hh-space-s);
+    max-width: 22ch;
+  }
+
+  .hh-jcta .hh-lede {
+    max-width: 54ch;
+  }
+
+  .hh-jcta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--hh-space-2xs);
+  }
+
+  @media (min-width: 60rem) {
+    .hh-jcta {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: var(--hh-space-3xl);
+    }
+
+    /* Stacked and stretched so the pair reads as one block rather than a ragged edge. */
+    .hh-jcta__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  /* -------------------------------------------------------- other journeys */
+  .hh-othergrid {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: 1fr;
+  }
+
+  .hh-othergrid__item {
+    display: flex;
+    min-width: 0;
+  }
+
+  .hh-othergrid__item > :global(.hh-tourcard) {
+    flex: 1;
+  }
+
+  /* 4 cards: 1-up, then 2x2, then 4-up. Never a single orphan on its own row. */
+  @media (min-width: 44rem) {
+    .hh-othergrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 72rem) {
+    .hh-othergrid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

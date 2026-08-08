@@ -1,0 +1,143 @@
+---
+/**
+ * Full brand lockup: SVG mark + live HTML wordmark. Keeping the wordmark as real
+ * text means it inherits the display face, stays selectable, and scales with the
+ * user's font size instead of being baked into the SVG.
+ */
+import BrandMark from './BrandMark.astro';
+
+interface Props {
+  /** `row` puts the wordmark beside the mark; `stack` centres it underneath. */
+  orientation?: 'row' | 'stack';
+  size?: 'sm' | 'md' | 'lg';
+  tagline?: boolean;
+  /** Renders the wordmark in bone for use on dark surfaces. */
+  tone?: 'default' | 'inverse';
+  class?: string;
+}
+
+const {
+  orientation = 'row',
+  size = 'md',
+  tagline = true,
+  tone = 'default',
+  class: className = '',
+} = Astro.props;
+
+const markHeight = { sm: '1.9rem', md: '2.6rem', lg: '4.5rem' }[size];
+---
+
+<span
+  class:list={[
+    'hh-lockup',
+    `hh-lockup--${orientation}`,
+    `hh-lockup--${size}`,
+    tone === 'inverse' && 'hh-lockup--inverse',
+    className,
+  ]}
+>
+  <BrandMark variant="mark" height={markHeight} decorative class="hh-lockup__mark" />
+  <span class="hh-lockup__text">
+    <span class="hh-lockup__word">Harry&rsquo;s Hunts</span>
+    {
+      tagline && (
+        <span class="hh-lockup__tagline">
+          <span class="hh-lockup__rule" aria-hidden="true" />
+          New Zealand Field Journeys
+          <span class="hh-lockup__rule" aria-hidden="true" />
+        </span>
+      )
+    }
+  </span>
+</span>
+
+<style>
+  .hh-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: var(--hh-forest-800);
+    --hh-brandmark-antler: var(--hh-brass-600);
+  }
+
+  .hh-lockup--stack {
+    flex-direction: column;
+    gap: 0.55rem;
+    text-align: center;
+  }
+
+  .hh-lockup--inverse {
+    color: var(--hh-bone-50);
+    --hh-brandmark-antler: var(--hh-brass-300);
+  }
+
+  .hh-lockup__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .hh-lockup--stack .hh-lockup__text {
+    align-items: center;
+  }
+
+  .hh-lockup__word {
+    font-family: var(--hh-font-display);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .hh-lockup--sm .hh-lockup__word {
+    font-size: 1.35rem;
+  }
+  .hh-lockup--md .hh-lockup__word {
+    font-size: 1.9rem;
+  }
+  .hh-lockup--lg .hh-lockup__word {
+    font-size: clamp(2.4rem, 1.6rem + 3vw, 3.6rem);
+  }
+
+  .hh-lockup__tagline {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--hh-font-body);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: color-mix(in srgb, currentColor 78%, transparent);
+  }
+
+  .hh-lockup--lg .hh-lockup__tagline {
+    font-size: clamp(0.62rem, 0.5rem + 0.4vw, 0.82rem);
+  }
+
+  .hh-lockup__rule {
+    flex: none;
+    inline-size: 1.1rem;
+    block-size: 1px;
+    background: var(--hh-brass-500);
+  }
+
+  .hh-lockup--inverse .hh-lockup__rule {
+    background: var(--hh-brass-300);
+  }
+
+  .hh-lockup--row .hh-lockup__rule:first-child {
+    display: none;
+  }
+
+  .hh-lockup--row .hh-lockup__tagline {
+    gap: 0;
+  }
+
+  .hh-lockup--row .hh-lockup__rule:last-child {
+    display: none;
+  }
+</style>

@@ -1,0 +1,237 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import ProductGallery from '../../components/ProductGallery.astro';
+import ProductPurchase from '../../components/ProductPurchase.tsx';
+import { href } from '../../lib/paths';
+import { collections, products, type Product } from '../../data/products';
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const collection = collections.find((entry) => entry.id === product.collection);
+const related = products.filter((entry) => entry.slug !== product.slug).slice(0, 3);
+---
+
+<Base
+  title={product.name}
+  description={`${product.summary} A fictional demonstration product — no payment is processed and no order is created.`}
+  pageId="product"
+>
+  <div class="hh-container">
+    <nav class="hh-crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href={href('/')}>Home</a></li>
+        <li><a href={href('/shop/')}>Store</a></li>
+        {collection && <li><a href={href(`/shop/#${collection.id}`)}>{collection.name}</a></li>}
+        <li aria-current="page">{product.name}</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="hh-section hh-section--tight" aria-labelledby="product-title">
+    <div class="hh-container hh-product">
+      <div class="hh-product__media">
+        <ProductGallery images={product.images} name={product.name} />
+      </div>
+
+      <div class="hh-product__detail">
+        <p class="hh-eyebrow">{collection?.name ?? 'Field kit'}</p>
+        <h1 id="product-title">{product.name}</h1>
+        <p class="hh-product__tagline">{product.tagline}</p>
+        <p class="hh-product__summary">{product.summary}</p>
+
+        <ProductPurchase client:load slug={product.slug} />
+      </div>
+    </div>
+  </section>
+
+  <section class="hh-section hh-section--tight hh-section--sunken" aria-labelledby="details-title">
+    <div class="hh-container hh-productinfo">
+      <div class="hh-productinfo__prose">
+        <h2 id="details-title">The detail</h2>
+        {product.description.map((paragraph) => <p>{paragraph}</p>)}
+        <h3>Care</h3>
+        <p>{product.care}</p>
+      </div>
+
+      <div class="hh-productinfo__specs">
+        <h2 class="hh-productinfo__specstitle">Specification</h2>
+        <dl class="hh-speclist hh-speclist--stacked">
+          {
+            product.specs.map((spec) => (
+              <div>
+                <dt>{spec.label}</dt>
+                <dd>{spec.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="hh-notice">
+          <span>
+            <strong>Fictional product.</strong> These specifications describe an invented item
+            created for this demonstration. Nothing here is manufactured or sold.
+          </span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hh-section hh-section--tight" aria-labelledby="related-title">
+    <div class="hh-container">
+      <header class="hh-relatedhead">
+        <h2 id="related-title">The rest of the kit</h2>
+        <a class="hh-link" href={href('/shop/')}>All five products</a>
+      </header>
+      <div class="hh-relatedgrid">
+        {related.map((entry) => <ProductCard product={entry} />)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hh-crumbs {
+    padding-block: var(--hh-space-s) 0;
+  }
+
+  .hh-crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-crumbs li + li::before {
+    content: '/';
+    margin-inline-end: 0.6rem;
+    color: var(--hh-line-strong);
+  }
+
+  .hh-crumbs a {
+    color: var(--hh-ink-muted);
+    text-decoration: none;
+  }
+
+  .hh-crumbs a:hover {
+    color: var(--hh-ink-brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .hh-crumbs [aria-current='page'] {
+    color: var(--hh-ink-brand);
+    font-weight: 500;
+  }
+
+  .hh-product {
+    display: grid;
+    gap: var(--hh-space-xl);
+    align-items: start;
+  }
+
+  .hh-product__detail h1 {
+    font-size: var(--hh-step-4);
+    margin-block: 0.3rem 0.4rem;
+  }
+
+  .hh-product__tagline {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    font-style: italic;
+    color: var(--hh-forest-600);
+    margin-bottom: var(--hh-space-xs);
+  }
+
+  .hh-product__summary {
+    color: var(--hh-ink-muted);
+    max-width: 46ch;
+    margin-bottom: var(--hh-space-m);
+  }
+
+  @media (min-width: 60rem) {
+    .hh-product {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: var(--hh-space-3xl);
+    }
+
+    .hh-product__media {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+
+  .hh-productinfo {
+    display: grid;
+    gap: var(--hh-space-xl);
+    align-items: start;
+  }
+
+  .hh-productinfo__prose {
+    max-width: var(--hh-measure);
+    display: grid;
+    gap: var(--hh-space-s);
+  }
+
+  .hh-productinfo__prose h2 {
+    font-size: var(--hh-step-3);
+  }
+
+  .hh-productinfo__prose h3 {
+    font-size: var(--hh-step-1);
+    margin-top: var(--hh-space-s);
+  }
+
+  .hh-productinfo__specstitle {
+    font-size: var(--hh-step-2);
+    margin-bottom: var(--hh-space-s);
+  }
+
+  .hh-productinfo__specs {
+    display: grid;
+    gap: var(--hh-space-m);
+  }
+
+  .hh-speclist--stacked {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 60rem) {
+    .hh-productinfo {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: var(--hh-space-3xl);
+    }
+  }
+
+  .hh-relatedhead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--hh-space-s);
+    margin-bottom: var(--hh-space-l);
+  }
+
+  .hh-relatedhead h2 {
+    font-size: var(--hh-step-3);
+  }
+
+  .hh-relatedgrid {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+/**
+ * Demonstration checkout. The page is a shell; every stage of the flow is
+ * rendered by the CheckoutMock island. Nothing on this route contacts a
+ * payment processor, creates an order or transmits anything at all.
+ */
+import Base from '../../layouts/Base.astro';
+import CheckoutMock from '../../components/CheckoutMock.tsx';
+import { productThumbs } from '../../lib/thumbs';
+
+const thumbs = await productThumbs(200);
+---
+
+<Base
+  title="Demonstration checkout"
+  description="A staged checkout mockup for the fictional Harry's Hunts store. No payment method is collected, no order is created and nothing is transmitted."
+  pageId="checkout"
+  padTop={false}
+>
+  <section class="hh-section hh-section--tight" aria-labelledby="checkout-title">
+    <div class="hh-container">
+      <header class="hh-pagehead">
+        <p class="hh-eyebrow">Mockup checkout</p>
+        <h1 id="checkout-title">Checkout</h1>
+        <p class="hh-lede">
+          Four stages and a confirmation, built to show how the flow would read. There is no card
+          field anywhere in it, no processor behind it and no order at the end of it.
+        </p>
+      </header>
+
+      <CheckoutMock client:load thumbs={thumbs} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hh-pagehead {
+    max-width: 46rem;
+    margin-bottom: var(--hh-space-xl);
+  }
+
+  .hh-pagehead h1 {
+    margin-block: var(--hh-space-2xs) var(--hh-space-s);
+  }
+</style>

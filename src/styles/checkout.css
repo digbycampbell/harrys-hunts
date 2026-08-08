@@ -1,0 +1,676 @@
+/*
+ * Styles for the cart page and the checkout mockup islands.
+ *
+ * Astro's scoped <style> blocks do not reach Preact components, so everything
+ * rendered by CartPage.tsx and CheckoutMock.tsx is styled here as plain global
+ * CSS. Loaded after components.css, so the `.hh-cartline` modifiers below can
+ * widen the shared drawer line for a full-page layout.
+ *
+ * Note: global.css @imports this file at the top, so its own rules come later
+ * in source order. Anything that has to beat a base class defined in global.css
+ * (`.hh-speclist`, `.hh-notice`, `ul[class]`) needs the extra specificity you
+ * will see spelled out below.
+ */
+
+/* -------------------------------------------------------- shared scaffold */
+
+.hh-cartpage__loading,
+.hh-checkout__loading {
+  display: grid;
+  gap: var(--hh-space-m);
+}
+
+/* Two-column on desktop: content leads, summary rides alongside. */
+.hh-cartlayout,
+.hh-checkout__layout {
+  display: grid;
+  gap: var(--hh-space-xl);
+  align-items: start;
+}
+
+@media (min-width: 64rem) {
+  .hh-cartlayout,
+  .hh-checkout__layout {
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+    gap: var(--hh-space-2xl);
+  }
+}
+
+.hh-cartlayout__main,
+.hh-checkout__form {
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------ empty state */
+
+.hh-emptystate {
+  display: grid;
+  justify-items: start;
+  gap: var(--hh-space-s);
+  max-width: 40rem;
+  padding: var(--hh-space-xl) var(--hh-space-l);
+  border: 1px dashed var(--hh-line-strong);
+  border-radius: var(--hh-radius-m);
+  background: var(--hh-surface-sunken);
+}
+
+.hh-emptystate__title {
+  font-size: var(--hh-step-3);
+}
+
+.hh-emptystate__body {
+  color: var(--hh-ink-muted);
+  max-width: 46ch;
+}
+
+/* ------------------------------------------------------------- undo strip */
+
+.hh-undo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hh-space-s);
+  margin-bottom: var(--hh-space-m);
+  padding: var(--hh-space-xs) var(--hh-space-s);
+  border: 1px solid var(--hh-line);
+  border-left: 3px solid var(--hh-brass-500);
+  border-radius: var(--hh-radius-s);
+  background: var(--hh-surface-raised);
+  font-size: var(--hh-step--1);
+  animation: hh-fade var(--hh-duration) var(--hh-ease) both;
+}
+
+/* Kept in the DOM so the live region is stable, hidden while it has nothing to say. */
+.hh-undo:empty {
+  display: none;
+}
+
+.hh-undo__text {
+  color: var(--hh-ink-muted);
+}
+
+.hh-undo__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--hh-space-s);
+}
+
+.hh-undo__dismiss {
+  font-size: var(--hh-step--2);
+  color: var(--hh-ink-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hh-undo__dismiss:hover {
+  color: var(--hh-ink-brand);
+}
+
+/* ------------------------------------------------------------- line lists */
+
+.hh-cartlines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--hh-space-m);
+}
+
+.hh-cartlines__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--hh-space-s);
+  padding-bottom: var(--hh-space-xs);
+  margin-bottom: var(--hh-space-m);
+  border-bottom: 1px solid var(--hh-line);
+}
+
+.hh-cartlines__title {
+  font-size: var(--hh-step-2);
+}
+
+.hh-cartlines__count {
+  font-size: var(--hh-step--2);
+  font-weight: 600;
+  letter-spacing: var(--hh-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--hh-ink-accent);
+}
+
+.hh-cartlines__foot {
+  margin-top: var(--hh-space-l);
+  font-size: var(--hh-step--1);
+}
+
+.hh-cartlines--tight {
+  gap: var(--hh-space-s);
+  padding-bottom: var(--hh-space-s);
+  margin-bottom: var(--hh-space-s);
+  border-bottom: 1px solid var(--hh-line);
+}
+
+/* Full-page variant of the shared drawer line: bigger image, own hairline. */
+.hh-cartline--roomy {
+  grid-template-columns: 6rem minmax(0, 1fr) auto;
+  gap: var(--hh-space-m);
+  padding-bottom: var(--hh-space-m);
+  border-bottom: 1px solid var(--hh-line);
+}
+
+.hh-cartlines > .hh-cartline--roomy:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.hh-cartline--roomy .hh-cartline__image {
+  width: 6rem;
+}
+
+.hh-cartline--mini {
+  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+  gap: var(--hh-space-xs);
+}
+
+.hh-cartline--mini .hh-cartline__image {
+  width: 3.25rem;
+}
+
+.hh-cartline--mini .hh-cartline__name {
+  font-size: var(--hh-step-0);
+}
+
+/* Narrow screens: the price drops beneath the detail rather than squeezing it. */
+@media (max-width: 34rem) {
+  .hh-cartline--roomy {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: var(--hh-space-s);
+  }
+
+  .hh-cartline--roomy .hh-cartline__image {
+    width: 4.5rem;
+    grid-row: span 2;
+  }
+
+  .hh-cartline--roomy .hh-cartline__price {
+    grid-column: 2;
+    justify-self: end;
+  }
+}
+
+.hh-cartline--static .hh-cartline__name {
+  display: block;
+  font-family: var(--hh-font-display);
+  font-size: var(--hh-step-1);
+  line-height: 1.15;
+  color: var(--hh-ink-brand);
+}
+
+.hh-cartline__unit {
+  font-size: var(--hh-step--2);
+  color: var(--hh-ink-subtle);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* ---------------------------------------------------------- summary panel */
+
+.hh-summary {
+  min-width: 0;
+}
+
+.hh-summary__inner {
+  display: grid;
+  gap: var(--hh-space-s);
+  padding: var(--hh-space-m);
+  border: 1px solid var(--hh-line);
+  border-top: 2px solid var(--hh-forest-800);
+  border-radius: var(--hh-radius-m);
+  background: var(--hh-surface-raised);
+  box-shadow: var(--hh-shadow-s);
+}
+
+.hh-summary__title {
+  font-size: var(--hh-step-2);
+}
+
+.hh-summary__zone {
+  padding-bottom: var(--hh-space-s);
+  border-bottom: 1px solid var(--hh-line);
+}
+
+.hh-summary__shortfall {
+  font-size: var(--hh-step--1);
+  color: var(--hh-ink-accent);
+}
+
+.hh-summary__gst,
+.hh-summary__link {
+  font-size: var(--hh-step--2);
+  color: var(--hh-ink-muted);
+}
+
+.hh-summary__actions {
+  display: grid;
+  gap: var(--hh-space-2xs);
+  margin-top: var(--hh-space-2xs);
+}
+
+@media (min-width: 64rem) {
+  .hh-summary {
+    position: sticky;
+    top: calc(4.4rem + var(--hh-space-s));
+  }
+}
+
+/* ----------------------------------------------------------------- totals */
+
+.hh-totals {
+  display: grid;
+  gap: var(--hh-space-2xs);
+  margin: 0;
+  padding-top: var(--hh-space-2xs);
+}
+
+.hh-totals__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--hh-space-s);
+}
+
+.hh-totals__row dt {
+  font-size: var(--hh-step--1);
+  color: var(--hh-ink-muted);
+}
+
+.hh-totals__row dd {
+  margin: 0;
+  font-size: var(--hh-step--1);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hh-totals__row--grand {
+  margin-top: var(--hh-space-2xs);
+  padding-top: var(--hh-space-xs);
+  border-top: 1px solid var(--hh-line);
+}
+
+.hh-totals__row--grand dt {
+  font-size: var(--hh-step--1);
+  font-weight: 600;
+  letter-spacing: var(--hh-tracking-wide);
+  text-transform: uppercase;
+  color: var(--hh-ink-brand);
+}
+
+.hh-totals__row--grand dd {
+  font-family: var(--hh-font-display);
+  font-size: var(--hh-step-2);
+  font-weight: 600;
+  color: var(--hh-ink-brand);
+}
+
+/* -------------------------------------------------------- stage indicator */
+
+.hh-steps {
+  margin-bottom: var(--hh-space-xl);
+}
+
+.hh-steps__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hh-space-2xs) var(--hh-space-s);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hh-steps__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: var(--hh-space-2xs);
+  border-top: 2px solid var(--hh-line);
+  flex: 1 1 7rem;
+  min-width: 0;
+  font-size: var(--hh-step--2);
+  letter-spacing: var(--hh-tracking-wide);
+  text-transform: uppercase;
+  color: var(--hh-ink-subtle);
+}
+
+.hh-steps__item[data-state='done'] {
+  border-top-color: var(--hh-brass-500);
+  color: var(--hh-ink-accent);
+}
+
+.hh-steps__item[data-state='current'] {
+  border-top-color: var(--hh-forest-800);
+  color: var(--hh-ink-brand);
+  font-weight: 600;
+}
+
+.hh-steps__number {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid currentColor;
+  border-radius: var(--hh-radius-pill);
+  font-size: 0.68rem;
+  font-variant-numeric: lining-nums;
+  letter-spacing: 0;
+}
+
+.hh-steps__item[data-state='current'] .hh-steps__number {
+  background: var(--hh-forest-800);
+  border-color: var(--hh-forest-800);
+  color: var(--hh-bone-50);
+}
+
+.hh-steps__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ------------------------------------------------------------ form stages */
+
+.hh-stage__title {
+  font-size: var(--hh-step-3);
+}
+
+.hh-stage__title:focus {
+  outline: none;
+}
+
+.hh-stage__title:focus-visible {
+  outline: 2px solid var(--hh-focus);
+  outline-offset: 4px;
+}
+
+.hh-stage__intro {
+  margin-top: var(--hh-space-2xs);
+  max-width: 54ch;
+  color: var(--hh-ink-muted);
+}
+
+.hh-stage__tools {
+  margin-top: var(--hh-space-s);
+}
+
+.hh-stage__fields {
+  display: grid;
+  gap: var(--hh-space-m);
+  margin-top: var(--hh-space-l);
+  max-width: 34rem;
+}
+
+.hh-fieldrow {
+  display: grid;
+  gap: var(--hh-space-m);
+}
+
+@media (min-width: 30rem) {
+  .hh-fieldrow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* --------------------------------------------------------- error handling */
+
+.hh-alert {
+  margin-bottom: var(--hh-space-l);
+  padding: var(--hh-space-s);
+  border: 1px solid var(--hh-danger-700);
+  border-left-width: 3px;
+  border-radius: var(--hh-radius-s);
+  background: color-mix(in srgb, var(--hh-danger-100) 60%, var(--hh-surface-raised));
+}
+
+.hh-alert__title {
+  font-size: var(--hh-step--1);
+  font-weight: 600;
+  color: var(--hh-danger-700);
+}
+
+/* Outspecifies global.css's `ul[class]` list reset. */
+.hh-alert .hh-alert__list {
+  list-style: disc;
+  margin: var(--hh-space-2xs) 0 0;
+  padding-left: 1.15rem;
+  font-size: var(--hh-step--1);
+  color: var(--hh-ink);
+}
+
+/* ----------------------------------------------------------- payment mock */
+
+.hh-payment {
+  display: grid;
+  gap: var(--hh-space-m);
+  margin-top: var(--hh-space-l);
+  padding: var(--hh-space-m);
+  border: 2px dashed var(--hh-brass-500);
+  border-radius: var(--hh-radius-m);
+  background: color-mix(in srgb, var(--hh-brass-500) 5%, var(--hh-surface-raised));
+}
+
+.hh-payment .hh-payment__notice {
+  background: color-mix(in srgb, var(--hh-brass-500) 14%, transparent);
+  border-style: solid;
+}
+
+.hh-payment__grid {
+  display: grid;
+  gap: var(--hh-space-m);
+}
+
+@media (min-width: 34rem) {
+  .hh-payment__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Fixed placeholder: not editable, not submitted, not read by anything. */
+.hh-input--locked:disabled {
+  background: var(--hh-surface-sunken);
+  border-style: dashed;
+  color: var(--hh-ink-muted);
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.08em;
+  cursor: not-allowed;
+  opacity: 1;
+  -webkit-text-fill-color: var(--hh-ink-muted);
+}
+
+.hh-payment__spec {
+  padding-top: var(--hh-space-2xs);
+}
+
+.hh-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--hh-space-2xs);
+}
+
+.hh-check__input {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.28rem;
+  accent-color: var(--hh-forest-800);
+}
+
+.hh-check__label {
+  font-size: var(--hh-step--1);
+  color: var(--hh-ink);
+}
+
+/* ------------------------------------------------------------ review page */
+
+.hh-reviewblock + .hh-reviewblock {
+  margin-top: var(--hh-space-l);
+}
+
+.hh-stage .hh-reviewblock:first-of-type {
+  margin-top: var(--hh-space-l);
+}
+
+.hh-reviewblock__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--hh-space-s);
+  padding-bottom: var(--hh-space-3xs);
+  margin-bottom: var(--hh-space-s);
+  border-bottom: 1px solid var(--hh-line);
+}
+
+.hh-reviewblock__title {
+  font-size: var(--hh-step-1);
+  margin-bottom: var(--hh-space-xs);
+}
+
+.hh-reviewblock__head .hh-reviewblock__title {
+  margin-bottom: 0;
+}
+
+/* A block with its own rule does not need one per spec column as well. */
+.hh-reviewblock__head ~ .hh-speclist div {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.hh-reviewblock__edit {
+  font-size: var(--hh-step--2);
+  font-weight: 600;
+  letter-spacing: var(--hh-tracking-wide);
+  text-transform: uppercase;
+  color: var(--hh-ink-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hh-reviewblock__edit:hover {
+  color: var(--hh-ink-brand);
+}
+
+.hh-reviewblock__foot {
+  margin-top: var(--hh-space-s);
+  font-size: var(--hh-step--1);
+}
+
+/* ------------------------------------------------------- stage navigation */
+
+.hh-checkout__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hh-space-2xs);
+  justify-content: space-between;
+  margin-top: var(--hh-space-xl);
+  padding-top: var(--hh-space-m);
+  border-top: 1px solid var(--hh-line);
+}
+
+.hh-checkout__notice {
+  margin-top: var(--hh-space-m);
+}
+
+/* Side by side is too tight for "Place demonstration order" on a phone. */
+@media (max-width: 30rem) {
+  .hh-checkout__nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--hh-space-2xs);
+  }
+}
+
+/* ------------------------------------------------------------ confirmation */
+
+.hh-success {
+  max-width: 62rem;
+  padding: var(--hh-space-l);
+  border: 1px solid var(--hh-line);
+  border-top: 3px solid var(--hh-forest-800);
+  border-radius: var(--hh-radius-m);
+  background: var(--hh-surface-raised);
+  box-shadow: var(--hh-shadow-m);
+  animation: hh-rise var(--hh-duration-slow) var(--hh-ease-out) both;
+}
+
+.hh-success__title {
+  margin-block: var(--hh-space-2xs) var(--hh-space-m);
+  font-size: var(--hh-step-4);
+}
+
+.hh-success__title:focus {
+  outline: none;
+}
+
+.hh-success__title:focus-visible {
+  outline: 2px solid var(--hh-focus);
+  outline-offset: 4px;
+}
+
+.hh-success__notice {
+  max-width: 70ch;
+}
+
+.hh-success__reference {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--hh-space-2xs) var(--hh-space-s);
+  margin-top: var(--hh-space-m);
+  padding: var(--hh-space-s) var(--hh-space-m);
+  border: 1px solid var(--hh-line);
+  border-radius: var(--hh-radius-s);
+  background: var(--hh-surface-sunken);
+}
+
+.hh-success__referencelabel {
+  font-size: var(--hh-step--2);
+  font-weight: 600;
+  letter-spacing: var(--hh-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--hh-ink-accent);
+}
+
+.hh-success__reference strong {
+  font-family: var(--hh-font-display);
+  font-size: var(--hh-step-2);
+  letter-spacing: 0.06em;
+  color: var(--hh-ink-brand);
+}
+
+.hh-success__body {
+  display: grid;
+  gap: var(--hh-space-xl);
+  margin-top: var(--hh-space-xl);
+}
+
+@media (min-width: 60rem) {
+  .hh-success__body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--hh-space-2xl);
+  }
+}
+
+/* Outspecifies global.css's `.hh-speclist { margin: 0 }`. */
+.hh-success .hh-success__spec {
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: var(--hh-space-l);
+  padding-top: var(--hh-space-m);
+  border-top: 1px solid var(--hh-line);
+}
+
+.hh-success__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hh-space-2xs);
+  margin-top: var(--hh-space-xl);
+  padding-top: var(--hh-space-m);
+  border-top: 1px solid var(--hh-line);
+}

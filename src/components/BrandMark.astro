@@ -1,0 +1,128 @@
+---
+/**
+ * Harry's Hunts brand mark — original code-native SVG.
+ *
+ * Two variants share one geometry set so the brand reads the same from a 16px
+ * favicon to a hero lockup:
+ *   - `monogram` : Southern Alps ridge + interlocked HH. Legible at favicon size.
+ *   - `mark`     : the monogram plus red-stag antler linework.
+ *
+ * Colour comes from `currentColor` by default; override the
+ * `--hh-brandmark-ink` / `--hh-brandmark-ridge` / `--hh-brandmark-antler`
+ * custom properties to tint parts individually.
+ *
+ * Pass `decorative` when adjacent text already names the brand, so assistive
+ * tech does not announce it twice. See BrandLockup.astro for the full lockup.
+ */
+interface Props {
+  variant?: 'monogram' | 'mark';
+  /** Rendered height in CSS units; width follows the aspect ratio. */
+  height?: string;
+  decorative?: boolean;
+  title?: string;
+  class?: string;
+}
+
+const {
+  variant = 'mark',
+  height = '2.5rem',
+  decorative = false,
+  title = "Harry's Hunts",
+  class: className = '',
+} = Astro.props;
+
+const titleId = `hh-mark-${Math.random().toString(36).slice(2, 9)}`;
+const showAntlers = variant === 'mark';
+
+// Tighter crop for the monogram so the glyph stays large at small sizes.
+const viewBox = showAntlers ? '8 6 144 108' : '34 6 92 108';
+
+// One red-stag antler, mirrored for the pair. Heavier main beam, finer tines.
+const beam = 'M106 110c14-5 25-18 27-37 1.5-13 0.5-24-3-33';
+const tines = [
+  'M112.5 102c4-6 6-12 5-19', // brow tine
+  'M121.5 88c6-4 14-7 22.5-7', // bez tine
+  'M130.5 70c6-4 12-9 18-13', // trez tine
+  'M130 40c5-7 8-15 9-25', // crown, outer
+  'M130 40c-2-8-3-15-2-24', // crown, inner
+];
+---
+
+<svg
+  class:list={['hh-brandmark', `hh-brandmark--${variant}`, className]}
+  viewBox={viewBox}
+  style={`height:${height}`}
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  role={decorative ? undefined : 'img'}
+  aria-hidden={decorative ? 'true' : undefined}
+  focusable="false"
+  aria-labelledby={decorative ? undefined : titleId}
+>
+  {!decorative && <title id={titleId}>{title}</title>}
+
+  {
+    showAntlers && (
+      <g class="hh-brandmark__antlers">
+        <g>
+          <path class="hh-brandmark__beam" d={beam} />
+          {tines.map((d) => (
+            <path class="hh-brandmark__tine" d={d} />
+          ))}
+        </g>
+        {/* Exact mirror keeps the pair symmetric without duplicating geometry. */}
+        <g transform="translate(160 0) scale(-1 1)">
+          <path class="hh-brandmark__beam" d={beam} />
+          {tines.map((d) => (
+            <path class="hh-brandmark__tine" d={d} />
+          ))}
+        </g>
+      </g>
+    )
+  }
+
+  {/* Southern Alps: a three-peak range set clear of the monogram. */}
+  <path class="hh-brandmark__ridge" d="M38 50 L57 26 L66 35 L80 11 L93 28 L102 20 L122 50"></path>
+
+  {/* Interlocked HH: two H forms sharing their inner stem and crossbar. */}
+  <g class="hh-brandmark__monogram">
+    <rect x="58.75" y="58" width="6.5" height="48"></rect>
+    <rect x="76.75" y="58" width="6.5" height="48"></rect>
+    <rect x="94.75" y="58" width="6.5" height="48"></rect>
+    <rect x="58.75" y="78.75" width="42.5" height="6.5"></rect>
+  </g>
+</svg>
+
+<style>
+  .hh-brandmark {
+    width: auto;
+    overflow: visible;
+  }
+
+  .hh-brandmark__monogram {
+    fill: var(--hh-brandmark-ink, currentColor);
+  }
+
+  .hh-brandmark__ridge {
+    fill: none;
+    stroke: var(--hh-brandmark-ridge, currentColor);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .hh-brandmark__antlers {
+    fill: none;
+    stroke: var(--hh-brandmark-antler, currentColor);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .hh-brandmark__beam {
+    stroke-width: 4;
+  }
+
+  .hh-brandmark__tine {
+    stroke-width: 3;
+  }
+</style>

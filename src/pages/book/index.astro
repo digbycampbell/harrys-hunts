@@ -1,0 +1,134 @@
+---
+import Base from '../../layouts/Base.astro';
+import BookingWizard from '../../components/BookingWizard.tsx';
+import { href } from '../../lib/paths';
+import { tours } from '../../data/tours';
+---
+
+<Base
+  title="Plan a journey"
+  description="A staged demonstration planner for a bespoke Harry's Hunts field journey. Nothing is sent, nothing is reserved and no payment details are ever collected."
+  pageId="book"
+>
+  <section class="hh-section hh-section--tight" aria-labelledby="book-title">
+    <div class="hh-container">
+      <div class="hh-bookhead">
+        <div>
+          <p class="hh-eyebrow">Bespoke planning</p>
+          <h1 id="book-title">Tell us the week you have</h1>
+          <p class="hh-lede">
+            Nine short questions covering island, country, experience, timing, party,
+            accommodation, guiding and extras. It takes about three minutes and produces a written
+            outline you can read back.
+          </p>
+        </div>
+        <p class="hh-notice hh-bookhead__notice">
+          <span>
+            <strong>This planner makes no booking.</strong> Answers stay in this browser, nothing is
+            transmitted, no availability is checked and no reservation is held. Please do not enter
+            payment details or identity documents anywhere on this site.
+          </span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hh-section hh-section--tight hh-section--sunken" aria-label="Journey planner">
+    <div class="hh-container">
+      <BookingWizard client:load />
+    </div>
+  </section>
+
+  <section class="hh-section hh-section--tight" aria-labelledby="prefill-title">
+    <div class="hh-container hh-container--narrow">
+      <h2 id="prefill-title" class="hh-prefill__title">Start from a published journey</h2>
+      <p class="hh-muted">
+        Opening the planner from a journey page prefills the island, country, season, accommodation
+        and guiding for you.
+      </p>
+      <ul class="hh-prefill">
+        {
+          tours.map((tour) => (
+            <li>
+              <a href={href(`/book/?journey=${tour.slug}`)} data-testid={`prefill-${tour.slug}`}>
+                {tour.name}
+                <span>{tour.durationLabel}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hh-bookhead {
+    display: grid;
+    gap: var(--hh-space-l);
+    align-items: start;
+  }
+
+  .hh-bookhead h1 {
+    margin-block: 0.3rem var(--hh-space-xs);
+  }
+
+  .hh-bookhead .hh-lede {
+    max-width: 48ch;
+  }
+
+  @media (min-width: 60rem) {
+    .hh-bookhead {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--hh-space-3xl);
+    }
+
+    .hh-bookhead__notice {
+      margin-top: var(--hh-space-l);
+    }
+  }
+
+  .hh-prefill__title {
+    font-size: var(--hh-step-2);
+    margin-bottom: var(--hh-space-2xs);
+  }
+
+  .hh-prefill {
+    list-style: none;
+    margin: var(--hh-space-m) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--hh-line);
+  }
+
+  .hh-prefill li {
+    border-bottom: 1px solid var(--hh-line);
+  }
+
+  .hh-prefill a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--hh-space-2xs) var(--hh-space-s);
+    padding-block: var(--hh-space-xs);
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    color: var(--hh-ink-brand);
+    text-decoration: none;
+    transition: color var(--hh-duration-fast) var(--hh-ease);
+  }
+
+  .hh-prefill a:hover {
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-prefill a span {
+    font-family: var(--hh-font-body);
+    font-size: var(--hh-step--2);
+    letter-spacing: var(--hh-tracking-wide);
+    text-transform: uppercase;
+    color: var(--hh-ink-subtle);
+  }
+</style>

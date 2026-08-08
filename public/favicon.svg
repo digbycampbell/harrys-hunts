@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Harry's Hunts">
+  <title>Harry's Hunts</title>
+  <rect width="64" height="64" rx="12" fill="#16311f" />
+  <!-- Heavier weights than the in-page mark so the ridge survives at 16px. -->
+  <path
+    d="M12 23 L24 9 L32 17 L42 6 L52 23"
+    fill="none"
+    stroke="#f4efe3"
+    stroke-width="4.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <g fill="#f4efe3">
+    <rect x="13" y="27" width="7" height="27" />
+    <rect x="27.5" y="27" width="7" height="27" />
+    <rect x="42" y="27" width="7" height="27" />
+    <rect x="13" y="37" width="36" height="7" />
+  </g>
+</svg>

@@ -1,0 +1,934 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import BrandMark from '../components/BrandMark.astro';
+import TourCard from '../components/TourCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { href } from '../lib/paths';
+import { islandBlurbs, islandLabels, tours, toursForIsland } from '../data/tours';
+import { products } from '../data/products';
+
+import heroImage from '../assets/generated/hero-south-island-ridgeline.png';
+import tussockRidge from '../assets/scenes/tussock-ridge.jpg';
+import valleyDawn from '../assets/scenes/valley-dawn.jpg';
+import braidedRiver from '../assets/scenes/braided-river.jpg';
+import merchBoard from '../assets/generated/merchandise-concept-board.png';
+import duffelDetail from '../assets/products/duffel-detail.png';
+import enamelMug from '../assets/products/enamel-mug.png';
+
+const featured = tours.filter((tour) => tour.featured);
+const featuredProducts = products.filter((product) => product.featured).slice(0, 4);
+
+const values = [
+  {
+    number: '01',
+    title: 'Guide-led, always',
+    body: 'Every journey runs with a New Zealand licensed guide who carries the safety plan, the permissions and the call on when to stand down.',
+  },
+  {
+    number: '02',
+    title: 'Legal ground, properly arranged',
+    body: 'We only walk country we have permission to be on, and we handle the permit administration before you land.',
+  },
+  {
+    number: '03',
+    title: 'The shot you can live with',
+    body: 'Identification, angle, backstop and recovery ground are settled before anything else. If any of them is wrong, we let it go.',
+  },
+  {
+    number: '04',
+    title: 'Nothing wasted',
+    body: 'Game care is part of the guiding, not an afterthought. Meat is handled properly, chilled properly and goes home with you or to the table.',
+  },
+];
+
+const notes = [
+  {
+    quote:
+      'Three mornings of nothing, then a stag answered from the next basin and the whole week made sense. The guides never once made the weather feel like a failure.',
+    name: 'Demonstration testimonial',
+    detail: 'Illustrative copy — not a real guest',
+  },
+  {
+    quote:
+      'I came to learn rather than to take something home. I left with a field log, a much better idea of what I do not know, and a booking for next winter.',
+    name: 'Demonstration testimonial',
+    detail: 'Illustrative copy — not a real guest',
+  },
+  {
+    quote:
+      'What surprised me was the food. Long table, one pot, everyone at it. That is the part I keep describing to people.',
+    name: 'Demonstration testimonial',
+    detail: 'Illustrative copy — not a real guest',
+  },
+];
+
+const atmosphere = [
+  {
+    title: 'The lodges',
+    body: 'Timber, wool blankets and a drying room that actually works. Never more than six guests, so nobody is queuing for hot water at five in the morning.',
+    image: valleyDawn,
+    alt: 'Dawn light spilling into a high-country valley below the ranges.',
+  },
+  {
+    title: 'The long table',
+    body: 'One kitchen, one table, one sitting. Venison when we have it, and the kind of breakfast that makes a pre-dawn start survivable.',
+    image: enamelMug,
+    alt: 'Bone enamel camp mug with a forest green rim.',
+    contain: true,
+  },
+  {
+    title: 'The guides',
+    body: 'Career field guides who grew up on this country. They will tell you honestly when a plan is wrong, which is the entire reason to hire one.',
+    image: tussockRidge,
+    alt: 'Guided party moving along a tussock ridge in evening light.',
+  },
+];
+---
+
+<Base
+  title="Harry's Hunts — New Zealand Field Journeys"
+  description="A fictional demonstration site for Harry's Hunts — guide-led New Zealand field journeys across the North and South Islands, with a mock booking flow and mock store."
+  pageId="home"
+  padTop={false}
+>
+  <!-- ------------------------------------------------------------- hero -->
+  <section class="hh-hero hh-on-dark" aria-labelledby="hero-title">
+    <Image
+      class="hh-hero__image"
+      src={heroImage}
+      alt="Three guided walkers following a tussock ridge above a braided river at dawn, with snow on the Southern Alps beyond."
+      widths={[720, 1100, 1672]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hh-hero__scrim"></div>
+
+    <div class="hh-hero__content hh-container">
+      <BrandMark variant="mark" height="clamp(3.2rem, 7vw, 5rem)" decorative class="hh-hero__mark" />
+      <p class="hh-hero__eyebrow">New Zealand Field Journeys</p>
+      <h1 id="hero-title" class="hh-hero__title">
+        The country sets<br />the pace.
+      </h1>
+      <p class="hh-hero__lede">
+        Small, guide-led hunting journeys across both islands &mdash; volcanic plateau to alpine
+        basin, run with the patience the ground asks for and the discipline it deserves.
+      </p>
+      <div class="hh-hero__actions">
+        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Plan a bespoke journey</a>
+        <a class="hh-button hh-button--outline-dark" href={href('/journeys/')}>See the five journeys</a>
+      </div>
+      <p class="hh-hero__note">
+        Demonstration site &mdash; the booking flow and store are fully interactive mockups.
+      </p>
+    </div>
+
+    <a class="hh-hero__scroll" href="#story" aria-label="Skip to the brand story">
+      <span aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <!-- -------------------------------------------------------- brand story -->
+  <section class="hh-section" id="story" aria-labelledby="story-title">
+    <div class="hh-container hh-story hh-reveal">
+      <div class="hh-story__lead">
+        <p class="hh-eyebrow">Since a made-up 1998</p>
+        <h2 id="story-title">
+          A house built on <em>patience</em>, not trophies.
+        </h2>
+      </div>
+      <div class="hh-story__body hh-stack-m">
+        <p class="hh-lede">
+          Harry&rsquo;s Hunts exists for people who want the whole thing done properly: the right
+          ground, the right guide, the right decision at the moment it matters.
+        </p>
+        <p>
+          We run five journeys and no more. Each one is built around a landscape rather than an
+          animal &mdash; the sound-carrying gullies of the volcanic plateau, the tight sika bush of
+          the eastern ranges, the bluff systems above the Main Divide, the braided river country
+          where you find things with glass instead of legs.
+        </p>
+        <p>
+          Parties are small, guides are licensed and career-long, and nobody is ever pushed onto a
+          face they should not be on. If the week gives you nothing but weather and company, that is
+          a week in New Zealand and we will say so before you book.
+        </p>
+        <p>
+          <a class="hh-link" href={href('/about/')}>Read how the house works</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------- featured journeys -->
+  <section class="hh-section hh-section--sunken" aria-labelledby="journeys-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">Featured journeys</p>
+          <h2 id="journeys-title">Four ways into the country</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          Every journey is fictional and every figure is indicative. Nothing here can be booked.
+        </p>
+      </header>
+
+      <div class="hh-tourgrid hh-reveal">
+        {
+          featured.map((tour, index) => (
+            <TourCard tour={tour} emphasis={index === 0 ? 'feature' : 'default'} />
+          ))
+        }
+      </div>
+
+      <p class="hh-sectionfoot hh-reveal">
+        <a class="hh-button hh-button--secondary" href={href('/journeys/')}>
+          View the full catalogue
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------- two islands -->
+  <section class="hh-section hh-section--inverse hh-on-dark" aria-labelledby="islands-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">Two islands</p>
+          <h2 id="islands-title">Same country, two entirely different arguments</h2>
+        </div>
+      </header>
+
+      <div class="hh-islands hh-reveal">
+        {
+          (['north', 'south'] as const).map((island) => {
+            const blurb = islandBlurbs[island];
+            const count = toursForIsland(island).length;
+            return (
+              <article class="hh-island">
+                <p class="hh-island__label">{islandLabels[island]}</p>
+                <h3 class="hh-island__title">{blurb.heading}</h3>
+                <p class="hh-island__body">{blurb.body}</p>
+                <ul class="hh-island__notes">
+                  {blurb.notes.map((note) => (
+                    <li>{note}</li>
+                  ))}
+                </ul>
+                <a class="hh-link hh-island__link" href={href(`/journeys/?island=${island}`)}>
+                  {count} {count === 1 ? 'journey' : 'journeys'} in the {islandLabels[island]}
+                </a>
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- field values -->
+  <section class="hh-section" aria-labelledby="values-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">Field values</p>
+          <h2 id="values-title">Four things we will not trade</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          Responsible, legal, guide-led fieldcraft. Described here as brand copy for a fictional
+          operator, not as guidance for any real trip.
+        </p>
+      </header>
+
+      <ol class="hh-values hh-reveal">
+        {
+          values.map((value) => (
+            <li class="hh-value">
+              <span class="hh-value__number" aria-hidden="true">
+                {value.number}
+              </span>
+              <h3 class="hh-value__title">{value.title}</h3>
+              <p class="hh-value__body">{value.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- atmosphere -->
+  <section class="hh-section hh-section--sunken" aria-labelledby="atmosphere-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">Off the hill</p>
+          <h2 id="atmosphere-title">Half of it happens indoors</h2>
+        </div>
+      </header>
+
+      <div class="hh-atmosphere hh-reveal">
+        {
+          atmosphere.map((panel) => (
+            <article class="hh-atmos">
+              <div class:list={['hh-atmos__media', panel.contain && 'hh-atmos__media--contain']}>
+                <Image
+                  src={panel.image}
+                  alt={panel.alt}
+                  widths={[320, 520, 760]}
+                  sizes="(min-width: 60rem) 24rem, 92vw"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h3 class="hh-atmos__title">{panel.title}</h3>
+              <p class="hh-atmos__body">{panel.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- social proof -->
+  <section class="hh-section" aria-labelledby="notes-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">From the guest book</p>
+          <h2 id="notes-title">Written for the demonstration</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          These are invented quotes shown to illustrate the layout. No real guest has stayed with
+          Harry&rsquo;s Hunts, because Harry&rsquo;s Hunts does not exist.
+        </p>
+      </header>
+
+      <div class="hh-notes hh-reveal">
+        {
+          notes.map((note) => (
+            <figure class="hh-note">
+              <blockquote>
+                <p>{note.quote}</p>
+              </blockquote>
+              <figcaption>
+                <span class="hh-note__name">{note.name}</span>
+                <span class="hh-note__detail">{note.detail}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- store -->
+  <section class="hh-section hh-section--sunken" aria-labelledby="store-title">
+    <div class="hh-container">
+      <div class="hh-storeteaser hh-reveal">
+        <div class="hh-storeteaser__media">
+          <Image
+            src={merchBoard}
+            alt="Concept sheet showing the Harry's Hunts field kit: wool cap, merino quarter-zip, waxed canvas duffel, enamel mug and field notebook."
+            widths={[420, 680, 1024]}
+            sizes="(min-width: 60rem) 26rem, 92vw"
+            loading="lazy"
+            decoding="async"
+          />
+          <Image
+            class="hh-storeteaser__inset"
+            src={duffelDetail}
+            alt="Close-up of the stamped leather patch with water beading on waxed canvas."
+            widths={[240, 420]}
+            sizes="12rem"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <div class="hh-storeteaser__body hh-stack-m">
+          <p class="hh-eyebrow">The field kit</p>
+          <h2 id="store-title">Five things, made to be used up</h2>
+          <p class="hh-lede">
+            Wool, merino, waxed canvas, enamel and paper. No technical claims we cannot keep and no
+            logo bigger than it needs to be.
+          </p>
+          <p>
+            The store is a working mockup: variants, cart, delivery estimate and a checkout that
+            ends in a demonstration confirmation. No payment panel accepts real details and no order
+            is ever created.
+          </p>
+          <p>
+            <a class="hh-button" href={href('/shop/')}>Browse the store</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="hh-productgrid hh-reveal">
+        {featuredProducts.map((product) => <ProductCard product={product} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- closing cta -->
+  <section class="hh-cta hh-on-dark" aria-labelledby="cta-title">
+    <Image
+      class="hh-cta__image"
+      src={braidedRiver}
+      alt=""
+      widths={[720, 1100, 1400]}
+      sizes="100vw"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="hh-cta__scrim"></div>
+    <div class="hh-container hh-cta__content hh-reveal">
+      <p class="hh-eyebrow">Bespoke by default</p>
+      <h2 id="cta-title">Tell us the week you have, and we will tell you what it can be.</h2>
+      <p class="hh-lede">
+        The planner walks through island, country, season, party, accommodation and guiding
+        intensity, then produces a written summary. In this demonstration it stops there &mdash;
+        nothing is sent and nothing is held.
+      </p>
+      <div class="hh-cta__actions">
+        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Open the journey planner</a>
+        <a class="hh-button hh-button--outline-dark" href={href('/about/#contact')}>How to reach a real person</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ------------------------------------------------------------------ hero */
+  .hh-hero {
+    position: relative;
+    display: grid;
+    align-items: end;
+    min-height: min(92svh, 54rem);
+    padding-block: var(--hh-space-3xl) var(--hh-space-2xl);
+    overflow: clip;
+    background: var(--hh-forest-950);
+    isolation: isolate;
+  }
+
+  .hh-hero :global(.hh-hero__image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 50%;
+    z-index: -2;
+    animation: hh-heroin 1.6s var(--hh-ease-out) both;
+  }
+
+  @keyframes hh-heroin {
+    from {
+      opacity: 0;
+      transform: scale(1.05);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .hh-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(
+        to top,
+        rgb(8 18 13 / 0.92) 0%,
+        rgb(8 18 13 / 0.72) 34%,
+        rgb(8 18 13 / 0.25) 66%,
+        rgb(8 18 13 / 0.4) 100%
+      ),
+      linear-gradient(to right, rgb(8 18 13 / 0.6), transparent 62%);
+  }
+
+  .hh-hero__content {
+    position: relative;
+    max-width: 46rem;
+    margin-inline: 0;
+    padding-inline: var(--hh-gutter);
+    animation: hh-rise 900ms var(--hh-ease-out) 120ms both;
+  }
+
+  .hh-hero :global(.hh-hero__mark) {
+    --hh-brandmark-ink: var(--hh-bone-50);
+    --hh-brandmark-ridge: var(--hh-bone-50);
+    --hh-brandmark-antler: var(--hh-brass-300);
+    margin-bottom: var(--hh-space-s);
+  }
+
+  .hh-hero__eyebrow {
+    font-size: var(--hh-step--2);
+    font-weight: 500;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-brass-300);
+    margin-bottom: var(--hh-space-xs);
+  }
+
+  .hh-hero__title {
+    font-size: var(--hh-step-6);
+    line-height: 0.98;
+    color: var(--hh-bone-50);
+    text-shadow: 0 2px 30px rgb(8 18 13 / 0.5);
+  }
+
+  .hh-hero__lede {
+    margin-top: var(--hh-space-m);
+    max-width: 40ch;
+    font-size: var(--hh-step-1);
+    color: var(--hh-bone-200);
+  }
+
+  .hh-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--hh-space-2xs);
+    margin-top: var(--hh-space-l);
+  }
+
+  .hh-hero__note {
+    margin-top: var(--hh-space-m);
+    font-size: var(--hh-step--2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--hh-bone-100) 66%, transparent);
+  }
+
+  .hh-hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: var(--hh-space-s);
+    translate: -50% 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--hh-line-inverse);
+  }
+
+  .hh-hero__scroll span {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 1.5px solid var(--hh-bone-100);
+    border-bottom: 1.5px solid var(--hh-bone-100);
+    rotate: 45deg;
+    translate: 0 -2px;
+    animation: hh-nudge 2.4s var(--hh-ease) infinite;
+  }
+
+  @keyframes hh-nudge {
+    0%,
+    100% {
+      translate: 0 -3px;
+    }
+    50% {
+      translate: 0 1px;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .hh-hero__scroll {
+      display: none;
+    }
+  }
+
+  /* --------------------------------------------------------- section heads */
+  .hh-sectionhead {
+    display: grid;
+    gap: var(--hh-space-s);
+    align-items: end;
+    margin-bottom: var(--hh-space-xl);
+  }
+
+  .hh-sectionhead > div > h2 {
+    margin-top: var(--hh-space-2xs);
+  }
+
+  .hh-sectionhead__aside {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+    max-width: 42ch;
+  }
+
+  .hh-section--inverse .hh-sectionhead__aside {
+    color: var(--hh-ink-inverse-muted);
+  }
+
+  @media (min-width: 56rem) {
+    .hh-sectionhead {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--hh-space-2xl);
+    }
+
+    .hh-sectionhead__aside {
+      justify-self: end;
+      text-align: right;
+    }
+  }
+
+  .hh-sectionfoot {
+    margin-top: var(--hh-space-xl);
+    text-align: center;
+  }
+
+  /* --------------------------------------------------------------- story */
+  .hh-story {
+    display: grid;
+    gap: var(--hh-space-l);
+  }
+
+  .hh-story__lead h2 {
+    margin-top: var(--hh-space-2xs);
+  }
+
+  .hh-story__lead em {
+    font-style: italic;
+    color: var(--hh-forest-600);
+  }
+
+  @media (min-width: 56rem) {
+    .hh-story {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      gap: var(--hh-space-3xl);
+    }
+
+    .hh-story__body {
+      padding-left: var(--hh-space-l);
+      border-left: 1px solid var(--hh-line);
+    }
+  }
+
+  /* ----------------------------------------------------------- tour grid */
+  .hh-tourgrid {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  }
+
+  @media (min-width: 64rem) {
+    .hh-tourgrid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hh-tourgrid > :global(.hh-tourcard--feature) {
+      grid-column: span 3;
+    }
+
+    .hh-tourgrid > :global(.hh-tourcard--feature) :global(.hh-tourcard__media) {
+      aspect-ratio: 21 / 8;
+    }
+  }
+
+  /* -------------------------------------------------------------- islands */
+  .hh-islands {
+    display: grid;
+    gap: var(--hh-space-l);
+  }
+
+  @media (min-width: 52rem) {
+    .hh-islands {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .hh-island + .hh-island {
+      padding-left: var(--hh-space-2xl);
+      border-left: 1px solid var(--hh-line-inverse);
+    }
+
+    .hh-island:first-child {
+      padding-right: var(--hh-space-2xl);
+    }
+  }
+
+  .hh-island__label {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--hh-brass-300);
+  }
+
+  .hh-island__title {
+    margin-block: var(--hh-space-2xs) var(--hh-space-xs);
+    font-size: var(--hh-step-2);
+  }
+
+  .hh-island__body {
+    color: var(--hh-ink-inverse-muted);
+    max-width: 46ch;
+  }
+
+  .hh-island__notes {
+    list-style: none;
+    padding: 0;
+    margin: var(--hh-space-m) 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .hh-island__notes li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: var(--hh-step--1);
+    color: var(--hh-bone-200);
+  }
+
+  .hh-island__notes li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.7rem;
+    height: 1px;
+    background: var(--hh-brass-500);
+  }
+
+  .hh-island__link {
+    font-size: var(--hh-step--1);
+    letter-spacing: var(--hh-tracking-wide);
+    text-transform: uppercase;
+  }
+
+  /* --------------------------------------------------------------- values */
+  .hh-values {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--hh-space-l);
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+    counter-reset: value;
+  }
+
+  .hh-value {
+    padding-top: var(--hh-space-s);
+    border-top: 2px solid var(--hh-forest-800);
+  }
+
+  .hh-value__number {
+    display: block;
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-2);
+    color: var(--hh-brass-500);
+    margin-bottom: var(--hh-space-2xs);
+  }
+
+  .hh-value__title {
+    font-size: var(--hh-step-1);
+    margin-bottom: var(--hh-space-2xs);
+  }
+
+  .hh-value__body {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  /* ----------------------------------------------------------- atmosphere */
+  .hh-atmosphere {
+    display: grid;
+    gap: var(--hh-space-l);
+    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  }
+
+  .hh-atmos__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--hh-radius-m);
+    overflow: clip;
+    background: var(--hh-forest-900);
+    margin-bottom: var(--hh-space-s);
+  }
+
+  .hh-atmos__media :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hh-atmos__media--contain {
+    background: var(--hh-bone-200);
+  }
+
+  .hh-atmos__media--contain :global(img) {
+    padding: var(--hh-space-s);
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .hh-atmos__title {
+    font-size: var(--hh-step-2);
+    margin-bottom: var(--hh-space-2xs);
+  }
+
+  .hh-atmos__body {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  /* ---------------------------------------------------------------- notes */
+  .hh-notes {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  }
+
+  .hh-note {
+    margin: 0;
+    padding: var(--hh-space-m);
+    background: var(--hh-surface-raised);
+    border: 1px solid var(--hh-line);
+    border-top: 2px solid var(--hh-brass-500);
+    border-radius: var(--hh-radius-m);
+    display: flex;
+    flex-direction: column;
+    gap: var(--hh-space-s);
+  }
+
+  .hh-note blockquote {
+    margin: 0;
+    flex: 1;
+  }
+
+  .hh-note blockquote p {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    line-height: 1.35;
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-note blockquote p::before {
+    content: open-quote;
+  }
+
+  .hh-note blockquote p::after {
+    content: close-quote;
+  }
+
+  .hh-note figcaption {
+    display: grid;
+    gap: 0.15rem;
+    padding-top: var(--hh-space-xs);
+    border-top: 1px solid var(--hh-line);
+  }
+
+  .hh-note__name {
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-note__detail {
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-subtle);
+  }
+
+  /* --------------------------------------------------------- store teaser */
+  .hh-storeteaser {
+    display: grid;
+    gap: var(--hh-space-xl);
+    align-items: center;
+    margin-bottom: var(--hh-space-2xl);
+  }
+
+  .hh-storeteaser__media {
+    position: relative;
+    border-radius: var(--hh-radius-m);
+    overflow: visible;
+  }
+
+  .hh-storeteaser__media :global(img:first-child) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--hh-radius-m);
+    border: 1px solid var(--hh-line);
+    box-shadow: var(--hh-shadow-m);
+  }
+
+  .hh-storeteaser :global(.hh-storeteaser__inset) {
+    position: absolute;
+    right: -1rem;
+    bottom: -1.25rem;
+    width: clamp(7rem, 22%, 11rem);
+    height: auto;
+    border-radius: var(--hh-radius-s);
+    border: 3px solid var(--hh-bone-100);
+    box-shadow: var(--hh-shadow-m);
+  }
+
+  @media (min-width: 60rem) {
+    .hh-storeteaser {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--hh-space-3xl);
+    }
+  }
+
+  .hh-productgrid {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+  }
+
+  /* ------------------------------------------------------------------ cta */
+  .hh-cta {
+    position: relative;
+    padding-block: var(--hh-space-3xl);
+    overflow: clip;
+    background: var(--hh-forest-950);
+    isolation: isolate;
+  }
+
+  .hh-cta :global(.hh-cta__image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  .hh-cta__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to right, rgb(8 18 13 / 0.94), rgb(8 18 13 / 0.72));
+  }
+
+  .hh-cta__content {
+    max-width: 52rem;
+    margin-inline: auto;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: var(--hh-space-s);
+  }
+
+  .hh-cta__content h2 {
+    color: var(--hh-bone-50);
+    max-width: 20ch;
+  }
+
+  .hh-cta__content .hh-lede {
+    color: var(--hh-bone-200);
+    max-width: 54ch;
+  }
+
+  .hh-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--hh-space-2xs);
+    margin-top: var(--hh-space-s);
+  }
+</style>

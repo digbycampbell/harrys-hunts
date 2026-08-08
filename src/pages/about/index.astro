@@ -1,0 +1,935 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { href } from '../../lib/paths';
+import { tours } from '../../data/tours';
+
+import brandBoard from '../../assets/generated/brand-concept-board.png';
+import valleyDawn from '../../assets/scenes/valley-dawn.jpg';
+
+const contents = [
+  { id: 'values', label: 'Field values' },
+  { id: 'guides', label: 'Guides and lodges' },
+  { id: 'contact', label: 'Contact' },
+  { id: 'demonstration', label: 'About this demonstration' },
+  { id: 'assets', label: 'Asset provenance' },
+];
+
+const fieldValues = [
+  {
+    title: 'Permission first, always',
+    body: 'A journey does not go on the calendar until the ground is arranged: landowner or concession permission in writing, the right permits lodged, and a named contact who knows we are there. If the paperwork is not settled a fortnight out, the trip moves.',
+  },
+  {
+    title: 'Guide-led, not guide-accompanied',
+    body: 'A New Zealand licensed guide runs the day. They hold the route, the wind, the safety plan and the decision about whether a stalk is on. Guests are taught the reasoning behind each call rather than simply led along behind it.',
+  },
+  {
+    title: 'Safety is the itinerary',
+    body: 'Every party carries a locator beacon and a written intentions plan. Alpine journeys add avalanche training and equipment. Nobody is put on ground they have not been honestly briefed on, and nobody is asked to keep up.',
+  },
+  {
+    title: 'Identify, then decide',
+    body: 'Species, sex, condition, angle, backstop and the ground you would have to cross to recover the animal are settled before anything else happens. Any one of those being wrong ends the stalk, and that is treated as a good outcome rather than a lost one.',
+  },
+  {
+    title: 'Nothing is wasted',
+    body: 'Game care is guiding work, not a chore left to the end of the day. Meat is handled cleanly, cooled properly and either travels home with the guest or goes to the lodge kitchen. Guests who do not want it can name a household that does.',
+  },
+  {
+    title: 'When we stand down',
+    body: 'Weather that closes a basin, a river that comes up, a guest who is not right, or an animal that is not right: any of these stops the day. Standing down is written into the price rather than argued about on the hill, and a guide who calls it is backed by the house.',
+  },
+];
+
+const whatIsReal = [
+  'The site itself: the Astro build, the components, the routing and the deploy.',
+  'The design system — palette, type scale, spacing tokens and shared components.',
+  'The interaction design: the journey planner, the store, the cart and the checkout, all working end to end as mockups.',
+  'The accessibility work: landmarks, focus handling, labelled controls, live regions and reduced-motion support.',
+  'The image pipeline that derives every product tile and journey scene from the source boards.',
+];
+
+const whatIsInvented = [
+  'Harry, the house, the guides, the lodges and the huts. None of them exists.',
+  'All five journeys, their seasons, itineraries and inclusions.',
+  'Every indicative figure. They are planning illustrations, not prices, quotes or offers.',
+  'Every testimonial and guest note, which are labelled as demonstration copy where they appear.',
+  'The store: the products, the variants, the delivery estimates and the order confirmation.',
+  'Any impression of availability. Nothing on this site can be reserved, held or bought.',
+];
+---
+
+<Base
+  title="The house"
+  description="How Harry's Hunts is meant to work — field values, guides and lodges, a non-functional contact form, and a plain explanation of what is real and what is invented on this demonstration site."
+  pageId="about"
+>
+  <!-- ------------------------------------------------------- page header -->
+  <section class="hh-section hh-section--tight" aria-labelledby="about-title">
+    <div class="hh-container hh-pagehead">
+      <div class="hh-pagehead__lead hh-stack-m">
+        <p class="hh-eyebrow">The house</p>
+        <h1 id="about-title">Everything here was built backwards from one week.</h1>
+        <p class="hh-lede">
+          Harry&rsquo;s Hunts was imagined as a small operation with an unusual constraint: it may
+          only run as many journeys as its guides can personally stand behind. Six weeks a season,
+          five landscapes, and a diary that fills or does not.
+        </p>
+        <p>
+          That constraint decides almost everything else. It is why the party sizes are small enough
+          to fit around one table, why a guide can afford to spend a morning teaching a guest to read
+          a face rather than hurrying them across it, and why an unproductive week is treated as an
+          ordinary result instead of a failure to be explained away.
+        </p>
+        <p>
+          The brand is written to sound like the kind of operator who tells you the awkward thing
+          first &mdash; that the weather may take three of your days, that the animal you had in mind
+          may not be there, that the licensing is your responsibility and it takes longer than you
+          think. If a house is going to be trusted with a week of somebody&rsquo;s life, it should
+          start by being dull and accurate.
+        </p>
+      </div>
+
+      <nav class="hh-toc" aria-labelledby="toc-title" data-testid="about-contents">
+        <h2 id="toc-title" class="hh-toc__title">On this page</h2>
+        <ul>
+          {
+            contents.map((entry) => (
+              <li>
+                <a href={href(`#${entry.id}`)}>{entry.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- field values -->
+  <section
+    class="hh-section hh-section--sunken"
+    id="values"
+    aria-labelledby="values-title"
+    data-testid="about-values"
+  >
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">Field values</p>
+          <h2 id="values-title">Six things the house will not argue about</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          Written as brand copy for a fictional operator. Nothing below is guidance for a real trip,
+          a real permit application or a real safety plan.
+        </p>
+      </header>
+
+      <div class="hh-valuegrid hh-reveal">
+        {
+          fieldValues.map((value) => (
+            <article class="hh-valuecard">
+              <h3 class="hh-valuecard__title">{value.title}</h3>
+              <p class="hh-valuecard__body">{value.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------- guides and lodges -->
+  <section class="hh-section" id="guides" aria-labelledby="guides-title" data-testid="about-guides">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">Guides, lodges, the table</p>
+          <h2 id="guides-title">The half of it that happens indoors</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          Invented people and invented buildings, described the way a real operator would describe
+          them.
+        </p>
+      </header>
+
+      <div class="hh-guides hh-reveal">
+        <figure class="hh-guides__figure">
+          <Image
+            src={valleyDawn}
+            alt="Dawn light reaching into a high-country valley, with cloud lying along the ranges behind."
+            widths={[396, 594, 792]}
+            sizes="(min-width: 60rem) 26rem, 92vw"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            First light in the valley. Derived from the AI-generated South Island board &mdash; see
+            <a class="hh-link" href={href('#assets')}>asset provenance</a>.
+          </figcaption>
+        </figure>
+
+        <div class="hh-guides__body hh-stack-m">
+          <h3>The guides</h3>
+          <p>
+            Seven of them, and the house is built around keeping the same seven. They are career
+            field guides rather than seasonal hires: people who have spent twenty seasons learning
+            which faces hold animals in a nor&rsquo;wester and which ones only look as though they
+            should. Two are alpine-qualified and carry the winter work; one runs the foundation
+            journey and is the only person permitted to teach it.
+          </p>
+          <p>
+            What the house asks of them is unusual in one respect. A guide is expected to say no in
+            front of a paying guest &mdash; to a face, to a shot, to a whole day &mdash; and to be
+            supported for it afterwards without a conversation about the diary.
+          </p>
+
+          <h3>The lodges and the huts</h3>
+          <p>
+            Two lodges, a station cottage, a homestead and a four-bunk alpine hut. None of them is
+            grand. What they share is a drying room that actually dries, a boot room that keeps the
+            hill out of the bedrooms, and enough hot water that a pre-dawn start is not a queue. The
+            alpine hut is resupplied by air and is the only place on the books where the bed is a
+            bunk and nobody minds.
+          </p>
+
+          <h3>The long table</h3>
+          <p>
+            One kitchen, one sitting, everyone at it. Venison when the week has produced some,
+            something slow and unfashionable when it has not, and a pot of coffee on the range at
+            four in the morning for whoever is going out first. Guests who came alone tend to leave
+            having argued with a stranger about rifle calibres for two hours, which is the part
+            nobody puts in the brochure.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ contact -->
+  <section
+    class="hh-section hh-section--sunken"
+    id="contact"
+    aria-labelledby="contact-title"
+    data-testid="about-contact"
+  >
+    <div class="hh-container hh-contact">
+      <div class="hh-contact__intro hh-stack-m">
+        <p class="hh-eyebrow">Contact</p>
+        <h2 id="contact-title">A form that deliberately goes nowhere</h2>
+        <p class="hh-lede">
+          A real operator would put a person and a phone number here. This one puts a working,
+          fully labelled enquiry form that is wired to nothing at all.
+        </p>
+        <div class="hh-notice">
+          <span>
+            <strong>Nothing is sent.</strong> There is no address behind this form, no server to receive
+            it, and no record kept. Everything you type stays in the browser tab until you close it. Please
+            do not enter anything you would not paste into a public page.
+          </span>
+        </div>
+        <p class="hh-contact__aside">
+          We never ask for payment details, identity documents or firearms-licensing information
+          anywhere on this site.
+        </p>
+      </div>
+
+      <form class="hh-form" data-testid="contact-form" novalidate>
+        <h3 class="hh-form__title">Demonstration enquiry</h3>
+
+        <div class="hh-field">
+          <label class="hh-label" for="contact-name">
+            Name <span class="hh-field__req">(required)</span>
+          </label>
+          <input
+            class="hh-input"
+            id="contact-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+          />
+          <p class="hh-error" id="contact-name-error" data-testid="error-name" hidden></p>
+        </div>
+
+        <div class="hh-field">
+          <label class="hh-label" for="contact-email">
+            Email <span class="hh-field__req">(required)</span>
+          </label>
+          <input
+            class="hh-input"
+            id="contact-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            aria-describedby="contact-email-hint"
+            required
+          />
+          <p class="hh-hint" id="contact-email-hint">
+            Used only to demonstrate the field. It is never stored or sent.
+          </p>
+          <p class="hh-error" id="contact-email-error" data-testid="error-email" hidden></p>
+        </div>
+
+        <div class="hh-field">
+          <label class="hh-label" for="contact-journey">Journey of interest</label>
+          <select class="hh-select" id="contact-journey" name="journey">
+            <option value="">Not sure yet</option>
+            {tours.map((tour) => <option value={tour.slug}>{tour.name}</option>)}
+            <option value="bespoke">Something bespoke</option>
+          </select>
+        </div>
+
+        <div class="hh-field">
+          <label class="hh-label" for="contact-message">
+            Message <span class="hh-field__req">(required)</span>
+          </label>
+          <textarea class="hh-textarea" id="contact-message" name="message" required></textarea>
+          <p class="hh-error" id="contact-message-error" data-testid="error-message" hidden></p>
+        </div>
+
+        <button class="hh-button" type="submit" data-testid="contact-submit">
+          Send the demonstration enquiry
+        </button>
+
+        <div
+          class="hh-form__success"
+          role="status"
+          tabindex="-1"
+          data-testid="contact-success"
+          hidden
+        >
+          <p class="hh-form__successtitle">Your message was not sent.</p>
+          <p>
+            The form validated and then stopped, because Harry&rsquo;s Hunts is a demonstration and
+            there is nothing behind it to receive an enquiry. Nothing was transmitted and nothing was
+            stored.
+          </p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------ demonstration -->
+  <section
+    class="hh-section"
+    id="demonstration"
+    aria-labelledby="demonstration-title"
+    data-testid="about-demonstration"
+  >
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">About this demonstration</p>
+          <h2 id="demonstration-title">What is real here, and what is not</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          The short version: the software is real, the company is not. The longer version is below,
+          in plain English.
+        </p>
+      </header>
+
+      <div class="hh-realgrid hh-reveal">
+        <div class="hh-real hh-real--yes">
+          <h3 class="hh-real__title" id="real-heading">Real</h3>
+          <ul aria-labelledby="real-heading">
+            {
+              whatIsReal.map((entry) => (
+                <li>
+                  <span class="hh-real__marker" aria-hidden="true">
+                    &check;
+                  </span>
+                  <span>{entry}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="hh-real hh-real--no">
+          <h3 class="hh-real__title" id="invented-heading">Invented</h3>
+          <ul aria-labelledby="invented-heading">
+            {
+              whatIsInvented.map((entry) => (
+                <li>
+                  <span class="hh-real__marker" aria-hidden="true">
+                    &ndash;
+                  </span>
+                  <span>{entry}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="hh-demonote hh-reveal hh-stack-m">
+        <h3>No booking or payment service exists</h3>
+        <p>
+          The journey planner produces a written summary in your browser and stops there. The store
+          keeps a cart in local storage and ends at a confirmation screen that no one receives. There
+          is no payment provider connected to this site, no card field will ever accept a real
+          number, and no order, booking or enquiry is created anywhere.
+        </p>
+        <p>
+          Nothing you type on this site is transmitted. It is a static build served as files, so
+          there is no application server, no database and no inbox behind any of these forms.
+        </p>
+        <h3>Not advice, not an offer</h3>
+        <p>
+          Descriptions of seasons, permissions, licensing, safety practice and game care are brand
+          copy written to sound plausible for a fictional operator. They are not legal advice, not
+          regulatory guidance and not a substitute for talking to a real licensed guide or the
+          relevant New Zealand authorities.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------- asset provenance -->
+  <section
+    class="hh-section hh-section--sunken"
+    id="assets"
+    aria-labelledby="assets-title"
+    data-testid="about-assets"
+  >
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">Asset provenance</p>
+          <h2 id="assets-title">Where the pictures and the mark came from</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          Stated openly, because a demonstration that hides its own materials is not much of a
+          demonstration.
+        </p>
+      </header>
+
+      <div class="hh-assets hh-reveal">
+        <figure class="hh-assets__figure">
+          <Image
+            src={brandBoard}
+            alt="Brand concept board for Harry's Hunts: monogram studies, an antler mark, colour chips in forest green, bone and brass, and type specimens."
+            widths={[520, 900, 1402]}
+            sizes="(min-width: 60rem) 30rem, 92vw"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            The brand concept board, generated with AI as a design input for this fictional
+            demonstration. It is a mood reference, not the production logo &mdash; the mark used
+            across the site is hand-built SVG.
+          </figcaption>
+        </figure>
+
+        <div class="hh-assets__body hh-stack-m">
+          <p>
+            Three source boards were generated with AI specifically for this fictional
+            demonstration: a brand concept board, a wide South Island landscape, and a merchandise
+            concept sheet. They are the only generated images in the project, and none of them
+            depicts a real place, a real product or a real person.
+          </p>
+          <p>
+            Everything else is derived from those three. The product tiles in the store and the scene
+            images on the journey cards are deterministic crops produced by
+            <code>scripts/derive-images.mjs</code>, which reads the boards, extracts a named region
+            for each asset and writes the result into the repository. Re-running the script is the
+            only way those files change, so the image set is reproducible rather than hand-edited.
+          </p>
+          <p>
+            The logo is not a trace of anything on the board. The mark and the lockup are original
+            code-native SVG, drawn as geometry in <code>src/components/BrandMark.astro</code> so the
+            same shapes serve a sixteen-pixel favicon and a hero-sized lockup without a raster asset
+            in between.
+          </p>
+          <p>
+            No photograph of a real hunt, a real animal or a real guest appears anywhere on this
+            site, and none will. The brand does not imitate, reference or trade on any existing
+            company: the name, the mark, the voice and the journeys were invented for this project,
+            and any resemblance to a real operator is coincidental.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  /*
+   * The contact form is a demonstration of the interaction, not a transport. It
+   * validates in the browser, reports errors against each control, and then
+   * explicitly tells the visitor that nothing was sent.
+   */
+  const form = document.querySelector<HTMLFormElement>('[data-testid="contact-form"]');
+  const success = document.querySelector<HTMLElement>('[data-testid="contact-success"]');
+
+  if (form && success) {
+    type Control = HTMLInputElement | HTMLTextAreaElement;
+
+    const rules: { name: string; check: (value: string) => string | null }[] = [
+      {
+        name: 'name',
+        check: (value) => (value.trim() ? null : 'Enter the name we should use.'),
+      },
+      {
+        name: 'email',
+        check: (value) => {
+          if (!value.trim()) return 'Enter an email address.';
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
+            ? null
+            : 'Enter an email address in the form name@example.com.';
+        },
+      },
+      {
+        name: 'message',
+        check: (value) =>
+          value.trim().length >= 10
+            ? null
+            : 'Write at least a sentence so the demonstration has something to validate.',
+      },
+    ];
+
+    interface Field {
+      control: Control;
+      error: HTMLElement;
+      /** Ids the control described itself with before any error was added. */
+      described: string | null;
+      check: (value: string) => string | null;
+    }
+
+    const fields: Field[] = [];
+    for (const rule of rules) {
+      const control = form.elements.namedItem(rule.name) as Control | null;
+      const error = form.querySelector<HTMLElement>(`[data-testid="error-${rule.name}"]`);
+      if (!control || !error) continue;
+      fields.push({
+        control,
+        error,
+        described: control.getAttribute('aria-describedby'),
+        check: rule.check,
+      });
+    }
+
+    const report = (field: Field, message: string | null) => {
+      const ids = field.described ? field.described.split(/\s+/) : [];
+      if (message) {
+        field.control.setAttribute('aria-invalid', 'true');
+        field.error.textContent = message;
+        field.error.hidden = false;
+        ids.push(field.error.id);
+      } else {
+        field.control.removeAttribute('aria-invalid');
+        field.error.textContent = '';
+        field.error.hidden = true;
+      }
+      if (ids.length) field.control.setAttribute('aria-describedby', ids.join(' '));
+      else field.control.removeAttribute('aria-describedby');
+    };
+
+    let submitted = false;
+
+    const validate = () => {
+      const failures = fields.filter((field) => {
+        const message = field.check(field.control.value);
+        report(field, message);
+        return message !== null;
+      });
+      return failures;
+    };
+
+    for (const field of fields) {
+      field.control.addEventListener('input', () => {
+        if (!submitted) return;
+        report(field, field.check(field.control.value));
+      });
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submitted = true;
+      success.hidden = true;
+
+      const failures = validate();
+      if (failures.length) {
+        failures[0].control.focus();
+        return;
+      }
+
+      success.hidden = false;
+      success.focus();
+    });
+  }
+</script>
+
+<style>
+  /* ------------------------------------------------------------ page head */
+  .hh-pagehead {
+    display: grid;
+    gap: var(--hh-space-l);
+    align-items: start;
+  }
+
+  .hh-pagehead__lead h1 {
+    max-width: 20ch;
+  }
+
+  .hh-pagehead__lead p:not(.hh-lede) {
+    max-width: var(--hh-measure);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-pagehead__lead .hh-lede {
+    max-width: 54ch;
+  }
+
+  @media (min-width: 60rem) {
+    .hh-pagehead {
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+      gap: var(--hh-space-3xl);
+    }
+  }
+
+  /* ------------------------------------------------------ table of contents */
+  .hh-toc {
+    padding: var(--hh-space-m);
+    background: var(--hh-surface-sunken);
+    border-left: 3px solid var(--hh-brass-500);
+    border-radius: 0 var(--hh-radius-m) var(--hh-radius-m) 0;
+  }
+
+  .hh-toc__title {
+    font-family: var(--hh-font-body);
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+    margin-bottom: var(--hh-space-s);
+  }
+
+  .hh-toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+
+  .hh-toc li + li {
+    border-top: 1px solid var(--hh-line);
+  }
+
+  .hh-toc a {
+    display: block;
+    padding-block: 0.55rem;
+    font-size: var(--hh-step--1);
+    text-decoration: none;
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-toc a:hover {
+    color: var(--hh-ink-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* --------------------------------------------------------- section head */
+  .hh-sectionhead {
+    display: grid;
+    gap: var(--hh-space-s);
+    align-items: end;
+    margin-bottom: var(--hh-space-xl);
+  }
+
+  .hh-sectionhead > div > h2 {
+    margin-top: var(--hh-space-2xs);
+  }
+
+  .hh-sectionhead__aside {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+    max-width: 42ch;
+  }
+
+  @media (min-width: 56rem) {
+    .hh-sectionhead {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--hh-space-2xl);
+    }
+
+    .hh-sectionhead__aside {
+      justify-self: end;
+      text-align: right;
+    }
+  }
+
+  /* --------------------------------------------------------------- values */
+  .hh-valuegrid {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  }
+
+  .hh-valuecard {
+    padding: var(--hh-space-m);
+    background: var(--hh-surface-raised);
+    border: 1px solid var(--hh-line);
+    border-top: 2px solid var(--hh-forest-800);
+    border-radius: var(--hh-radius-m);
+  }
+
+  .hh-valuecard__title {
+    font-size: var(--hh-step-1);
+    margin-bottom: var(--hh-space-2xs);
+  }
+
+  .hh-valuecard__body {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  /* --------------------------------------------------------------- guides */
+  .hh-guides {
+    display: grid;
+    gap: var(--hh-space-xl);
+    align-items: start;
+  }
+
+  @media (min-width: 60rem) {
+    .hh-guides {
+      grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+      gap: var(--hh-space-3xl);
+    }
+
+    .hh-guides__figure {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+
+  .hh-guides__figure {
+    margin: 0;
+  }
+
+  .hh-guides__figure :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--hh-radius-m);
+    border: 1px solid var(--hh-line);
+  }
+
+  .hh-guides__figure figcaption {
+    margin-top: var(--hh-space-xs);
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-guides__body {
+    max-width: var(--hh-measure);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-guides__body h3 {
+    font-size: var(--hh-step-2);
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-guides__body h3:not(:first-child) {
+    margin-top: var(--hh-space-l);
+    padding-top: var(--hh-space-m);
+    border-top: 1px solid var(--hh-line);
+  }
+
+  /* -------------------------------------------------------------- contact */
+  .hh-contact {
+    display: grid;
+    gap: var(--hh-space-xl);
+    align-items: start;
+  }
+
+  @media (min-width: 60rem) {
+    .hh-contact {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 27rem);
+      gap: var(--hh-space-3xl);
+    }
+  }
+
+  .hh-contact__intro h2 {
+    max-width: 18ch;
+  }
+
+  .hh-contact__intro .hh-lede {
+    max-width: 46ch;
+  }
+
+  .hh-contact__aside {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+    max-width: 46ch;
+  }
+
+  .hh-form {
+    display: grid;
+    gap: var(--hh-space-m);
+    padding: var(--hh-space-l);
+    background: var(--hh-surface-raised);
+    border: 1px solid var(--hh-line);
+    border-top: 3px solid var(--hh-forest-800);
+    border-radius: var(--hh-radius-m);
+    box-shadow: var(--hh-shadow-s);
+  }
+
+  .hh-form__title {
+    font-size: var(--hh-step-2);
+  }
+
+  .hh-field__req {
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-error[hidden] {
+    display: none;
+  }
+
+  .hh-form__success {
+    padding: var(--hh-space-m);
+    border: 1px solid var(--hh-forest-600);
+    border-left: 3px solid var(--hh-forest-600);
+    border-radius: var(--hh-radius-s);
+    background: color-mix(in srgb, var(--hh-forest-600) 8%, transparent);
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-form__success[hidden] {
+    display: none;
+  }
+
+  .hh-form__successtitle {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    color: var(--hh-ink-brand);
+    margin-bottom: var(--hh-space-2xs);
+  }
+
+  /* -------------------------------------------------- real versus invented */
+  .hh-realgrid {
+    display: grid;
+    gap: var(--hh-space-l);
+  }
+
+  @media (min-width: 52rem) {
+    .hh-realgrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--hh-space-2xl);
+    }
+  }
+
+  .hh-real__title {
+    padding-bottom: var(--hh-space-2xs);
+    margin-bottom: var(--hh-space-s);
+    border-bottom: 2px solid var(--hh-forest-800);
+    font-size: var(--hh-step-1);
+  }
+
+  .hh-real--no .hh-real__title {
+    border-bottom-color: var(--hh-line-strong);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-real ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--hh-space-xs);
+  }
+
+  .hh-real li {
+    display: grid;
+    grid-template-columns: 1.4rem minmax(0, 1fr);
+    gap: 0.5rem;
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-real__marker {
+    display: grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    line-height: 1;
+  }
+
+  .hh-real--yes .hh-real__marker {
+    background: color-mix(in srgb, var(--hh-forest-600) 16%, transparent);
+    color: var(--hh-forest-700);
+  }
+
+  .hh-real--no .hh-real__marker {
+    background: color-mix(in srgb, var(--hh-charcoal-900) 8%, transparent);
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-demonote {
+    margin-top: var(--hh-space-2xl);
+    padding-top: var(--hh-space-l);
+    border-top: 1px solid var(--hh-line);
+    max-width: var(--hh-measure);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-demonote h3 {
+    font-size: var(--hh-step-1);
+  }
+
+  /* --------------------------------------------------------------- assets */
+  .hh-assets {
+    display: grid;
+    gap: var(--hh-space-xl);
+    align-items: start;
+  }
+
+  @media (min-width: 60rem) {
+    .hh-assets {
+      grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
+      gap: var(--hh-space-3xl);
+    }
+  }
+
+  .hh-assets__figure {
+    margin: 0;
+  }
+
+  .hh-assets__figure :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--hh-radius-m);
+    border: 1px solid var(--hh-line);
+    box-shadow: var(--hh-shadow-m);
+  }
+
+  .hh-assets__figure figcaption {
+    margin-top: var(--hh-space-xs);
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-subtle);
+    max-width: 48ch;
+  }
+
+  .hh-assets__body {
+    max-width: var(--hh-measure);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-assets__body code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--hh-radius-xs);
+    background: color-mix(in srgb, var(--hh-charcoal-900) 7%, transparent);
+    color: var(--hh-ink-brand);
+    overflow-wrap: anywhere;
+  }
+</style>

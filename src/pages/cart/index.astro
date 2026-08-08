@@ -1,0 +1,45 @@
+---
+/**
+ * Full cart view. The shell, page head and thumbnails are rendered on the
+ * server; everything interactive lives in the CartPage island because the cart
+ * itself only exists in the visitor's browser.
+ */
+import Base from '../../layouts/Base.astro';
+import CartPage from '../../components/CartPage.tsx';
+import { productThumbs } from '../../lib/thumbs';
+
+const thumbs = await productThumbs(220);
+---
+
+<Base
+  title="Cart"
+  description="The demonstration cart for Harry's Hunts. Items live only in your browser — nothing is reserved, charged or sent."
+  pageId="cart"
+  padTop={false}
+>
+  <section class="hh-section hh-section--tight" aria-labelledby="cart-title">
+    <div class="hh-container">
+      <header class="hh-pagehead">
+        <p class="hh-eyebrow">The field kit</p>
+        <h1 id="cart-title">Your cart</h1>
+        <p class="hh-lede">
+          A demonstration cart for a fictional store. Quantities, delivery estimates and totals
+          all behave properly &mdash; they simply never leave this browser.
+        </p>
+      </header>
+
+      <CartPage client:load thumbs={thumbs} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hh-pagehead {
+    max-width: 46rem;
+    margin-bottom: var(--hh-space-xl);
+  }
+
+  .hh-pagehead h1 {
+    margin-block: var(--hh-space-2xs) var(--hh-space-s);
+  }
+</style>

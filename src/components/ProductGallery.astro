@@ -1,0 +1,191 @@
+---
+import { Image } from 'astro:assets';
+import type { ProductImage } from '../data/products';
+
+interface Props {
+  images: ProductImage[];
+  name: string;
+}
+
+const { images, name } = Astro.props;
+const galleryId = `gallery-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="hh-gallery" data-gallery data-testid="product-gallery">
+  <div class="hh-gallery__stage">
+    {
+      images.map((image, index) => (
+        <figure
+          class="hh-gallery__slide"
+          data-index={index}
+          hidden={index !== 0}
+          id={`${galleryId}-panel-${index}`}
+          role="tabpanel"
+          aria-labelledby={`${galleryId}-tab-${index}`}
+        >
+          <Image
+            src={image.src}
+            alt={image.alt}
+            widths={[420, 700, 1000]}
+            sizes="(min-width: 64rem) 34rem, 92vw"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        </figure>
+      ))
+    }
+  </div>
+
+  {
+    images.length > 1 && (
+      <div class="hh-gallery__thumbs" role="tablist" aria-label={`${name} images`}>
+        {images.map((image, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={`${galleryId}-tab-${index}`}
+            aria-controls={`${galleryId}-panel-${index}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            tabindex={index === 0 ? 0 : -1}
+            class="hh-gallery__thumb"
+            data-index={index}
+            data-testid={`gallery-thumb-${index}`}
+          >
+            <Image
+              src={image.src}
+              alt=""
+              widths={[120, 200]}
+              sizes="5rem"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="hh-visually-hidden">
+              View image {index + 1} of {images.length}: {image.alt}
+            </span>
+          </button>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<script>
+  // Tabbed gallery. Every image is already in the DOM and optimised by Astro, so
+  // switching is a visibility toggle — nothing loads on click.
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gallery) => {
+    const tabs = Array.from(gallery.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = Array.from(gallery.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    if (tabs.length === 0) return;
+
+    const select = (index: number, focus = true) => {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+      });
+      if (focus) tabs[index].focus();
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => select(index, false));
+      tab.addEventListener('keydown', (event) => {
+        const step =
+          event.key === 'ArrowRight' || event.key === 'ArrowDown'
+            ? 1
+            : event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+              ? -1
+              : 0;
+        if (step === 0) {
+          if (event.key === 'Home') select(0);
+          else if (event.key === 'End') select(tabs.length - 1);
+          else return;
+        } else {
+          select((index + step + tabs.length) % tabs.length);
+        }
+        event.preventDefault();
+      });
+    });
+  });
+</script>
+
+<style>
+  .hh-gallery {
+    display: grid;
+    gap: var(--hh-space-xs);
+  }
+
+  .hh-gallery__stage {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--hh-bone-100);
+    border: 1px solid var(--hh-line);
+    border-radius: var(--hh-radius-m);
+    overflow: clip;
+  }
+
+  .hh-gallery__slide {
+    margin: 0;
+    position: absolute;
+    inset: 0;
+    animation: hh-fade var(--hh-duration) var(--hh-ease) both;
+  }
+
+  .hh-gallery__slide[hidden] {
+    display: none;
+  }
+
+  .hh-gallery__slide :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: var(--hh-space-m);
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .hh-gallery__thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--hh-space-2xs);
+  }
+
+  .hh-gallery__thumb {
+    width: 4.5rem;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    padding: 0.25rem;
+    background: var(--hh-bone-100);
+    border: 1px solid var(--hh-line);
+    border-radius: var(--hh-radius-s);
+    transition:
+      border-color var(--hh-duration-fast) var(--hh-ease),
+      background-color var(--hh-duration-fast) var(--hh-ease);
+  }
+
+  .hh-gallery__thumb {
+    position: relative;
+  }
+
+  .hh-gallery__thumb :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0.3rem;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .hh-gallery__thumb:hover {
+    border-color: var(--hh-brass-500);
+  }
+
+  .hh-gallery__thumb[aria-selected='true'] {
+    border-color: var(--hh-forest-800);
+    box-shadow: inset 0 0 0 1px var(--hh-forest-800);
+  }
+</style>
