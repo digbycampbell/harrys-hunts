@@ -115,7 +115,7 @@ The brand direction is original and does not copy or imitate the marks, layouts,
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds on every push to `main` and publishes `dist/` to GitHub Pages with `actions/deploy-pages`.
+`.github/workflows/deploy.yml` type-checks, runs the full Playwright suite, builds, and publishes `dist/` to GitHub Pages with `actions/deploy-pages` on every push to `main`.
 `.github/workflows/ci.yml` type-checks, builds and runs the full Playwright suite on pull requests and branch pushes.
 
 The base path is configured once, in `astro.config.mjs`:
