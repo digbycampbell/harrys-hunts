@@ -11,6 +11,7 @@ import {
   addToCart,
   deliveryZones,
   lineId,
+  MAX_QUANTITY,
   openCart,
   $cart,
 } from '../lib/cart';
@@ -73,8 +74,18 @@ export default function ProductPurchase({ slug }: { slug: string }) {
 
   function submit(event: Event) {
     event.preventDefault();
+    const id = lineId(product!.slug, selection);
+    const before = $cart.get().find((line) => line.id === id)?.quantity ?? 0;
     addToCart(product!.slug, selection, quantity);
-    setAdded(`${quantity} × ${product!.name} added to your demonstration cart.`);
+    const after = $cart.get().find((line) => line.id === id)?.quantity ?? 0;
+    const delta = after - before;
+    setAdded(
+      delta === quantity
+        ? `${quantity} × ${product!.name} added to your demonstration cart.`
+        : delta > 0
+          ? `${delta} × ${product!.name} added — the demonstration cart holds at most ${MAX_QUANTITY} of each item.`
+          : `${product!.name} is already at the demonstration cart limit of ${MAX_QUANTITY}.`,
+    );
     openCart();
   }
 

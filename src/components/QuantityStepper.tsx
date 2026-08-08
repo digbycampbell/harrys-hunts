@@ -7,6 +7,7 @@ interface Props {
   /** Allows stepping down to zero (which removes a cart line). */
   allowZero?: boolean;
   compact?: boolean;
+  max?: number;
   testId?: string;
 }
 
@@ -17,6 +18,7 @@ export default function QuantityStepper({
   label,
   allowZero = false,
   compact = false,
+  max = MAX_QUANTITY,
   testId,
 }: Props) {
   const min = allowZero ? 0 : 1;
@@ -37,20 +39,20 @@ export default function QuantityStepper({
         type="number"
         inputMode="numeric"
         min={min}
-        max={MAX_QUANTITY}
+        max={max}
         step={1}
         value={value}
         aria-label={`Quantity of ${label}`}
         onInput={(event) => {
           const next = Number.parseInt((event.currentTarget as HTMLInputElement).value, 10);
-          if (Number.isFinite(next)) onChange(Math.min(MAX_QUANTITY, Math.max(min, next)));
+          if (Number.isFinite(next)) onChange(Math.min(max, Math.max(min, next)));
         }}
       />
       <button
         type="button"
         class="hh-stepper__button"
-        onClick={() => onChange(Math.min(MAX_QUANTITY, value + 1))}
-        disabled={value >= MAX_QUANTITY}
+        onClick={() => onChange(Math.min(max, value + 1))}
+        disabled={value >= max}
         aria-label={`Increase quantity of ${label}`}
       >
         <span aria-hidden="true">+</span>

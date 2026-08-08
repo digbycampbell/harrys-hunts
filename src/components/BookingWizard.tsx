@@ -144,16 +144,46 @@ const steps: Step[] = [
   },
 ];
 
-function loadState(): { state: BookingState; step: number } | null {
+function loadState(): { state: BookingState; step: number; journey: string } | null {
   if (typeof localStorage === 'undefined') return null;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as { state?: Partial<BookingState>; step?: number };
-    if (!parsed?.state) return null;
+    const parsed = JSON.parse(raw) as {
+      state?: Partial<BookingState>;
+      step?: number;
+      journey?: string;
+    };
+    if (typeof parsed?.state !== 'object' || parsed.state === null) return null;
+
+    // Take persisted values only when they still match the expected shape, so a
+    // hand-edited or stale entry can never blank the planner.
+    const state: BookingState = { ...emptyBooking };
+    for (const key of Object.keys(emptyBooking) as (keyof BookingState)[]) {
+      const value = (parsed.state as Record<string, unknown>)[key];
+      if (key === 'addOns') {
+        if (Array.isArray(value)) {
+          state.addOns = value.filter((entry): entry is string => typeof entry === 'string');
+        }
+      } else if (typeof value === typeof emptyBooking[key]) {
+        (state as Record<keyof BookingState, unknown>)[key] = value;
+      }
+    }
+    state.guests = Number.isFinite(state.guests)
+      ? Math.min(MAX_GUESTS, Math.max(1, Math.floor(state.guests)))
+      : emptyBooking.guests;
+    state.companions = Number.isFinite(state.companions)
+      ? Math.min(MAX_COMPANIONS, Math.max(0, Math.floor(state.companions)))
+      : emptyBooking.companions;
+
+    const step =
+      typeof parsed.step === 'number' && Number.isFinite(parsed.step)
+        ? Math.floor(parsed.step)
+        : 0;
     return {
-      state: { ...emptyBooking, ...parsed.state, addOns: parsed.state.addOns ?? [] },
-      step: Math.min(Math.max(parsed.step ?? 0, 0), steps.length - 1),
+      state,
+      step: Math.min(Math.max(step, 0), steps.length - 1),
+      journey: typeof parsed.journey === 'string' ? parsed.journey : '',
     };
   } catch {
     return null;
@@ -305,13 +335,16 @@ export default function BookingWizard() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
   const firstRender = useRef(true);
+  const journeyRef = useRef('');
 
-  // Restore saved answers, then apply any `?journey=` prefill on top.
+  // Restore saved answers, then apply a `?journey=` prefill only the first time
+  // that journey is seen, so a reload never reverts deliberate edits.
   useEffect(() => {
     const saved = loadState();
     const params = new URLSearchParams(window.location.search);
     const journey = params.get('journey') ?? '';
-    const prefill = journey ? prefillFromTour(journey) : {};
+    const prefill = journey && journey !== saved?.journey ? prefillFromTour(journey) : {};
+    journeyRef.current = journey || saved?.journey || '';
 
     if (saved) {
       setState({ ...saved.state, ...prefill });
@@ -326,7 +359,10 @@ export default function BookingWizard() {
   useEffect(() => {
     if (!ready) return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ state, step: stepIndex }));
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ state, step: stepIndex, journey: journeyRef.current }),
+      );
     } catch {
       /* Private mode: the planner still works, it just will not survive a refresh. */
     }
@@ -717,6 +753,7 @@ export default function BookingWizard() {
                   <QuantityStepper
                     value={state.guests}
                     label="guests on the hill"
+                    max={MAX_GUESTS}
                     testId="guests"
                     onChange={(value) => update({ guests: Math.min(MAX_GUESTS, Math.max(1, value)) })}
                   />
@@ -728,6 +765,7 @@ export default function BookingWizard() {
                     value={state.companions}
                     label="non-hunting companions"
                     allowZero
+                    max={MAX_COMPANIONS}
                     testId="companions"
                     onChange={(value) =>
                       update({ companions: Math.min(MAX_COMPANIONS, Math.max(0, value)) })
@@ -787,7 +825,7 @@ export default function BookingWizard() {
                     class="hh-input"
                     id="booking-name"
                     type="text"
-                    autocomplete="name"
+                    autocomplete="off"
                     value={state.name}
                     required
                     aria-invalid={errors.name ? 'true' : undefined}
@@ -804,7 +842,7 @@ export default function BookingWizard() {
                     class="hh-input"
                     id="booking-email"
                     type="email"
-                    autocomplete="email"
+                    autocomplete="off"
                     value={state.email}
                     required
                     aria-invalid={errors.email ? 'true' : undefined}
@@ -824,7 +862,7 @@ export default function BookingWizard() {
                     class="hh-input"
                     id="booking-residence"
                     type="text"
-                    autocomplete="country-name"
+                    autocomplete="off"
                     value={state.country_of_residence}
                     data-testid="booking-residence"
                     onInput={(event) =>

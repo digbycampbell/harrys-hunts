@@ -6,6 +6,7 @@ import { useStore } from '@nanostores/preact';
 import { useEffect, useRef } from 'preact/hooks';
 import {
   $cartOpen,
+  $deliveryZone,
   $itemCount,
   $lines,
   $subtotal,
@@ -30,6 +31,7 @@ export default function CartDrawer({ thumbs }: { thumbs: ThumbMap }) {
   const lines = useStore($lines);
   const subtotal = useStore($subtotal);
   const count = useStore($itemCount);
+  const zone = useStore($deliveryZone);
   const panelRef = useRef<HTMLDivElement>(null);
   const opener = useRef<HTMLElement | null>(null);
 
@@ -74,7 +76,7 @@ export default function CartDrawer({ thumbs }: { thumbs: ThumbMap }) {
 
   if (!open) return null;
 
-  const totals = totalsFor(subtotal, 'nz-metro');
+  const totals = totalsFor(subtotal, zone);
 
   return (
     <div class="hh-drawer" data-testid="cart-drawer">

@@ -44,7 +44,7 @@ async function resolveFile(pathname) {
 
   const relative = decodeURIComponent(pathname.slice(base.length)) || '/';
   const target = path.join(root, relative);
-  if (!target.startsWith(root)) return null;
+  if (target !== root && !target.startsWith(root + path.sep)) return null;
 
   try {
     const info = await stat(target);

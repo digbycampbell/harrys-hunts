@@ -78,7 +78,13 @@ function readStorage(): CartLine[] {
     if (!raw) return [];
     const parsed: unknown = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(isCartLine).filter((line) => getProduct(line.slug));
+    return parsed
+      .filter(isCartLine)
+      .filter((line) => getProduct(line.slug))
+      .map((line) => ({
+        ...line,
+        quantity: Math.min(MAX_QUANTITY, Math.max(1, Math.floor(line.quantity))),
+      }));
   } catch {
     return [];
   }
@@ -91,6 +97,7 @@ function isCartLine(value: unknown): value is CartLine {
     typeof line.id === 'string' &&
     typeof line.slug === 'string' &&
     typeof line.quantity === 'number' &&
+    Number.isFinite(line.quantity) &&
     line.quantity > 0 &&
     typeof line.selection === 'object' &&
     line.selection !== null
@@ -100,7 +107,9 @@ function isCartLine(value: unknown): value is CartLine {
 function writeStorage(lines: readonly CartLine[]): void {
   if (typeof localStorage === 'undefined') return;
   try {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(lines));
+    const serialized = JSON.stringify(lines);
+    if (localStorage.getItem(CART_STORAGE_KEY) === serialized) return;
+    localStorage.setItem(CART_STORAGE_KEY, serialized);
   } catch {
     /* Private-mode or quota failures must not break the demo. */
   }
@@ -108,7 +117,12 @@ function writeStorage(lines: readonly CartLine[]): void {
 
 function readZone(): DeliveryZoneId {
   if (typeof localStorage === 'undefined') return 'nz-metro';
-  const stored = localStorage.getItem(DELIVERY_STORAGE_KEY);
+  let stored: string | null = null;
+  try {
+    stored = localStorage.getItem(DELIVERY_STORAGE_KEY);
+  } catch {
+    return 'nz-metro';
+  }
   return deliveryZones.some((zone) => zone.id === stored)
     ? (stored as DeliveryZoneId)
     : 'nz-metro';

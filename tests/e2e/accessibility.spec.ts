@@ -109,9 +109,15 @@ test.describe('accessibility', () => {
 
   test('keyboard focus is visibly indicated on primary controls', async ({ page }) => {
     await page.goto('shop/');
-    // The cart trigger is in the header at every breakpoint.
+    // The cart trigger is in the header at every breakpoint. Real keyboard
+    // presses are what trigger :focus-visible, so tab to it rather than
+    // focusing programmatically.
     const control = page.getByTestId('cart-trigger');
-    await control.focus();
+    for (let presses = 0; presses < 30; presses += 1) {
+      await page.keyboard.press('Tab');
+      if (await control.evaluate((element) => element === document.activeElement)) break;
+    }
+    await expect(control).toBeFocused();
 
     const outline = await control.evaluate((element) => {
       const styles = getComputedStyle(element);

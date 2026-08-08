@@ -613,9 +613,9 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                 nothing is emailed, logged or kept once you leave the page.
               </p>
               <div class="hh-stage__fields">
-                {textField('name', { autocomplete: 'name' })}
+                {textField('name', { autocomplete: 'off' })}
                 {textField('email', {
-                  autocomplete: 'email',
+                  autocomplete: 'off',
                   type: 'email',
                   inputMode: 'email',
                   hint: 'Use anything you like. It is never sent.',
@@ -648,13 +648,13 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                 </button>
               </p>
               <div class="hh-stage__fields">
-                {textField('street', { autocomplete: 'address-line1' })}
+                {textField('street', { autocomplete: 'off' })}
                 <div class="hh-fieldrow">
-                  {textField('suburb', { autocomplete: 'address-line2' })}
-                  {textField('city', { autocomplete: 'address-level2' })}
+                  {textField('suburb', { autocomplete: 'off' })}
+                  {textField('city', { autocomplete: 'off' })}
                 </div>
                 <div class="hh-fieldrow">
-                  {textField('postcode', { autocomplete: 'postal-code', inputMode: 'numeric' })}
+                  {textField('postcode', { autocomplete: 'off', inputMode: 'numeric' })}
                   <div class="hh-field">
                     <label class="hh-label" for="hh-co-zone">
                       Delivery zone
