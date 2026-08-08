@@ -1,0 +1,67 @@
+---
+/**
+ * Site-wide demonstration strip. Present on every page, above the header, so a
+ * visitor cannot land on any surface without being told the site is fictional.
+ */
+import { href } from '../lib/paths';
+---
+
+<!-- A landmark rather than a bare div so the strip is not orphaned content (axe `region`). -->
+<aside class="hh-demobar" aria-label="Demonstration notice">
+  <p class="hh-container">
+    <span class="hh-demobar__tag">Demo</span>
+    <span>
+      Harry&rsquo;s Hunts is a <strong>fictional demonstration site</strong>. No bookings,
+      orders or payments are possible here &mdash;
+      <a href={href('/about/#demonstration')}>what that means</a>.
+    </span>
+  </p>
+</aside>
+
+<style>
+  .hh-demobar {
+    background: var(--hh-forest-950);
+    color: var(--hh-bone-200);
+    font-size: var(--hh-step--2);
+    line-height: 1.4;
+    border-bottom: 1px solid color-mix(in srgb, var(--hh-brass-500) 35%, transparent);
+  }
+
+  .hh-demobar p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.7rem;
+    padding-block: 0.5rem;
+  }
+
+  .hh-demobar__tag {
+    flex: none;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--hh-brass-500);
+    border-radius: var(--hh-radius-pill);
+    color: var(--hh-brass-300);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.62rem;
+  }
+
+  .hh-demobar strong {
+    color: var(--hh-bone-50);
+    font-weight: 600;
+  }
+
+  .hh-demobar a {
+    color: var(--hh-brass-300);
+    text-underline-offset: 3px;
+  }
+
+  .hh-demobar a:hover {
+    color: var(--hh-bone-50);
+  }
+
+  .hh-demobar :global(:focus-visible) {
+    outline-color: var(--hh-brass-300);
+  }
+</style>

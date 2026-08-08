@@ -1,0 +1,597 @@
+---
+import Base from '../../layouts/Base.astro';
+import TourCard from '../../components/TourCard.astro';
+import { href } from '../../lib/paths';
+import { islandBlurbs, islandLabels, tours, toursForIsland } from '../../data/tours';
+
+/*
+ * The catalogue is a static page, so the island filter is built from real links
+ * first (`/journeys/?island=north`) and enhanced by script second. Nothing here
+ * depends on the query string at build time: the server render always shows all
+ * five journeys, which is exactly what a visitor without JavaScript should get.
+ */
+const islands = ['north', 'south'] as const;
+
+const filters = [
+  { key: 'all', label: 'All journeys', path: '/journeys/', count: tours.length },
+  ...islands.map((island) => ({
+    key: island,
+    label: islandLabels[island],
+    path: `/journeys/?island=${island}`,
+    count: toursForIsland(island).length,
+  })),
+];
+---
+
+<Base
+  title="The journeys"
+  description="Five fictional guide-led field journeys across the North and South Islands, filterable by island. A demonstration catalogue — nothing here can be booked."
+  pageId="journeys"
+>
+  <!-- ------------------------------------------------------- page header -->
+  <section class="hh-section hh-section--tight" aria-labelledby="catalogue-title">
+    <div class="hh-container hh-pagehead">
+      <div class="hh-pagehead__lead">
+        <p class="hh-eyebrow">The catalogue</p>
+        <h1 id="catalogue-title">Five journeys, and no more.</h1>
+        <p class="hh-lede">
+          Two in the North Island, three in the South. Each one is drawn around a landscape rather
+          than a species, and each runs for as long as that country needs rather than as long as a
+          brochure would like.
+        </p>
+      </div>
+
+      <div class="hh-notice hh-pagehead__notice" data-testid="journeys-demo-notice">
+        <span>
+          <strong>Demonstration catalogue.</strong> These journeys are invented for this site. Seasons,
+          durations and indicative figures illustrate the layout only &mdash; none of them is an offer,
+          a quote or an availability, and nothing here can be booked.
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- catalogue -->
+  <section class="hh-section hh-section--tight" aria-labelledby="grid-title">
+    <div class="hh-container">
+      <h2 id="grid-title" class="hh-visually-hidden">All journeys</h2>
+
+      <div class="hh-filterbar">
+        <nav class="hh-filter" aria-label="Filter journeys by island" data-testid="journeys-filter">
+          <ul class="hh-filter__list">
+            {
+              filters.map((filter) => (
+                <li>
+                  <a
+                    class="hh-filter__link"
+                    href={href(filter.path)}
+                    data-island-filter={filter.key}
+                    data-testid={`filter-${filter.key}`}
+                    aria-current={filter.key === 'all' ? 'true' : undefined}
+                  >
+                    {filter.label}
+                    <span class="hh-filter__count hh-num" aria-hidden="true">
+                      {filter.count}
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <p class="hh-filterbar__count" role="status" data-testid="journeys-count">
+          Showing {tours.length} of {tours.length} journeys
+        </p>
+      </div>
+
+      <div class="hh-tourgrid" data-journey-grid data-testid="journeys-grid">
+        {
+          tours.map((tour) => (
+            <div
+              class="hh-tourgrid__item"
+              data-tour-island={tour.island}
+              data-testid={`tour-item-${tour.slug}`}
+            >
+              <TourCard tour={tour} sizes="(min-width: 60rem) 24rem, (min-width: 44rem) 46vw, 92vw" />
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="hh-empty" data-testid="journeys-empty" hidden>
+        <p class="hh-empty__title">No journeys in that filter yet.</p>
+        <p class="hh-empty__body">
+          The catalogue only runs to five journeys, so a filter can come up short.
+          <a class="hh-link" href={href('/journeys/')} data-testid="journeys-empty-clear">
+            Show every journey
+          </a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------- comparison -->
+  <section class="hh-section hh-section--sunken" aria-labelledby="compare-title">
+    <div class="hh-container">
+      <header class="hh-sectionhead hh-reveal">
+        <div>
+          <p class="hh-eyebrow">North and South</p>
+          <h2 id="compare-title">Two islands, two entirely different weeks</h2>
+        </div>
+        <p class="hh-sectionhead__aside">
+          If you are choosing between them, choose the country rather than the animal. The rest
+          follows from that.
+        </p>
+      </header>
+
+      <div class="hh-compare hh-reveal" data-testid="journeys-compare">
+        {
+          islands.map((island) => {
+            const blurb = islandBlurbs[island];
+            const count = toursForIsland(island).length;
+            return (
+              <article
+                class="hh-compare__col"
+                data-testid={`compare-${island}`}
+                aria-labelledby={`compare-${island}-title`}
+              >
+                <p class="hh-compare__label">{islandLabels[island]}</p>
+                <h3 class="hh-compare__title" id={`compare-${island}-title`}>
+                  {blurb.heading}
+                </h3>
+                <p class="hh-compare__body">{blurb.body}</p>
+                <dl class="hh-compare__notes">
+                  <dt class="hh-visually-hidden">In brief</dt>
+                  {blurb.notes.map((note) => (
+                    <dd>{note}</dd>
+                  ))}
+                </dl>
+                <p class="hh-compare__foot">
+                  <a class="hh-link" href={href(`/journeys/?island=${island}`)}>
+                    {count} {count === 1 ? 'journey' : 'journeys'} in the {islandLabels[island]}
+                  </a>
+                </p>
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- cta -->
+  <section class="hh-section hh-section--inverse hh-on-dark" aria-labelledby="catalogue-cta-title">
+    <div class="hh-container hh-catalogue-cta hh-reveal" data-testid="journeys-cta">
+      <div>
+        <p class="hh-eyebrow">Bespoke by default</p>
+        <h2 id="catalogue-cta-title">None of these five is quite it?</h2>
+        <p class="hh-lede">
+          Every journey started as somebody&rsquo;s awkward set of constraints &mdash; one free week
+          in July, a father and a daughter, a knee that does not like descents. Tell the planner what
+          you actually have and it will write the week back to you.
+        </p>
+      </div>
+      <div class="hh-catalogue-cta__actions">
+        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Open the journey planner</a>
+        <a class="hh-button hh-button--outline-dark" href={href('/about/#contact')}>
+          Talk to the house
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  /*
+   * Progressive enhancement for the island filter. The links work on their own
+   * as ordinary navigations; this only intercepts them so the same URL filters
+   * in place, keeps `aria-current` honest, and reports the count to a live
+   * region. Deep links (`?island=south`) are read on load.
+   */
+  type IslandFilter = 'all' | 'north' | 'south';
+
+  const grid = document.querySelector<HTMLElement>('[data-journey-grid]');
+  const status = document.querySelector<HTMLElement>('[data-testid="journeys-count"]');
+  const empty = document.querySelector<HTMLElement>('[data-testid="journeys-empty"]');
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-island-filter]'));
+
+  if (grid && status && empty && links.length) {
+    const items = Array.from(grid.querySelectorAll<HTMLElement>('[data-tour-island]'));
+    const total = items.length;
+
+    const normalise = (value: string | null | undefined): IslandFilter =>
+      value === 'north' || value === 'south' ? value : 'all';
+
+    const apply = (island: IslandFilter) => {
+      grid.dataset.island = island;
+
+      let shown = 0;
+      for (const item of items) {
+        const matches = island === 'all' || item.dataset.tourIsland === island;
+        // `hidden` keeps non-matching cards out of the tab order; the matching
+        // CSS rule prevents any flash before this script runs.
+        item.hidden = !matches;
+        if (matches) {
+          item.removeAttribute('aria-hidden');
+          shown += 1;
+        } else {
+          item.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      for (const link of links) {
+        const active = normalise(link.dataset.islandFilter) === island;
+        if (active) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      }
+
+      status.textContent = `Showing ${shown} of ${total} ${total === 1 ? 'journey' : 'journeys'}`;
+      empty.hidden = shown > 0;
+    };
+
+    const fromLocation = () => normalise(new URLSearchParams(location.search).get('island'));
+
+    for (const link of links) {
+      link.addEventListener('click', (event) => {
+        if (event.defaultPrevented) return;
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+        event.preventDefault();
+        history.replaceState(null, '', link.href);
+        apply(normalise(link.dataset.islandFilter));
+      });
+    }
+
+    window.addEventListener('popstate', () => apply(fromLocation()));
+
+    apply(fromLocation());
+  }
+</script>
+
+<style>
+  /* ------------------------------------------------------------ page head */
+  .hh-pagehead {
+    display: grid;
+    gap: var(--hh-space-l);
+    align-items: start;
+  }
+
+  .hh-pagehead__lead h1 {
+    margin-block: var(--hh-space-2xs) var(--hh-space-m);
+  }
+
+  .hh-pagehead__lead .hh-lede {
+    max-width: 52ch;
+  }
+
+  @media (min-width: 60rem) {
+    .hh-pagehead {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: var(--hh-space-3xl);
+    }
+
+    .hh-pagehead__notice {
+      margin-top: var(--hh-space-l);
+    }
+  }
+
+  /* -------------------------------------------------------------- filters */
+  .hh-filterbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--hh-space-s) var(--hh-space-m);
+    margin-bottom: var(--hh-space-l);
+    padding-bottom: var(--hh-space-xs);
+    border-bottom: 1px solid var(--hh-line);
+  }
+
+  .hh-filter__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--hh-space-2xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hh-filter__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--hh-line);
+    border-radius: var(--hh-radius-pill);
+    background: var(--hh-surface-raised);
+    font-size: var(--hh-step--1);
+    font-weight: 500;
+    letter-spacing: var(--hh-tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--hh-ink-muted);
+    transition:
+      background-color var(--hh-duration-fast) var(--hh-ease),
+      border-color var(--hh-duration-fast) var(--hh-ease),
+      color var(--hh-duration-fast) var(--hh-ease);
+  }
+
+  .hh-filter__link:hover {
+    border-color: var(--hh-brass-500);
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-filter__link[aria-current='true'] {
+    background: var(--hh-forest-800);
+    border-color: var(--hh-forest-800);
+    color: var(--hh-bone-50);
+  }
+
+  .hh-filter__count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.35rem;
+    height: 1.35rem;
+    padding-inline: 0.3rem;
+    border-radius: var(--hh-radius-pill);
+    background: color-mix(in srgb, var(--hh-charcoal-900) 8%, transparent);
+    font-size: 0.7rem;
+    letter-spacing: 0;
+  }
+
+  .hh-filter__link[aria-current='true'] .hh-filter__count {
+    background: color-mix(in srgb, var(--hh-bone-50) 22%, transparent);
+  }
+
+  /* Below this the three pills cannot share a row, so they become a stacked set. */
+  @media (max-width: 33.99rem) {
+    .hh-filter {
+      flex: 1 1 100%;
+    }
+
+    .hh-filter__list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+
+    /* The <li> is the grid item, so the link needs to be told to fill it. */
+    .hh-filter__link {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  .hh-filterbar__count {
+    font-size: var(--hh-step--2);
+    letter-spacing: var(--hh-tracking-wide);
+    text-transform: uppercase;
+    color: var(--hh-ink-subtle);
+  }
+
+  /* ----------------------------------------------------------- tour grid */
+  .hh-tourgrid {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: 1fr;
+  }
+
+  .hh-tourgrid__item {
+    display: flex;
+    min-width: 0;
+  }
+
+  .hh-tourgrid__item[hidden] {
+    display: none;
+  }
+
+  .hh-tourgrid__item > :global(.hh-tourcard) {
+    flex: 1;
+  }
+
+  /*
+   * Belt-and-braces with the script: if the filter state lands before the
+   * `hidden` attributes do, the cards still disappear without a flash.
+   */
+  .hh-tourgrid[data-island='north'] .hh-tourgrid__item[data-tour-island='south'],
+  .hh-tourgrid[data-island='south'] .hh-tourgrid__item[data-tour-island='north'] {
+    display: none;
+  }
+
+  @media (min-width: 44rem) {
+    .hh-tourgrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /*
+   * In the two-up band an odd count strands one card on its own row. Everything
+   * except the North Island filter (two journeys) is odd, so the trailing card
+   * runs the full width on a wider crop rather than sitting alone at half.
+   */
+  @media (min-width: 44rem) and (max-width: 59.99rem) {
+    .hh-tourgrid:not([data-island='north']) .hh-tourgrid__item:last-child {
+      grid-column: span 2;
+    }
+
+    .hh-tourgrid:not([data-island='north'])
+      .hh-tourgrid__item:last-child
+      :global(.hh-tourcard__media) {
+      aspect-ratio: 21 / 9;
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .hh-tourgrid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* ---------------------------------------------------------- empty state */
+  .hh-empty {
+    margin-top: var(--hh-space-l);
+    padding: var(--hh-space-l);
+    border: 1px dashed var(--hh-line-strong);
+    border-radius: var(--hh-radius-m);
+    text-align: center;
+  }
+
+  .hh-empty[hidden] {
+    display: none;
+  }
+
+  .hh-empty__title {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-2);
+    color: var(--hh-ink-brand);
+    margin-bottom: var(--hh-space-2xs);
+  }
+
+  .hh-empty__body {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  /* --------------------------------------------------------- section head */
+  .hh-sectionhead {
+    display: grid;
+    gap: var(--hh-space-s);
+    align-items: end;
+    margin-bottom: var(--hh-space-xl);
+  }
+
+  .hh-sectionhead > div > h2 {
+    margin-top: var(--hh-space-2xs);
+  }
+
+  .hh-sectionhead__aside {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+    max-width: 42ch;
+  }
+
+  @media (min-width: 56rem) {
+    .hh-sectionhead {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--hh-space-2xl);
+    }
+
+    .hh-sectionhead__aside {
+      justify-self: end;
+      text-align: right;
+    }
+  }
+
+  /* ----------------------------------------------------------- comparison */
+  .hh-compare {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 52rem) {
+    .hh-compare {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--hh-space-l);
+    }
+  }
+
+  .hh-compare__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--hh-space-s);
+    padding: var(--hh-space-m);
+    background: var(--hh-surface-raised);
+    border: 1px solid var(--hh-line);
+    border-top: 3px solid var(--hh-brass-500);
+    border-radius: var(--hh-radius-m);
+  }
+
+  .hh-compare__label {
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-compare__title {
+    font-size: var(--hh-step-2);
+  }
+
+  .hh-compare__body {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+    padding-bottom: var(--hh-space-s);
+    border-bottom: 1px solid var(--hh-line);
+  }
+
+  .hh-compare__notes {
+    flex: 1;
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  .hh-compare__notes dd {
+    position: relative;
+    margin: 0;
+    padding-left: 1.5rem;
+    font-size: var(--hh-step--1);
+  }
+
+  .hh-compare__notes dd::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.7rem;
+    height: 1px;
+    background: var(--hh-brass-500);
+  }
+
+  .hh-compare__foot {
+    padding-top: var(--hh-space-s);
+    border-top: 1px solid var(--hh-line);
+    font-size: var(--hh-step--1);
+    letter-spacing: var(--hh-tracking-wide);
+    text-transform: uppercase;
+  }
+
+  /* ------------------------------------------------------------------ cta */
+  .hh-catalogue-cta {
+    display: grid;
+    gap: var(--hh-space-l);
+    align-items: center;
+  }
+
+  .hh-catalogue-cta h2 {
+    margin-block: var(--hh-space-2xs) var(--hh-space-s);
+    max-width: 18ch;
+  }
+
+  .hh-catalogue-cta .hh-lede {
+    max-width: 54ch;
+  }
+
+  .hh-catalogue-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--hh-space-2xs);
+  }
+
+  @media (min-width: 60rem) {
+    .hh-catalogue-cta {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: var(--hh-space-3xl);
+    }
+
+    /* Stacked and stretched so the pair reads as one block rather than a ragged edge. */
+    .hh-catalogue-cta__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

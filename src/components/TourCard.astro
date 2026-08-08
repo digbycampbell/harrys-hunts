@@ -1,0 +1,241 @@
+---
+import { Image } from 'astro:assets';
+import { href } from '../lib/paths';
+import { formatIndicative, islandLabels, type Tour } from '../data/tours';
+
+interface Props {
+  tour: Tour;
+  /** `feature` gives the first card in a grid more presence. */
+  emphasis?: 'default' | 'feature';
+  sizes?: string;
+}
+
+const { tour, emphasis = 'default', sizes = '(min-width: 64rem) 30rem, 92vw' } = Astro.props;
+---
+
+<article class:list={['hh-tourcard', emphasis === 'feature' && 'hh-tourcard--feature']}>
+  <a class="hh-tourcard__link" href={href(`/journeys/${tour.slug}/`)}>
+    <span class="hh-visually-hidden">View the {tour.name} journey</span>
+  </a>
+
+  <div class="hh-tourcard__media">
+    <Image
+      src={tour.image}
+      alt={tour.imageAlt}
+      widths={[420, 640, 900, 1200]}
+      sizes={sizes}
+      loading={emphasis === 'feature' ? 'eager' : 'lazy'}
+      decoding="async"
+    />
+    <span class:list={['hh-badge', `hh-badge--island-${tour.island}`, 'hh-tourcard__island']}>
+      {islandLabels[tour.island]}
+    </span>
+  </div>
+
+  <div class="hh-tourcard__body">
+    <p class="hh-tourcard__category">{tour.categoryLabel}</p>
+    <h3 class="hh-tourcard__name">{tour.name}</h3>
+    <p class="hh-tourcard__tagline">{tour.tagline}</p>
+    <p class="hh-tourcard__summary">{tour.summary}</p>
+
+    <dl class="hh-tourcard__meta">
+      <div>
+        <dt>Duration</dt>
+        <dd>{tour.durationLabel}</dd>
+      </div>
+      <div>
+        <dt>Season</dt>
+        <dd>{tour.season}</dd>
+      </div>
+      <div>
+        <dt>Effort</dt>
+        <dd>{tour.fitnessLabel}</dd>
+      </div>
+    </dl>
+
+    <p class="hh-tourcard__foot">
+      <span class="hh-tourcard__from">
+        Indicative from <strong>{formatIndicative(tour.indicativeFrom)}</strong> per guest
+      </span>
+      <span class="hh-tourcard__more" aria-hidden="true">
+        Read the journey
+        <svg viewBox="0 0 20 12" width="20" height="12" focusable="false">
+          <path
+            d="M0 6h18M13 1l5 5-5 5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </span>
+    </p>
+  </div>
+</article>
+
+<style>
+  .hh-tourcard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--hh-surface-raised);
+    border: 1px solid var(--hh-line);
+    border-radius: var(--hh-radius-m);
+    overflow: clip;
+    transition:
+      transform var(--hh-duration) var(--hh-ease-out),
+      box-shadow var(--hh-duration) var(--hh-ease-out),
+      border-color var(--hh-duration) var(--hh-ease-out);
+  }
+
+  .hh-tourcard:hover {
+    transform: translateY(-3px);
+    border-color: var(--hh-brass-500);
+    box-shadow: var(--hh-shadow-m);
+  }
+
+  .hh-tourcard:has(.hh-tourcard__link:focus-visible) {
+    outline: 2px solid var(--hh-focus);
+    outline-offset: 3px;
+  }
+
+  .hh-tourcard__link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .hh-tourcard__link:focus-visible {
+    outline: none;
+  }
+
+  .hh-tourcard__media {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    min-height: 0;
+    background: var(--hh-forest-900);
+    overflow: clip;
+  }
+
+  /*
+   * `inset: 0` alone does not stretch a replaced element — with `width: auto`
+   * the <img> falls back to its intrinsic size and leaves the media box part
+   * empty. Explicit 100% is what makes `object-fit: cover` fill the frame.
+   */
+  .hh-tourcard__media :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--hh-duration-slow) var(--hh-ease-out);
+  }
+
+  .hh-tourcard:hover .hh-tourcard__media :global(img) {
+    transform: scale(1.035);
+  }
+
+  .hh-tourcard__island {
+    position: absolute;
+    top: var(--hh-space-xs);
+    left: var(--hh-space-xs);
+    background: color-mix(in srgb, var(--hh-bone-50) 92%, transparent);
+    backdrop-filter: blur(4px);
+  }
+
+  .hh-tourcard__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--hh-space-2xs);
+    padding: var(--hh-space-m);
+    flex: 1;
+  }
+
+  .hh-tourcard__category {
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-tourcard__name {
+    font-size: var(--hh-step-2);
+    line-height: 1.1;
+  }
+
+  .hh-tourcard--feature .hh-tourcard__name {
+    font-size: var(--hh-step-3);
+  }
+
+  .hh-tourcard__tagline {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    font-style: italic;
+    color: var(--hh-forest-600);
+  }
+
+  .hh-tourcard__summary {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+    margin-block: var(--hh-space-2xs);
+  }
+
+  .hh-tourcard__meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--hh-space-2xs);
+    margin: var(--hh-space-2xs) 0 var(--hh-space-s);
+    padding-top: var(--hh-space-xs);
+    border-top: 1px solid var(--hh-line);
+  }
+
+  .hh-tourcard__meta dt {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-tourcard__meta dd {
+    margin: 0.15rem 0 0;
+    font-size: var(--hh-step--1);
+    line-height: 1.3;
+  }
+
+  .hh-tourcard__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--hh-space-2xs);
+    margin-top: auto;
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-tourcard__from strong {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-0);
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-tourcard__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    letter-spacing: var(--hh-tracking-wide);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-tourcard__more svg {
+    transition: transform var(--hh-duration) var(--hh-ease);
+  }
+
+  .hh-tourcard:hover .hh-tourcard__more svg {
+    transform: translateX(3px);
+  }
+</style>

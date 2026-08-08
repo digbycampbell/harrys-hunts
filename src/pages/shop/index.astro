@@ -1,0 +1,440 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { href } from '../../lib/paths';
+import { collections, products, productsInCollection } from '../../data/products';
+import { deliveryZones } from '../../lib/cart';
+import { formatMoney } from '../../lib/money';
+
+import merchBoard from '../../assets/generated/merchandise-concept-board.png';
+import duffelHardware from '../../assets/products/duffel-hardware.png';
+
+const freeOver = deliveryZones[0].freeOver ?? 0;
+
+/** Short editorial note that closes out each collection row. */
+const collectionNotes: Record<string, { label: string; body: string }> = {
+  'field-wear': {
+    label: 'On sizing',
+    body: 'Order your usual size for a close layering fit, or one up if you wear a shirt underneath. Everything is cut to be worn with something else.',
+  },
+  carry: {
+    label: 'Made to order',
+    body: 'Six weeks from sketch to shipping, in the fiction we have written for it. Waxed canvas is finished by hand, so no two panels take the wax the same way.',
+  },
+  camp: {
+    label: 'On the small things',
+    body: 'A mug that survives a hut table and a notebook that survives the rain. Neither is exciting. Both come on every trip.',
+  },
+};
+---
+
+<Base
+  title="The field kit"
+  description="A fictional demonstration storefront: wool field cap, merino quarter-zip, waxed canvas duffel, enamel mug and field notebook. No payment is ever processed."
+  pageId="shop"
+>
+  <section class="hh-section hh-section--tight" aria-labelledby="shop-title">
+    <div class="hh-container">
+      <div class="hh-shophead">
+        <div class="hh-shophead__text">
+          <p class="hh-eyebrow">The field kit</p>
+          <h1 id="shop-title">Five things, made to be used up</h1>
+          <p class="hh-lede">
+            Wool, merino, waxed canvas, enamel and paper. Everything here is chosen because it works
+            harder the longer you keep it &mdash; and everything here is invented for this
+            demonstration.
+          </p>
+          <p class="hh-notice">
+            <span>
+              <strong>Demonstration store.</strong> Prices are illustrative, stock is fictional, and
+              checkout ends in a mock confirmation. No payment method is collected and no order is
+              created.
+            </span>
+          </p>
+        </div>
+
+        <figure class="hh-shophead__figure">
+          <Image
+            src={merchBoard}
+            alt="Concept sheet showing the full Harry's Hunts field kit with fabric and leather swatches."
+            widths={[360, 560, 900]}
+            sizes="(min-width: 64rem) 22rem, 60vw"
+            loading="eager"
+            decoding="async"
+          />
+          <figcaption>
+            The originating concept sheet &mdash; generated with AI for this demonstration.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="hh-section hh-section--tight hh-collections" aria-label="Collections">
+    <div class="hh-container">
+      <nav class="hh-collectionnav" aria-label="Jump to a collection">
+        <span class="hh-collectionnav__label">Collections</span>
+        <ul>
+          {
+            collections.map((collection) => (
+              <li>
+                <a href={`#${collection.id}`} data-testid={`collection-link-${collection.id}`}>
+                  {collection.name}
+                  <span class="hh-collectionnav__count">
+                    {productsInCollection(collection.id).length}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="hh-collectionnav__total">
+          {products.length} products &middot; all fictional
+        </p>
+      </nav>
+    </div>
+  </section>
+
+  {
+    collections.map((collection, index) => {
+      const items = productsInCollection(collection.id);
+      return (
+        <section
+          class:list={['hh-section', 'hh-section--tight', index % 2 === 1 && 'hh-section--sunken']}
+          id={collection.id}
+          aria-labelledby={`${collection.id}-title`}
+        >
+          <div class="hh-container">
+            <header class="hh-collectionhead hh-reveal">
+              <div>
+                <p class="hh-eyebrow">{`0${index + 1}`}</p>
+                <h2 id={`${collection.id}-title`}>{collection.name}</h2>
+              </div>
+              <p class="hh-collectionhead__blurb">{collection.blurb}</p>
+            </header>
+
+            {items.length === 0 ? (
+              <p class="hh-collectionempty" data-testid={`collection-empty-${collection.id}`}>
+                Nothing in this collection yet. The next drop is being sketched.
+              </p>
+            ) : (
+              <div class="hh-shopgrid hh-reveal" data-testid={`collection-grid-${collection.id}`}>
+                {items.map((product) => (
+                  <ProductCard product={product} loading={index === 0 ? 'eager' : 'lazy'} />
+                ))}
+                {/* Fills the remainder of the three-column row so short collections
+                    read as deliberate rather than half-empty. */}
+                <aside
+                  class="hh-notetile"
+                  style={`--note-span:${3 - ((items.length % 3) || 3)}`}
+                  hidden={items.length % 3 === 0}
+                >
+                  <p class="hh-notetile__eyebrow">{collectionNotes[collection.id].label}</p>
+                  <p class="hh-notetile__body">{collectionNotes[collection.id].body}</p>
+                </aside>
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <section class="hh-section hh-section--tight" aria-labelledby="delivery-title">
+    <div class="hh-container">
+      <div class="hh-deliverypanel hh-reveal">
+        <div class="hh-deliverypanel__media">
+          <Image
+            src={duffelHardware}
+            alt="Close-up of an aged brass zip pull and leather tab on waxed canvas."
+            widths={[320, 520]}
+            sizes="(min-width: 60rem) 18rem, 92vw"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="hh-deliverypanel__body">
+          <p class="hh-eyebrow">Delivery, in theory</p>
+          <h2 id="delivery-title">What the estimator would tell you</h2>
+          <p class="hh-muted">
+            The cart and checkout run a working delivery estimator against these demonstration
+            rates. Complimentary urban New Zealand delivery applies over {formatMoney(freeOver)}.
+          </p>
+          <table class="hh-ratetable">
+            <caption class="hh-visually-hidden">Indicative demonstration delivery rates</caption>
+            <thead>
+              <tr>
+                <th scope="col">Destination</th>
+                <th scope="col">Rate</th>
+                <th scope="col">Estimate</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                deliveryZones.map((zone) => (
+                  <tr>
+                    <th scope="row">{zone.label}</th>
+                    <td class="hh-num">{formatMoney(zone.fee)}</td>
+                    <td>{zone.estimate}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+          <p class="hh-hint">
+            Rates are invented for the demonstration and are never charged.
+          </p>
+          <p>
+            <a class="hh-button hh-button--secondary" href={href('/cart/')}>Open the cart</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hh-shophead {
+    display: grid;
+    gap: var(--hh-space-xl);
+    align-items: start;
+  }
+
+  .hh-shophead__text {
+    display: grid;
+    gap: var(--hh-space-s);
+    align-content: start;
+    max-width: 44rem;
+  }
+
+  .hh-shophead__figure {
+    margin: 0;
+  }
+
+  .hh-shophead__figure :global(img) {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--hh-line);
+    border-radius: var(--hh-radius-m);
+    box-shadow: var(--hh-shadow-m);
+  }
+
+  .hh-shophead__figure figcaption {
+    margin-top: var(--hh-space-2xs);
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-subtle);
+  }
+
+  @media (min-width: 64rem) {
+    .hh-shophead {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+      gap: var(--hh-space-3xl);
+    }
+  }
+
+  .hh-collections {
+    padding-block: 0;
+  }
+
+  .hh-collectionnav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--hh-space-s) var(--hh-space-m);
+    padding-block: var(--hh-space-s);
+    border-block: 1px solid var(--hh-line);
+  }
+
+  .hh-collectionnav__label {
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-collectionnav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--hh-space-2xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hh-collectionnav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--hh-line-strong);
+    border-radius: var(--hh-radius-pill);
+    font-size: var(--hh-step--1);
+    text-decoration: none;
+    color: var(--hh-ink-brand);
+    transition:
+      background-color var(--hh-duration-fast) var(--hh-ease),
+      border-color var(--hh-duration-fast) var(--hh-ease);
+  }
+
+  .hh-collectionnav a:hover {
+    background: var(--hh-surface-sunken);
+    border-color: var(--hh-brass-500);
+  }
+
+  .hh-collectionnav__count {
+    font-size: var(--hh-step--2);
+    font-variant-numeric: tabular-nums;
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-collectionnav__total {
+    margin-inline-start: auto;
+    font-size: var(--hh-step--2);
+    color: var(--hh-ink-subtle);
+  }
+
+  .hh-collectionhead {
+    display: grid;
+    gap: var(--hh-space-xs);
+    margin-bottom: var(--hh-space-l);
+  }
+
+  .hh-collectionhead h2 {
+    font-size: var(--hh-step-3);
+    margin-top: 0.2rem;
+  }
+
+  .hh-collectionhead__blurb {
+    color: var(--hh-ink-muted);
+    max-width: 46ch;
+  }
+
+  @media (min-width: 56rem) {
+    .hh-collectionhead {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: end;
+      gap: var(--hh-space-2xl);
+    }
+
+    .hh-collectionhead__blurb {
+      justify-self: end;
+      text-align: right;
+    }
+  }
+
+  .hh-shopgrid {
+    display: grid;
+    gap: var(--hh-space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  }
+
+  @media (min-width: 64rem) {
+    .hh-shopgrid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hh-notetile {
+      grid-column: span var(--note-span, 1);
+    }
+  }
+
+  .hh-notetile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--hh-space-2xs);
+    padding: var(--hh-space-m);
+    border: 1px dashed var(--hh-line-strong);
+    border-radius: var(--hh-radius-m);
+    background: transparent;
+  }
+
+  .hh-notetile[hidden] {
+    display: none;
+  }
+
+  .hh-notetile__eyebrow {
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-notetile__body {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    line-height: 1.35;
+    color: var(--hh-ink-brand);
+    max-width: 42ch;
+  }
+
+  .hh-collectionempty {
+    padding: var(--hh-space-xl);
+    border: 1px dashed var(--hh-line-strong);
+    border-radius: var(--hh-radius-m);
+    text-align: center;
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-deliverypanel {
+    display: grid;
+    gap: var(--hh-space-l);
+    align-items: center;
+    padding: var(--hh-space-m);
+    background: var(--hh-surface-raised);
+    border: 1px solid var(--hh-line);
+    border-radius: var(--hh-radius-m);
+  }
+
+  .hh-deliverypanel__media :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--hh-radius-s);
+  }
+
+  .hh-deliverypanel__body {
+    display: grid;
+    gap: var(--hh-space-xs);
+  }
+
+  .hh-deliverypanel__body h2 {
+    font-size: var(--hh-step-2);
+  }
+
+  .hh-ratetable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--hh-space-2xs);
+    font-size: var(--hh-step--1);
+  }
+
+  .hh-ratetable th,
+  .hh-ratetable td {
+    text-align: left;
+    padding: 0.45rem 0.6rem 0.45rem 0;
+    border-bottom: 1px solid var(--hh-line);
+  }
+
+  .hh-ratetable thead th {
+    font-size: var(--hh-step--2);
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-ink-subtle);
+    font-weight: 600;
+  }
+
+  .hh-ratetable tbody th {
+    font-weight: 500;
+  }
+
+  @media (min-width: 52rem) {
+    .hh-deliverypanel {
+      grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+      gap: var(--hh-space-2xl);
+      padding: var(--hh-space-l);
+    }
+  }
+</style>

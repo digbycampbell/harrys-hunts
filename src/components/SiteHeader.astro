@@ -1,0 +1,345 @@
+---
+import BrandLockup from './BrandLockup.astro';
+import CartButton from './CartButton.tsx';
+import { href, isActive } from '../lib/paths';
+
+const current = Astro.url.pathname;
+
+const links = [
+  { label: 'Journeys', path: '/journeys/' },
+  { label: 'Store', path: '/shop/' },
+  { label: 'The house', path: '/about/' },
+];
+---
+
+<header class="hh-header" data-testid="site-header">
+  <div class="hh-header__inner hh-container">
+    <a class="hh-header__brand" href={href('/')} aria-label="Harry's Hunts — home">
+      <BrandLockup size="sm" orientation="row" tagline={false} />
+    </a>
+
+    <nav class="hh-header__nav" aria-label="Primary">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={href(link.path)}
+                class="hh-header__link"
+                aria-current={isActive(current, link.path) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="hh-header__actions">
+      <a class="hh-button hh-button--small hh-header__cta" href={href('/book/')}>Plan a journey</a>
+      <CartButton client:load />
+      <button
+        type="button"
+        class="hh-header__burger"
+        aria-expanded="false"
+        aria-controls="hh-mobile-nav"
+        data-testid="menu-toggle"
+      >
+        <span class="hh-visually-hidden">Menu</span>
+        <span class="hh-header__burgerbars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="hh-mobilenav" id="hh-mobile-nav" hidden data-testid="mobile-nav">
+    <nav class="hh-container" aria-label="Primary, mobile">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={href(link.path)}
+                aria-current={isActive(current, link.path) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={href('/cart/')}>Cart</a>
+        </li>
+      </ul>
+      <a class="hh-button hh-button--block" href={href('/book/')}>Plan a journey</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.hh-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.hh-header__burger');
+  const panel = document.getElementById('hh-mobile-nav');
+
+  if (header && toggle && panel) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      header.classList.toggle('is-menu-open', open);
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    panel.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // Close the panel if the viewport grows past the mobile breakpoint.
+    const wide = window.matchMedia('(min-width: 60rem)');
+    wide.addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+
+    // Sticky header gains a hairline shadow once the page scrolls.
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;height:1px;width:1px;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(
+      ([entry]) => header.classList.toggle('is-stuck', !entry.isIntersecting),
+      { threshold: 0 },
+    ).observe(sentinel);
+  }
+</script>
+
+<style>
+  .hh-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--hh-z-header);
+    background: color-mix(in srgb, var(--hh-bone-50) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color var(--hh-duration) var(--hh-ease),
+      box-shadow var(--hh-duration) var(--hh-ease);
+  }
+
+  .hh-header.is-stuck {
+    border-bottom-color: var(--hh-line);
+    box-shadow: 0 8px 24px -20px rgb(16 36 26 / 0.5);
+  }
+
+  .hh-header.is-menu-open {
+    background: var(--hh-bone-50);
+  }
+
+  .hh-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--hh-space-m);
+    min-height: 4.4rem;
+  }
+
+  .hh-header__brand {
+    flex: none;
+    text-decoration: none;
+    border-radius: var(--hh-radius-s);
+  }
+
+  .hh-header__nav {
+    flex: 1;
+    display: none;
+  }
+
+  .hh-header__nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 0.5rem + 2vw, 2.5rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-inline-start: clamp(1rem, -1rem + 5vw, 3rem);
+  }
+
+  .hh-header__link {
+    position: relative;
+    display: inline-block;
+    padding-block: 0.35rem;
+    font-size: var(--hh-step--1);
+    font-weight: 500;
+    letter-spacing: var(--hh-tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--hh-ink-brand);
+    white-space: nowrap;
+  }
+
+  .hh-header__link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--hh-brass-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--hh-duration) var(--hh-ease);
+  }
+
+  .hh-header__link:hover::after,
+  .hh-header__link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .hh-header__actions {
+    margin-inline-start: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--hh-space-2xs);
+  }
+
+  .hh-header__cta {
+    display: none;
+  }
+
+  .hh-header__burger {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: var(--hh-radius-s);
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-header__burgerbars {
+    /* Anchors the two absolutely positioned bars to the span, not the header. */
+    position: relative;
+  }
+
+  .hh-header__burgerbars,
+  .hh-header__burgerbars::before,
+  .hh-header__burgerbars::after {
+    display: block;
+    width: 1.15rem;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform var(--hh-duration) var(--hh-ease);
+  }
+
+  .hh-header__burgerbars::before,
+  .hh-header__burgerbars::after {
+    content: '';
+    position: absolute;
+  }
+
+  .hh-header__burgerbars::before {
+    transform: translateY(-5px);
+  }
+
+  .hh-header__burgerbars::after {
+    transform: translateY(5px);
+  }
+
+  .hh-header.is-menu-open .hh-header__burgerbars {
+    background: transparent;
+  }
+
+  .hh-header.is-menu-open .hh-header__burgerbars::before {
+    transform: rotate(45deg);
+  }
+
+  .hh-header.is-menu-open .hh-header__burgerbars::after {
+    transform: rotate(-45deg);
+  }
+
+  .hh-mobilenav {
+    border-top: 1px solid var(--hh-line);
+    background: var(--hh-bone-50);
+    animation: hh-fade var(--hh-duration) var(--hh-ease) both;
+  }
+
+  .hh-mobilenav[hidden] {
+    display: none;
+  }
+
+  .hh-mobilenav nav {
+    padding-block: var(--hh-space-s) var(--hh-space-m);
+  }
+
+  .hh-mobilenav ul {
+    list-style: none;
+    margin: 0 0 var(--hh-space-s);
+    padding: 0;
+  }
+
+  .hh-mobilenav li + li {
+    border-top: 1px solid var(--hh-line);
+  }
+
+  .hh-mobilenav a {
+    display: block;
+    padding-block: 0.8rem;
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-2);
+    text-decoration: none;
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-mobilenav a[aria-current='page'] {
+    color: var(--hh-ink-accent);
+  }
+
+  /*
+   * The lockup, the cart trigger and the menu button do not all fit across a
+   * small phone at full size. Step the wordmark down, then drop it entirely on
+   * the narrowest devices — the mark still identifies the brand and the link
+   * carries an accessible name.
+   */
+  @media (max-width: 30rem) {
+    .hh-header__inner {
+      gap: var(--hh-space-s);
+    }
+
+    .hh-header__brand :global(.hh-lockup__word) {
+      font-size: 1.05rem;
+    }
+
+    .hh-header__brand :global(.hh-lockup) {
+      gap: 0.6rem;
+    }
+  }
+
+  @media (max-width: 22.5rem) {
+    .hh-header__brand :global(.hh-lockup__word) {
+      display: none;
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .hh-header__nav {
+      display: block;
+    }
+
+    .hh-header__cta {
+      display: inline-flex;
+    }
+
+    .hh-header__burger {
+      display: none;
+    }
+
+    .hh-mobilenav {
+      display: none;
+    }
+  }
+</style>

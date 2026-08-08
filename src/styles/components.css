@@ -1,0 +1,308 @@
+/*
+ * Styles for the Preact islands. Astro's scoped <style> blocks do not reach
+ * framework components, so island styling lives here as plain global CSS.
+ */
+
+/* ------------------------------------------------------------ cart trigger */
+
+.hh-carttrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: var(--hh-radius-s);
+  color: var(--hh-ink-brand);
+  font-size: var(--hh-step--1);
+  font-weight: 500;
+  letter-spacing: var(--hh-tracking-wide);
+  text-transform: uppercase;
+  transition:
+    background-color var(--hh-duration-fast) var(--hh-ease),
+    border-color var(--hh-duration-fast) var(--hh-ease);
+}
+
+.hh-carttrigger:hover {
+  background: color-mix(in srgb, var(--hh-forest-800) 7%, transparent);
+  border-color: var(--hh-line);
+}
+
+.hh-carttrigger__text {
+  display: none;
+}
+
+.hh-carttrigger__count {
+  display: grid;
+  place-items: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding-inline: 0.3rem;
+  border-radius: var(--hh-radius-pill);
+  background: var(--hh-forest-800);
+  color: var(--hh-bone-50);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.hh-carttrigger__count[data-empty='true'] {
+  background: transparent;
+  border: 1px solid var(--hh-line-strong);
+  color: var(--hh-ink-muted);
+}
+
+@media (min-width: 48rem) {
+  .hh-carttrigger__text {
+    display: inline;
+  }
+}
+
+/* ------------------------------------------------------------ cart drawer */
+
+.hh-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--hh-z-drawer);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hh-drawer__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(12 26 19 / 0.52);
+  backdrop-filter: blur(2px);
+  animation: hh-fade var(--hh-duration) var(--hh-ease) both;
+}
+
+.hh-drawer__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(28rem, 100%);
+  max-height: 100dvh;
+  background: var(--hh-surface);
+  border-left: 1px solid var(--hh-line);
+  box-shadow: var(--hh-shadow-l);
+}
+
+.hh-drawer__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--hh-space-s);
+  padding: var(--hh-space-m) var(--hh-space-m) var(--hh-space-s);
+  border-bottom: 1px solid var(--hh-line);
+}
+
+.hh-drawer__title {
+  font-size: var(--hh-step-2);
+  margin-top: 0.25rem;
+}
+
+.hh-drawer__close {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid var(--hh-line);
+  border-radius: var(--hh-radius-s);
+  color: var(--hh-ink-brand);
+}
+
+.hh-drawer__close:hover {
+  background: var(--hh-surface-sunken);
+}
+
+.hh-drawer__notice {
+  margin: var(--hh-space-s) var(--hh-space-m) 0;
+}
+
+.hh-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--hh-space-m);
+}
+
+.hh-drawer__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--hh-space-s);
+  justify-content: center;
+}
+
+.hh-drawer__emptytitle {
+  font-family: var(--hh-font-display);
+  font-size: var(--hh-step-2);
+  color: var(--hh-ink-brand);
+}
+
+.hh-drawer__lines {
+  list-style: none;
+  margin: 0;
+  display: grid;
+  gap: var(--hh-space-m);
+}
+
+.hh-drawer__foot {
+  border-top: 1px solid var(--hh-line);
+  padding: var(--hh-space-m);
+  background: var(--hh-surface-sunken);
+  display: grid;
+  gap: var(--hh-space-xs);
+}
+
+.hh-drawer__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--hh-space-s);
+  font-size: var(--hh-step--1);
+  letter-spacing: var(--hh-tracking-wide);
+  text-transform: uppercase;
+}
+
+.hh-drawer__row strong {
+  font-family: var(--hh-font-display);
+  font-size: var(--hh-step-2);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--hh-ink-brand);
+}
+
+.hh-drawer__ship {
+  font-size: var(--hh-step--2);
+  color: var(--hh-ink-muted);
+}
+
+.hh-drawer__actions {
+  display: grid;
+  gap: var(--hh-space-2xs);
+}
+
+/* -------------------------------------------------------------- cart line */
+
+.hh-cartline {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  gap: var(--hh-space-s);
+  align-items: start;
+}
+
+.hh-cartline__image {
+  width: 4.5rem;
+  height: auto;
+  border: 1px solid var(--hh-line);
+  border-radius: var(--hh-radius-s);
+  background: var(--hh-surface-raised);
+}
+
+.hh-cartline__detail {
+  min-width: 0;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.hh-cartline__name {
+  font-family: var(--hh-font-display);
+  font-size: var(--hh-step-1);
+  line-height: 1.15;
+  color: var(--hh-ink-brand);
+  text-decoration: none;
+}
+
+.hh-cartline__name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hh-cartline__options {
+  font-size: var(--hh-step--2);
+  color: var(--hh-ink-muted);
+}
+
+.hh-cartline__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--hh-space-xs);
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+
+.hh-cartline__remove {
+  font-size: var(--hh-step--2);
+  color: var(--hh-ink-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hh-cartline__remove:hover {
+  color: var(--hh-danger-700);
+}
+
+.hh-cartline__price {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- stepper */
+
+.hh-stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--hh-line-strong);
+  border-radius: var(--hh-radius-s);
+  overflow: clip;
+  background: var(--hh-surface-raised);
+}
+
+.hh-stepper__button {
+  width: 2.4rem;
+  display: grid;
+  place-items: center;
+  color: var(--hh-ink-brand);
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: background-color var(--hh-duration-fast) var(--hh-ease);
+}
+
+.hh-stepper__button:hover:not(:disabled) {
+  background: var(--hh-surface-sunken);
+}
+
+.hh-stepper__button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.hh-stepper__input {
+  width: 2.8rem;
+  min-height: 2.4rem;
+  border: none;
+  border-inline: 1px solid var(--hh-line);
+  background: transparent;
+  text-align: center;
+  font-size: var(--hh-step--1);
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.hh-stepper__input::-webkit-outer-spin-button,
+.hh-stepper__input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.hh-stepper--compact .hh-stepper__button {
+  width: 2rem;
+}
+
+.hh-stepper--compact .hh-stepper__input {
+  width: 2.4rem;
+  min-height: 2rem;
+}

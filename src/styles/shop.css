@@ -1,0 +1,183 @@
+/*
+ * Styles for the product-page purchase island (src/components/ProductPurchase.tsx).
+ * Astro scoped styles do not reach Preact components, so these live globally.
+ */
+
+.hh-buy {
+  display: grid;
+  gap: var(--hh-space-m);
+  padding-top: var(--hh-space-s);
+  border-top: 1px solid var(--hh-line);
+}
+
+.hh-buy__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.hh-buy__price .hh-price {
+  font-family: var(--hh-font-display);
+  font-size: var(--hh-step-4);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--hh-ink-brand);
+}
+
+.hh-buy__pricenote {
+  font-size: var(--hh-step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hh-ink-subtle);
+}
+
+/* --------------------------------------------------------------- options */
+
+.hh-buy__group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--hh-space-2xs);
+}
+
+.hh-buy__legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0;
+  font-size: var(--hh-step--2);
+  font-weight: 600;
+  letter-spacing: var(--hh-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--hh-ink-accent);
+}
+
+.hh-buy__selected {
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--hh-ink-muted);
+}
+
+.hh-buy__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hh-space-2xs);
+}
+
+.hh-buy__choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--hh-line-strong);
+  border-radius: var(--hh-radius-s);
+  background: var(--hh-surface-raised);
+  font-size: var(--hh-step--1);
+  color: var(--hh-ink);
+  transition:
+    border-color var(--hh-duration-fast) var(--hh-ease),
+    box-shadow var(--hh-duration-fast) var(--hh-ease),
+    background-color var(--hh-duration-fast) var(--hh-ease);
+}
+
+.hh-buy__choice:hover:not([disabled]) {
+  border-color: var(--hh-brass-500);
+}
+
+.hh-buy__choice[aria-checked='true'] {
+  border-color: var(--hh-forest-800);
+  box-shadow: inset 0 0 0 1px var(--hh-forest-800);
+  background: color-mix(in srgb, var(--hh-forest-800) 5%, var(--hh-surface-raised));
+  font-weight: 500;
+}
+
+.hh-buy__choice[disabled] {
+  cursor: not-allowed;
+  color: var(--hh-ink-subtle);
+  background: var(--hh-surface-sunken);
+  border-style: dashed;
+}
+
+/* Struck-through label makes the sold-out state legible without relying on colour. */
+.hh-buy__choice[disabled] > span:not(.hh-buy__soldout):not(.hh-buy__swatch) {
+  text-decoration: line-through;
+}
+
+.hh-buy__swatch {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--hh-line-strong);
+  flex: none;
+}
+
+.hh-buy__soldout,
+.hh-buy__delta {
+  font-size: var(--hh-step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hh-ink-subtle);
+}
+
+.hh-buy__delta {
+  color: var(--hh-ink-accent);
+  font-variant-numeric: lining-nums;
+}
+
+/* --------------------------------------------------------------- actions */
+
+.hh-buy__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--hh-space-2xs);
+}
+
+.hh-buy__add {
+  flex: 1 1 12rem;
+}
+
+.hh-buy__status {
+  min-height: 1.4rem;
+  font-size: var(--hh-step--1);
+  color: var(--hh-forest-600);
+  font-weight: 500;
+}
+
+.hh-buy__status:empty {
+  min-height: 0;
+}
+
+.hh-buy__notice {
+  margin: 0;
+}
+
+.hh-buy__reassurance {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--hh-step--2);
+  color: var(--hh-ink-muted);
+}
+
+.hh-buy__reassurance li {
+  position: relative;
+  padding-left: 1.15rem;
+}
+
+.hh-buy__reassurance li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.55rem;
+  height: 1px;
+  background: var(--hh-brass-500);
+}

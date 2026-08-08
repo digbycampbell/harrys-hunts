@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import { href } from '../lib/paths';
+import { formatMoney } from '../lib/money';
+import type { Product } from '../data/products';
+
+interface Props {
+  product: Product;
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+}
+
+const {
+  product,
+  sizes = '(min-width: 64rem) 22rem, (min-width: 40rem) 45vw, 92vw',
+  loading = 'lazy',
+} = Astro.props;
+
+const optionSummary = product.options
+  .map((group) => `${group.values.length} ${group.label.toLowerCase()}`)
+  .join(' · ');
+---
+
+<article class="hh-productcard" data-testid={`product-card-${product.slug}`}>
+  <a class="hh-productcard__link" href={href(`/shop/${product.slug}/`)}>
+    <span class="hh-visually-hidden">View {product.name}</span>
+  </a>
+
+  <div class="hh-productcard__media">
+    <Image
+      src={product.images[0].src}
+      alt={product.images[0].alt}
+      widths={[280, 420, 640]}
+      sizes={sizes}
+      loading={loading}
+      decoding="async"
+    />
+    {product.badge && <span class="hh-badge hh-badge--brass hh-productcard__badge">{product.badge}</span>}
+  </div>
+
+  <div class="hh-productcard__body">
+    <h3 class="hh-productcard__name">{product.name}</h3>
+    <p class="hh-productcard__tagline">{product.tagline}</p>
+    <p class="hh-productcard__foot">
+      <span class="hh-productcard__price">{formatMoney(product.price)}</span>
+      <span class="hh-productcard__options">{optionSummary}</span>
+    </p>
+  </div>
+</article>
+
+<style>
+  .hh-productcard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--hh-surface-raised);
+    border: 1px solid var(--hh-line);
+    border-radius: var(--hh-radius-m);
+    overflow: clip;
+    transition:
+      border-color var(--hh-duration) var(--hh-ease),
+      box-shadow var(--hh-duration) var(--hh-ease),
+      transform var(--hh-duration) var(--hh-ease-out);
+  }
+
+  .hh-productcard:hover {
+    transform: translateY(-3px);
+    border-color: var(--hh-brass-500);
+    box-shadow: var(--hh-shadow-m);
+  }
+
+  .hh-productcard:has(.hh-productcard__link:focus-visible) {
+    outline: 2px solid var(--hh-focus);
+    outline-offset: 3px;
+  }
+
+  .hh-productcard__link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .hh-productcard__link:focus-visible {
+    outline: none;
+  }
+
+  .hh-productcard__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--hh-bone-100);
+    overflow: clip;
+  }
+
+  /* Absolute positioning keeps the intrinsic image size from overriding the
+     aspect ratio, so every card in a row is exactly the same height. Padding
+     (not `inset`) creates the breathing room, because `object-fit` lays the
+     image out inside the content box. */
+  .hh-productcard__media :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: var(--hh-space-s);
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: transform var(--hh-duration-slow) var(--hh-ease-out);
+  }
+
+  .hh-productcard:hover .hh-productcard__media :global(img) {
+    transform: scale(1.04);
+  }
+
+  .hh-productcard__badge {
+    position: absolute;
+    top: var(--hh-space-xs);
+    right: var(--hh-space-xs);
+    background: var(--hh-surface-raised);
+  }
+
+  .hh-productcard__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: var(--hh-space-s) var(--hh-space-m) var(--hh-space-m);
+    border-top: 1px solid var(--hh-line);
+    flex: 1;
+  }
+
+  .hh-productcard__name {
+    font-size: var(--hh-step-1);
+    line-height: 1.15;
+  }
+
+  .hh-productcard__tagline {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+    flex: 1;
+  }
+
+  .hh-productcard__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-top: var(--hh-space-2xs);
+  }
+
+  .hh-productcard__price {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-1);
+    font-weight: 600;
+    color: var(--hh-ink-brand);
+  }
+
+  .hh-productcard__options {
+    font-size: var(--hh-step--2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--hh-ink-subtle);
+  }
+</style>

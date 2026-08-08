@@ -1,0 +1,174 @@
+---
+import BrandLockup from './BrandLockup.astro';
+import { href } from '../lib/paths';
+import { tours } from '../data/tours';
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: 'Journeys',
+    links: tours.map((tour) => ({ label: tour.name, path: `/journeys/${tour.slug}/` })),
+  },
+  {
+    title: 'Store',
+    links: [
+      { label: 'All field kit', path: '/shop/' },
+      { label: 'Cart', path: '/cart/' },
+      { label: 'Demo checkout', path: '/checkout/' },
+    ],
+  },
+  {
+    title: 'The house',
+    links: [
+      { label: 'Field values', path: '/about/#values' },
+      { label: 'Guides and lodges', path: '/about/#guides' },
+      { label: 'Contact', path: '/about/#contact' },
+      { label: 'About this demonstration', path: '/about/#demonstration' },
+    ],
+  },
+];
+---
+
+<footer class="hh-footer hh-on-dark" data-testid="site-footer">
+  <div class="hh-container">
+    <div class="hh-footer__top">
+      <div class="hh-footer__brand">
+        <BrandLockup orientation="stack" size="md" tone="inverse" />
+        <p class="hh-footer__blurb">
+          Guide-led field journeys across both islands, run at the pace the country asks for.
+        </p>
+        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Plan a journey</a>
+      </div>
+
+      <nav class="hh-footer__nav" aria-label="Footer">
+        {
+          columns.map((column) => (
+            <div>
+              <h2 class="hh-footer__heading">{column.title}</h2>
+              <ul>
+                {column.links.map((link) => (
+                  <li>
+                    <a href={href(link.path)}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </nav>
+    </div>
+
+    <div class="hh-notice hh-footer__notice">
+      <span>
+        <strong>This is a demonstration.</strong> Harry&rsquo;s Hunts is a fictional brand built to
+        show what a small AI-assisted team can design and ship. No enquiry is transmitted, no
+        booking is held, no order is placed and no payment is processed anywhere on this site.
+        Imagery was generated with AI for this demonstration &mdash;
+        <a href={href('/about/#assets')}>asset provenance</a>.
+      </span>
+    </div>
+
+    <div class="hh-footer__base">
+      <p>&copy; {year} Harry&rsquo;s Hunts &mdash; a fictional demonstration brand.</p>
+      <p>
+        Field journeys are described for illustration only and are not offers, quotes or advice.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .hh-footer {
+    background: var(--hh-forest-950);
+    color: var(--hh-ink-inverse-muted);
+    padding-block: var(--hh-space-2xl) var(--hh-space-l);
+    border-top: 3px solid var(--hh-brass-600);
+  }
+
+  .hh-footer__top {
+    display: grid;
+    gap: var(--hh-space-2xl);
+    padding-bottom: var(--hh-space-xl);
+  }
+
+  .hh-footer__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--hh-space-m);
+  }
+
+  .hh-footer__blurb {
+    max-width: 30ch;
+    font-size: var(--hh-step--1);
+  }
+
+  .hh-footer__nav {
+    display: grid;
+    gap: var(--hh-space-l);
+    grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+  }
+
+  .hh-footer__heading {
+    font-family: var(--hh-font-body);
+    font-size: var(--hh-step--2);
+    font-weight: 600;
+    letter-spacing: var(--hh-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--hh-brass-300);
+    margin-bottom: var(--hh-space-xs);
+  }
+
+  .hh-footer__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .hh-footer__nav a {
+    font-size: var(--hh-step--1);
+    text-decoration: none;
+    color: var(--hh-ink-inverse-muted);
+    transition: color var(--hh-duration-fast) var(--hh-ease);
+  }
+
+  .hh-footer__nav a:hover {
+    color: var(--hh-bone-50);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .hh-footer__notice {
+    margin-block: var(--hh-space-m);
+  }
+
+  .hh-footer__notice a {
+    color: var(--hh-brass-300);
+    text-underline-offset: 3px;
+  }
+
+  .hh-footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--hh-space-2xs) var(--hh-space-m);
+    padding-top: var(--hh-space-m);
+    border-top: 1px solid var(--hh-line-inverse);
+    font-size: var(--hh-step--2);
+    color: color-mix(in srgb, var(--hh-bone-100) 62%, transparent);
+  }
+
+  .hh-footer__base p {
+    margin: 0;
+  }
+
+  @media (min-width: 52rem) {
+    .hh-footer__top {
+      grid-template-columns: minmax(16rem, 22rem) 1fr;
+      gap: var(--hh-space-3xl);
+    }
+  }
+</style>

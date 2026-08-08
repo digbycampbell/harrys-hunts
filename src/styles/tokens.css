@@ -1,0 +1,126 @@
+/*
+ * Harry's Hunts design tokens.
+ * Palette: deep forest green, warm bone, charcoal, weathered brass, muted tussock, waxed tan.
+ * Text pairings below are chosen so body-size text clears WCAG AA (4.5:1) on its surface.
+ */
+:root {
+  /* --- Palette ------------------------------------------------------- */
+  --hh-forest-950: #0c1a13;
+  --hh-forest-900: #10241a;
+  --hh-forest-800: #16311f;
+  --hh-forest-700: #1e4230;
+  --hh-forest-600: #2c5a41;
+  --hh-forest-400: #6d9a82;
+  --hh-forest-200: #b9d0c3;
+
+  --hh-bone-50: #fbf8f2;
+  --hh-bone-100: #f4efe3;
+  --hh-bone-200: #eae3d2;
+  --hh-bone-300: #ddd3bd;
+
+  --hh-charcoal-900: #1d2124;
+  --hh-charcoal-800: #2b3134;
+  --hh-charcoal-600: #4a5256;
+  --hh-charcoal-400: #78817f;
+
+  --hh-brass-700: #6d5426;
+  --hh-brass-600: #8a6c34;
+  --hh-brass-500: #a6874a;
+  --hh-brass-300: #c8ae7d;
+
+  --hh-tussock-600: #877a55;
+  --hh-tussock-500: #a89a73;
+  --hh-tussock-300: #cfc4a5;
+
+  --hh-tan-700: #6f5334;
+  --hh-tan-600: #8a6a45;
+  --hh-tan-400: #b6935f;
+
+  --hh-danger-700: #8a2b1f;
+  --hh-danger-100: #f7e4e0;
+
+  /* --- Semantic surfaces --------------------------------------------- */
+  --hh-surface: var(--hh-bone-50);
+  --hh-surface-raised: #ffffff;
+  --hh-surface-sunken: var(--hh-bone-100);
+  --hh-surface-inverse: var(--hh-forest-900);
+  --hh-surface-inverse-raised: var(--hh-forest-800);
+
+  --hh-ink: var(--hh-charcoal-900);
+  --hh-ink-muted: var(--hh-charcoal-600);
+  --hh-ink-subtle: #5d6569;
+  --hh-ink-inverse: var(--hh-bone-100);
+  --hh-ink-inverse-muted: #c3d0c6;
+  --hh-ink-brand: var(--hh-forest-800);
+  --hh-ink-accent: var(--hh-brass-700);
+
+  --hh-line: color-mix(in srgb, var(--hh-charcoal-900) 14%, transparent);
+  --hh-line-strong: color-mix(in srgb, var(--hh-charcoal-900) 28%, transparent);
+  --hh-line-inverse: color-mix(in srgb, var(--hh-bone-100) 22%, transparent);
+  --hh-line-accent: var(--hh-brass-500);
+
+  --hh-focus: var(--hh-brass-600);
+  --hh-focus-inverse: var(--hh-brass-300);
+
+  /* --- Typography ------------------------------------------------------ */
+  --hh-font-display: 'Cormorant Garamond Variable', 'Cormorant Garamond', 'Iowan Old Style',
+    'Palatino Linotype', Palatino, Georgia, serif;
+  --hh-font-body: 'Inter Variable', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  --hh-step--2: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --hh-step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --hh-step-0: clamp(1rem, 0.97rem + 0.16vw, 1.075rem);
+  --hh-step-1: clamp(1.19rem, 1.12rem + 0.34vw, 1.4rem);
+  --hh-step-2: clamp(1.42rem, 1.29rem + 0.63vw, 1.82rem);
+  --hh-step-3: clamp(1.69rem, 1.47rem + 1.06vw, 2.37rem);
+  --hh-step-4: clamp(2.01rem, 1.67rem + 1.7vw, 3.08rem);
+  --hh-step-5: clamp(2.4rem, 1.87rem + 2.63vw, 4rem);
+  --hh-step-6: clamp(2.85rem, 2.03rem + 4.1vw, 5.2rem);
+
+  --hh-tracking-eyebrow: 0.22em;
+  --hh-tracking-wide: 0.08em;
+
+  /* --- Space ----------------------------------------------------------- */
+  --hh-space-3xs: 0.25rem;
+  --hh-space-2xs: 0.5rem;
+  --hh-space-xs: 0.75rem;
+  --hh-space-s: 1rem;
+  --hh-space-m: 1.5rem;
+  --hh-space-l: 2rem;
+  --hh-space-xl: 3rem;
+  --hh-space-2xl: 4rem;
+  --hh-space-3xl: clamp(4rem, 3rem + 5vw, 7.5rem);
+
+  --hh-measure: 62ch;
+  --hh-width-page: 78rem;
+  --hh-width-narrow: 46rem;
+  --hh-gutter: clamp(1.25rem, 0.9rem + 1.7vw, 2.75rem);
+
+  /* --- Shape and depth -------------------------------------------------- */
+  --hh-radius-xs: 2px;
+  --hh-radius-s: 4px;
+  --hh-radius-m: 8px;
+  --hh-radius-pill: 999px;
+
+  --hh-shadow-s: 0 1px 2px rgb(16 36 26 / 0.06), 0 2px 6px rgb(16 36 26 / 0.05);
+  --hh-shadow-m: 0 2px 4px rgb(16 36 26 / 0.05), 0 12px 28px -12px rgb(16 36 26 / 0.22);
+  --hh-shadow-l: 0 4px 8px rgb(16 36 26 / 0.06), 0 28px 60px -24px rgb(16 36 26 / 0.34);
+
+  /* --- Motion ------------------------------------------------------------ */
+  --hh-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --hh-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --hh-duration-fast: 140ms;
+  --hh-duration: 260ms;
+  --hh-duration-slow: 520ms;
+
+  /* --- Layers -------------------------------------------------------------- */
+  --hh-z-header: 40;
+  --hh-z-drawer: 60;
+  --hh-z-skip: 80;
+}
+
+/* A faint paper tooth used behind bone surfaces. Encoded inline so it costs no request. */
+:root {
+  --hh-texture-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+}

@@ -1,0 +1,184 @@
+---
+import Base from '../layouts/Base.astro';
+import BrandMark from '../components/BrandMark.astro';
+import { href } from '../lib/paths';
+
+const ways = [
+  {
+    label: 'Home',
+    path: '/',
+    note: 'The whole house, from the top.',
+    testid: 'not-found-home',
+  },
+  {
+    label: 'The journeys',
+    path: '/journeys/',
+    note: 'Five field journeys across both islands.',
+    testid: 'not-found-journeys',
+  },
+  {
+    label: 'The store',
+    path: '/shop/',
+    note: 'Wool, merino, waxed canvas and enamel.',
+    testid: 'not-found-shop',
+  },
+  {
+    label: 'The planner',
+    path: '/book/',
+    note: 'Sketch a week and see it written back to you.',
+    testid: 'not-found-book',
+  },
+];
+---
+
+<Base
+  title="Page not found"
+  description="That page is not here. Find your way back to the journeys, the store or the journey planner on the Harry's Hunts demonstration site."
+  pageId="404"
+>
+  <section class="hh-section hh-notfound" aria-labelledby="notfound-title" data-testid="not-found">
+    <div class="hh-container hh-notfound__inner">
+      <BrandMark variant="monogram" height="3.25rem" decorative class="hh-notfound__mark" />
+
+      <p class="hh-eyebrow hh-notfound__eyebrow">Off the track &mdash; error 404</p>
+      <h1 id="notfound-title">You have walked off the edge of the map.</h1>
+      <p class="hh-lede">
+        There is nothing at this address. It may have been renamed, or the link that brought you here
+        was written by somebody in a hurry. No harm done &mdash; the country is small and everything
+        is a minute away.
+      </p>
+
+      <ul class="hh-notfound__ways">
+        {
+          ways.map((way) => (
+            <li>
+              <a class="hh-notfound__way" href={href(way.path)} data-testid={way.testid}>
+                <span class="hh-notfound__waylabel">{way.label}</span>
+                <span class="hh-notfound__waynote">{way.note}</span>
+                <svg viewBox="0 0 20 12" width="20" height="12" aria-hidden="true" focusable="false">
+                  <path
+                    d="M0 6h18M13 1l5 5-5 5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="hh-notice hh-notfound__notice">
+        <span>
+          <strong>Still a demonstration.</strong> Harry&rsquo;s Hunts is a fictional brand. Even the
+          pages that do exist take no bookings, orders or payments &mdash;
+          <a class="hh-link" href={href('/about/#demonstration')}>what that means</a>.
+        </span>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hh-notfound {
+    padding-block: var(--hh-space-2xl) var(--hh-space-3xl);
+  }
+
+  .hh-notfound__inner {
+    max-width: 46rem;
+  }
+
+  .hh-notfound :global(.hh-notfound__mark) {
+    --hh-brandmark-ink: var(--hh-forest-800);
+    --hh-brandmark-ridge: var(--hh-forest-600);
+    margin-bottom: var(--hh-space-m);
+  }
+
+  .hh-notfound__eyebrow {
+    margin-bottom: var(--hh-space-xs);
+  }
+
+  .hh-notfound h1 {
+    font-size: var(--hh-step-4);
+    max-width: 18ch;
+  }
+
+  .hh-notfound .hh-lede {
+    margin-top: var(--hh-space-m);
+    max-width: var(--hh-measure);
+  }
+
+  .hh-notfound__ways {
+    list-style: none;
+    margin: var(--hh-space-xl) 0 0;
+    padding: 0;
+    display: grid;
+    border-top: 1px solid var(--hh-line);
+  }
+
+  .hh-notfound__ways li {
+    border-bottom: 1px solid var(--hh-line);
+  }
+
+  .hh-notfound__way {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    column-gap: var(--hh-space-m);
+    padding-block: var(--hh-space-s);
+    text-decoration: none;
+    color: var(--hh-ink-brand);
+    transition: color var(--hh-duration-fast) var(--hh-ease);
+  }
+
+  .hh-notfound__way:hover {
+    color: var(--hh-ink-accent);
+  }
+
+  .hh-notfound__waylabel {
+    font-family: var(--hh-font-display);
+    font-size: var(--hh-step-2);
+    line-height: 1.15;
+  }
+
+  .hh-notfound__waynote {
+    grid-column: 1;
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
+  }
+
+  .hh-notfound__way svg {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    transition: transform var(--hh-duration) var(--hh-ease);
+  }
+
+  .hh-notfound__way:hover svg {
+    transform: translateX(4px);
+  }
+
+  .hh-notfound__notice {
+    margin-top: var(--hh-space-xl);
+  }
+
+  @media (min-width: 44rem) {
+    .hh-notfound__way {
+      grid-template-columns: 12rem minmax(0, 1fr) auto;
+      align-items: baseline;
+    }
+
+    .hh-notfound__waynote {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .hh-notfound__way svg {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: baseline;
+    }
+  }
+</style>
