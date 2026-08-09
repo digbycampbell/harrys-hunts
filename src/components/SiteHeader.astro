@@ -8,7 +8,7 @@ const current = Astro.url.pathname;
 const links = [
   { label: 'Journeys', path: '/journeys/' },
   { label: 'Store', path: '/shop/' },
-  { label: 'The house', path: '/about/' },
+  { label: 'About', path: '/about/' },
 ];
 ---
 
@@ -37,7 +37,7 @@ const links = [
     </nav>
 
     <div class="hh-header__actions">
-      <a class="hh-button hh-button--small hh-header__cta" href={href('/book/')}>Plan a journey</a>
+      <a class="hh-button hh-button--small hh-header__cta" href={href('/book/')}>Try the planner</a>
       <CartButton client:load />
       <button
         type="button"
@@ -71,7 +71,7 @@ const links = [
           <a href={href('/cart/')}>Cart</a>
         </li>
       </ul>
-      <a class="hh-button hh-button--block" href={href('/book/')}>Plan a journey</a>
+      <a class="hh-button hh-button--block" href={href('/book/')}>Try the planner</a>
     </nav>
   </div>
 </header>

@@ -25,7 +25,7 @@ const filters = [
 
 <Base
   title="The journeys"
-  description="Five fictional guide-led field journeys across the North and South Islands, filterable by island. A demonstration catalogue — nothing here can be booked."
+  description="Explore five fictional, guide-led hunting journeys across New Zealand's North and South Islands. Demonstration only; nothing can be booked."
   pageId="journeys"
 >
   <!-- ------------------------------------------------------- page header -->
@@ -33,19 +33,17 @@ const filters = [
     <div class="hh-container hh-pagehead">
       <div class="hh-pagehead__lead">
         <p class="hh-eyebrow">The catalogue</p>
-        <h1 id="catalogue-title">Five journeys, and no more.</h1>
+        <h1 id="catalogue-title">Five ways into the country.</h1>
         <p class="hh-lede">
-          Two in the North Island, three in the South. Each one is drawn around a landscape rather
-          than a species, and each runs for as long as that country needs rather than as long as a
-          brochure would like.
+          Two in the North Island and three in the South. Each begins with the terrain, then works
+          out the season, pace and field days from there.
         </p>
       </div>
 
       <div class="hh-notice hh-pagehead__notice" data-testid="journeys-demo-notice">
         <span>
-          <strong>Demonstration catalogue.</strong> These journeys are invented for this site. Seasons,
-          durations and indicative figures illustrate the layout only &mdash; none of them is an offer,
-          a quote or an availability, and nothing here can be booked.
+          <strong>Demonstration catalogue.</strong> Every journey is invented. Seasons, durations and
+          indicative figures are examples, not offers, quotes or availability. Nothing can be booked.
         </span>
       </div>
     </div>
@@ -117,11 +115,10 @@ const filters = [
       <header class="hh-sectionhead hh-reveal">
         <div>
           <p class="hh-eyebrow">North and South</p>
-          <h2 id="compare-title">Two islands, two entirely different weeks</h2>
+          <h2 id="compare-title">Choose the ground first</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          If you are choosing between them, choose the country rather than the animal. The rest
-          follows from that.
+          Bush calls for a different pace from open alpine country. The journey follows from that choice.
         </p>
       </header>
 
@@ -164,18 +161,17 @@ const filters = [
   <section class="hh-section hh-section--inverse hh-on-dark" aria-labelledby="catalogue-cta-title">
     <div class="hh-container hh-catalogue-cta hh-reveal" data-testid="journeys-cta">
       <div>
-        <p class="hh-eyebrow">Bespoke by default</p>
-        <h2 id="catalogue-cta-title">None of these five is quite it?</h2>
+        <p class="hh-eyebrow">Build an outline</p>
+        <h2 id="catalogue-cta-title">Need a different sort of week?</h2>
         <p class="hh-lede">
-          Every journey started as somebody&rsquo;s awkward set of constraints &mdash; one free week
-          in July, a father and a daughter, a knee that does not like descents. Tell the planner what
-          you actually have and it will write the week back to you.
+          Start with your dates, party and appetite for the hills. The planner turns those choices
+          into a demonstration summary you can review.
         </p>
       </div>
       <div class="hh-catalogue-cta__actions">
-        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Open the journey planner</a>
+        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Try the journey planner</a>
         <a class="hh-button hh-button--outline-dark" href={href('/about/#contact')}>
-          Talk to the house
+          Try the demo enquiry
         </a>
       </div>
     </div>

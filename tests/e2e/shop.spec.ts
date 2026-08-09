@@ -9,7 +9,7 @@ test.describe('storefront', () => {
   test('lists every collection and links through to a product', async ({ page }) => {
     await page.goto('shop/');
 
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Five things');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Five pieces of field kit');
     await expect(page.getByTestId('collection-grid-field-wear')).toBeVisible();
     await expect(page.getByTestId('collection-grid-carry')).toBeVisible();
     await expect(page.getByTestId('collection-grid-camp')).toBeVisible();
@@ -63,7 +63,7 @@ test.describe('storefront', () => {
     await expect(drawer.getByTestId('cart-line-wool-field-cap')).toContainText('Tussock');
     await expect(drawer.getByTestId('cart-line-total-wool-field-cap')).toHaveText('$158.00');
     await expect(page.getByTestId('cart-count')).toHaveText('2');
-    await expect(drawer).toContainText(/nothing is reserved, charged or sent/i);
+    await expect(drawer).toContainText(/nothing is reserved, ordered, charged or sent/i);
   });
 
   test('merges repeat adds of the same variant and separates different ones', async ({ page }) => {
@@ -163,7 +163,7 @@ test.describe('storefront', () => {
 
   test('states on the product page that nothing is sold', async ({ page }) => {
     await page.goto('shop/waxed-canvas-duffel/');
-    await expect(page.getByTestId('product-purchase')).toContainText(/nothing is sold here/i);
+    await expect(page.getByTestId('product-purchase')).toContainText(/this product is not for sale/i);
     await expect(page.getByRole('main')).toContainText(/fictional product/i);
   });
 });

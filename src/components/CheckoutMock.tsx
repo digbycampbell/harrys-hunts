@@ -93,7 +93,7 @@ const POSTCODE_PATTERN = /^[A-Za-z0-9][A-Za-z0-9 -]{2,9}$/;
 function fieldError(field: Field, values: Values, acknowledged: boolean): string | null {
   switch (field) {
     case 'name':
-      return values.name.trim() ? null : 'Enter a name for the demonstration order.';
+      return values.name.trim() ? null : 'Enter a name for the demonstration.';
     case 'email':
       if (!values.email.trim()) return 'Enter an email address.';
       return EMAIL_PATTERN.test(values.email.trim())
@@ -385,11 +385,11 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
     return (
       <div class="hh-checkout">
         <div class="hh-emptystate" data-testid="checkout-empty">
-          <p class="hh-eyebrow">Nothing to check out</p>
+          <p class="hh-eyebrow">Nothing added</p>
           <h2 class="hh-emptystate__title">The cart is empty</h2>
           <p class="hh-emptystate__body">
-            Add something from the store and the demonstration checkout will walk you through
-            contact, delivery, a fictional payment panel and a confirmation that creates no order.
+            Add a fictional product, then try the contact, delivery, payment-demo and confirmation
+            stages. No order will be created.
           </p>
           <a class="hh-button" href={href('/shop/')} data-testid="checkout-empty-shop">
             Browse the field kit
@@ -412,17 +412,16 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
           aria-labelledby="hh-co-success-title"
           data-testid="checkout-success"
         >
-          <p class="hh-eyebrow">Demonstration complete</p>
+          <p class="hh-eyebrow">End of demonstration</p>
           <h2 id="hh-co-success-title" class="hh-success__title" tabindex={-1} ref={successRef}>
-            That is the whole flow
+            Checkout demonstration complete
           </h2>
 
           <p class="hh-notice hh-success__notice">
             <span>
-              <strong>No order was created and no payment was processed.</strong> Nothing was
-              submitted or stored anywhere off this device, no processor was contacted, and no
-              card details were ever collected. The reference below was generated in your browser
-              a moment ago.
+              <strong>No order was made and no payment was taken.</strong> Nothing was sent or stored
+              off this device. No processor was contacted and no card details were collected. The
+              reference below was generated in this browser.
             </span>
           </p>
 
@@ -609,8 +608,7 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                 Contact
               </h2>
               <p class="hh-stage__intro">
-                Where a real confirmation would go. In this demonstration it goes nowhere —
-                nothing is emailed, logged or kept once you leave the page.
+                Use made-up contact details. Nothing is emailed, logged or kept after you leave the page.
               </p>
               <div class="hh-stage__fields">
                 {textField('name', { autocomplete: 'off' })}
@@ -618,7 +616,7 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                   autocomplete: 'off',
                   type: 'email',
                   inputMode: 'email',
-                  hint: 'Use anything you like. It is never sent.',
+                  hint: 'Use a made-up address. It is never sent.',
                 })}
               </div>
             </section>
@@ -634,8 +632,8 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                 Delivery
               </h2>
               <p class="hh-stage__intro">
-                A demonstration address form. Nothing is dispatched and no address is validated
-                against anything, so invented values are the right values here.
+                Use the sample details or invent your own. The address is not checked, saved or used
+                for delivery.
               </p>
               <p class="hh-stage__tools">
                 <button
@@ -644,7 +642,7 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                   onClick={fillDemoDetails}
                   data-testid="fill-demo-address"
                 >
-                  Fill with demonstration details
+                  Use sample details
                 </button>
               </p>
               <div class="hh-stage__fields">
@@ -677,7 +675,7 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                       ))}
                     </select>
                     <p class="hh-hint" data-testid="checkout-zone-estimate">
-                      {totals.zone.estimate}. Sets the indicative delivery figure in the summary.
+                      Indicative window: {totals.zone.estimate}. This only changes the demo total.
                     </p>
                   </div>
                 </div>
@@ -695,16 +693,14 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                 Payment
               </h2>
               <p class="hh-stage__intro">
-                This is where a real store would take a card. This one cannot, by design.
+                A real checkout would ask for payment here. This demonstration does not.
               </p>
 
               <div class="hh-payment" data-testid="payment-demo-panel">
                 <p class="hh-notice hh-payment__notice">
                   <span>
-                    <strong>No payment method is collected here.</strong> There is no card field
-                    on this page, no card entry is possible, and no payment processor is
-                    contacted. The values below are fixed placeholders shown to complete the
-                    picture.
+                    <strong>No payment method is collected.</strong> Card entry is not possible and
+                    there is no payment processor. The fixed values below are only placeholders.
                   </span>
                 </p>
 
@@ -802,8 +798,8 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
                 Review
               </h2>
               <p class="hh-stage__intro">
-                Everything the demonstration knows, in one place. Placing the order below creates
-                nothing and charges nothing.
+                Check the sample details and fictional totals. The final button creates no order and
+                takes no payment.
               </p>
 
               <div class="hh-reviewblock" data-testid="review-contact">
@@ -940,7 +936,7 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
             </button>
             {stage === 'review' ? (
               <button type="submit" class="hh-button" data-testid="checkout-place-order">
-                Place demonstration order
+                Complete demonstration
               </button>
             ) : (
               <button type="submit" class="hh-button" data-testid="checkout-next">
@@ -951,9 +947,8 @@ export default function CheckoutMock({ thumbs }: { thumbs: ThumbMap }) {
 
           <p class="hh-notice hh-checkout__notice" data-testid="checkout-demo-notice">
             <span>
-              <strong>This checkout is a mockup.</strong> No payment is collected or processed, no
-              order is created, and nothing typed here is submitted, transmitted or stored beyond
-              this browser tab.
+              <strong>This checkout is a mockup.</strong> It collects no payment, creates no order and
+              sends nothing. Typed details stay in this browser tab only.
             </span>
           </p>
         </form>

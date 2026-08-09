@@ -24,7 +24,7 @@ const related = products.filter((entry) => entry.slug !== product.slug).slice(0,
 
 <Base
   title={product.name}
-  description={`${product.summary} A fictional demonstration product — no payment is processed and no order is created.`}
+  description={`${product.summary} A fictional Harry's Hunts product concept; no payment is processed and no order is created.`}
   pageId="product"
 >
   <div class="hh-container">
@@ -58,14 +58,14 @@ const related = products.filter((entry) => entry.slug !== product.slug).slice(0,
   <section class="hh-section hh-section--tight hh-section--sunken" aria-labelledby="details-title">
     <div class="hh-container hh-productinfo">
       <div class="hh-productinfo__prose">
-        <h2 id="details-title">The detail</h2>
+        <h2 id="details-title">Product concept</h2>
         {product.description.map((paragraph) => <p>{paragraph}</p>)}
         <h3>Care</h3>
         <p>{product.care}</p>
       </div>
 
       <div class="hh-productinfo__specs">
-        <h2 class="hh-productinfo__specstitle">Specification</h2>
+        <h2 class="hh-productinfo__specstitle">Concept specification</h2>
         <dl class="hh-speclist hh-speclist--stacked">
           {
             product.specs.map((spec) => (
@@ -78,8 +78,8 @@ const related = products.filter((entry) => entry.slug !== product.slug).slice(0,
         </dl>
         <p class="hh-notice">
           <span>
-            <strong>Fictional product.</strong> These specifications describe an invented item
-            created for this demonstration. Nothing here is manufactured or sold.
+            <strong>Fictional product.</strong> This is an invented specification for the
+            demonstration. The item is not manufactured or sold.
           </span>
         </p>
       </div>

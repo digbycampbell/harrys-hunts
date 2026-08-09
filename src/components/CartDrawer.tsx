@@ -90,7 +90,7 @@ export default function CartDrawer({ thumbs }: { thumbs: ThumbMap }) {
       >
         <header class="hh-drawer__head">
           <div>
-            <p class="hh-eyebrow">Your selection</p>
+            <p class="hh-eyebrow">Demonstration store</p>
             <h2 id="hh-drawer-title" class="hh-drawer__title">
               Cart{ready && count > 0 ? ` · ${count}` : ''}
             </h2>
@@ -115,8 +115,7 @@ export default function CartDrawer({ thumbs }: { thumbs: ThumbMap }) {
 
         <p class="hh-notice hh-drawer__notice">
           <span>
-            <strong>Demonstration cart.</strong> Nothing is reserved, charged or sent. Items live only
-            in this browser.
+            <strong>Browser-only cart.</strong> Nothing is reserved, ordered, charged or sent.
           </span>
         </p>
 
@@ -130,7 +129,7 @@ export default function CartDrawer({ thumbs }: { thumbs: ThumbMap }) {
           <div class="hh-drawer__body hh-drawer__empty" data-testid="cart-empty">
             <p class="hh-drawer__emptytitle">Nothing here yet</p>
             <p class="hh-muted">
-              The field kit is small on purpose. Five things we would actually take.
+              The fictional field kit has five pieces. Add one to try the cart.
             </p>
             <a class="hh-button hh-button--secondary" href={href('/shop/')} onClick={closeCart}>
               Browse the store
@@ -195,12 +194,12 @@ export default function CartDrawer({ thumbs }: { thumbs: ThumbMap }) {
             </div>
             <p class="hh-drawer__ship">
               {totals.freeDeliveryShortfall
-                ? `${formatMoneyPrecise(totals.freeDeliveryShortfall)} from complimentary urban delivery.`
-                : 'Urban New Zealand delivery included at this subtotal.'}
+                ? `${formatMoneyPrecise(totals.freeDeliveryShortfall)} from the included urban-delivery demo rate.`
+                : 'Urban New Zealand delivery is included in this demonstration total.'}
             </p>
             <div class="hh-drawer__actions">
               <a class="hh-button hh-button--block" href={href('/checkout/')} onClick={closeCart}>
-                Demo checkout
+                Try demo checkout
               </a>
               <a
                 class="hh-button hh-button--secondary hh-button--block"

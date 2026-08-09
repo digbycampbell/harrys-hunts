@@ -71,17 +71,17 @@ export const collections: { id: CollectionId; name: string; blurb: string }[] = 
   {
     id: 'field-wear',
     name: 'Field wear',
-    blurb: 'Wool and merino built for cold mornings and long sits.',
+    blurb: 'Wool and merino concepts for cold starts and quiet hours outside.',
   },
   {
     id: 'carry',
     name: 'Carry',
-    blurb: 'Waxed canvas and vegetable-tanned leather that ages instead of wearing out.',
+    blurb: 'A waxed-canvas carry concept with leather trim and plain hardware.',
   },
   {
     id: 'camp',
     name: 'Camp and desk',
-    blurb: 'The small things that end up on every trip.',
+    blurb: 'Two small, useful concepts for the hut or desk.',
   },
 ];
 
@@ -90,13 +90,13 @@ export const products: Product[] = [
     slug: 'wool-field-cap',
     name: 'Wool Field Cap',
     collection: 'field-wear',
-    tagline: 'Six panels, boiled wool, brass rear slide',
+    tagline: 'Boiled wool, low crown, brass slide',
     price: 79,
     summary:
-      'A low-crown six-panel cap in boiled wool, with a soft unstructured front and a weathered brass rear slide.',
+      'A fictional low-crown cap in boiled wool, with an unstructured front and brass rear slide.',
     description: [
-      'Cut low so it sits under a hood without fighting it, and unstructured so it packs flat in a lid pocket. The boiled wool sheds a light drizzle and stays warm when it eventually gives up.',
-      'The mark is embroidered in bone thread on the left panel — small enough to be a detail rather than a statement.',
+      'The concept sits low under a hood and packs flat in a lid pocket. Boiled wool gives it the right cold-weather character without turning the description into a performance claim.',
+      'A small bone-coloured mark sits on the left panel. That is all the branding it needs.',
     ],
     specs: [
       { label: 'Fabric', value: '100% boiled lambswool, 420 gsm' },
@@ -130,13 +130,13 @@ export const products: Product[] = [
     slug: 'merino-quarter-zip',
     name: 'Merino Quarter-Zip',
     collection: 'field-wear',
-    tagline: 'Mid-weight merino, brass pull, no branding to speak of',
+    tagline: 'Mid-weight merino with a raised collar',
     price: 289,
     summary:
-      'A mid-weight merino quarter-zip that works as a mid-layer on the tops and as a jersey at the table afterwards.',
+      'A fictional mid-weight merino layer with a raised collar, brass pull and quiet chest mark.',
     description: [
-      'Knitted from a 280 gsm merino blend with a raised collar that actually covers the neck, and a brass zip pull you can find with gloves on. Flatlock seams at the shoulder so a pack strap has nothing to chew.',
-      'Sized to layer: order your normal size for a close fit over a base layer, or one up if you plan to wear a shirt underneath.',
+      'The concept uses a 280 gsm merino blend, flat shoulder seams and a raised collar. The brass pull is deliberately easy to find in gloves.',
+      'The fictional sizing is close enough for a base layer underneath, with the option to size up for a shirt.',
     ],
     specs: [
       { label: 'Fabric', value: '85% merino / 15% nylon, 280 gsm' },
@@ -177,7 +177,7 @@ export const products: Product[] = [
       { src: merinoSwatch, alt: 'Close-up swatch of charcoal marle merino knit.' },
     ],
     weight: 420,
-    badge: 'Best seller',
+    badge: 'Merino concept',
     featured: true,
   },
   {
@@ -189,8 +189,8 @@ export const products: Product[] = [
     summary:
       'A 45-litre barrel duffel in 18 oz waxed canvas with vegetable-tanned leather ends, straps and a removable shoulder sling.',
     description: [
-      'Built to be the only bag on a week-long trip: a full-length brass zip, an internal wet pocket for waterproofs, and a base panel that takes a wet boot without complaint.',
-      'The wax finish will mark, scuff and lighten at the fold lines. That is the point. Re-wax it every couple of seasons and it will outlast several better-behaved bags.',
+      'The fictional layout has a full-length zip, an internal pocket for wet gear and a reinforced base. At 45 litres, it is drawn as a one-bag option for a week away.',
+      'Waxed canvas is meant to show marks and lighten at the folds. The care notes explain the intended upkeep without claiming a real product lifespan.',
     ],
     specs: [
       { label: 'Body', value: '18 oz waxed cotton canvas' },
@@ -226,25 +226,25 @@ export const products: Product[] = [
       { src: canvasSwatch, alt: 'Close-up swatch of waxed tan canvas.' },
     ],
     weight: 1650,
-    badge: 'Made to order',
+    badge: '45-litre concept',
     featured: true,
   },
   {
     slug: 'enamel-camp-mug',
     name: 'Enamel Camp Mug',
     collection: 'camp',
-    tagline: 'Bone enamel, forest rim, indestructible enough',
+    tagline: 'Bone enamel with a forest rim',
     price: 34,
     summary:
-      'A steel-core enamel mug in warm bone with a deep forest rim, printed with the full house mark.',
+      'A fictional steel-core enamel mug in warm bone with a forest rim and the house mark.',
     description: [
-      'Heavy enough not to blow off a hut table, light enough to clip to a pack. The rim is rolled and glazed so it does not take the skin off your lip at altitude.',
-      'It will chip. Every good one does.',
+      'The concept is drawn with a rolled, glazed rim and two sizes. It belongs on a hut table or clipped outside a pack.',
+      'Enamel chips. The copy does not pretend otherwise.',
     ],
     specs: [
       { label: 'Body', value: 'Vitreous enamel over carbon steel' },
       { label: 'Rim', value: 'Rolled steel, forest glaze' },
-      { label: 'Safe for', value: 'Open flame, gas ring, dishwasher' },
+      { label: 'Concept use', value: 'Open flame, gas ring, dishwasher' },
       { label: 'Made', value: 'Fictional demonstration product' },
     ],
     care: 'Dishwasher safe. Not suitable for microwaves.',
@@ -281,10 +281,10 @@ export const products: Product[] = [
     tagline: 'Water-resistant paper, bone board, elastic closure',
     price: 42,
     summary:
-      'A hard-wearing pocket notebook on water-resistant paper, with a bone board cover, a tussock elastic and a ribbon marker.',
+      'A fictional field notebook with water-resistant paper, a board cover, elastic closure and ribbon marker.',
     description: [
-      'Ninety-six pages of 100 gsm water-resistant stock that takes pencil in the rain and pen once it dries. The endpapers carry a blank field-log template for wind, weather, sign and distance.',
-      'It fits a chest pocket, which is the only specification that really matters.',
+      'The concept has 96 pages and a blank field-log template for wind, weather, sign and distance. It is intended for pencil in damp conditions and pen back indoors.',
+      'The A6 version fits a chest pocket. That earns it a place in the range.',
     ],
     specs: [
       { label: 'Paper', value: '96 pages, 100 gsm water-resistant stock' },

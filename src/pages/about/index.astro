@@ -11,83 +11,78 @@ const contents = [
   { id: 'values', label: 'Field values' },
   { id: 'guides', label: 'Guides and lodges' },
   { id: 'contact', label: 'Contact' },
-  { id: 'demonstration', label: 'About this demonstration' },
+  { id: 'demonstration', label: 'How the demo works' },
   { id: 'assets', label: 'Asset provenance' },
 ];
 
 const fieldValues = [
   {
-    title: 'Permission first, always',
-    body: 'A journey does not go on the calendar until the ground is arranged: landowner or concession permission in writing, the right permits lodged, and a named contact who knows we are there. If the paperwork is not settled a fortnight out, the trip moves.',
+    title: 'Access before itinerary',
+    body: 'A credible trip would begin with lawful access and the right permissions. This fictional site names no property, concession, block or access point.',
   },
   {
-    title: 'Guide-led, not guide-accompanied',
-    body: 'A New Zealand licensed guide runs the day. They hold the route, the wind, the safety plan and the decision about whether a stalk is on. Guests are taught the reasoning behind each call rather than simply led along behind it.',
+    title: 'The guide makes the call',
+    body: 'In the journey concepts, the guide reads the route, wind and conditions, explains the reasoning, and decides when the day needs to change.',
   },
   {
-    title: 'Safety is the itinerary',
-    body: 'Every party carries a locator beacon and a written intentions plan. Alpine journeys add avalanche training and equipment. Nobody is put on ground they have not been honestly briefed on, and nobody is asked to keep up.',
+    title: 'Conditions can rewrite the day',
+    body: 'Weather, rivers and alpine ground do not follow brochure copy. The itineraries leave room to turn back or use a reserve day.',
   },
   {
     title: 'Identify, then decide',
-    body: 'Species, sex, condition, angle, backstop and the ground you would have to cross to recover the animal are settled before anything else happens. Any one of those being wrong ends the stalk, and that is treated as a good outcome rather than a lost one.',
+    body: 'The copy puts identification, angle, backstop and recovery ground ahead of taking a shot. A wrong situation ends the stalk.',
   },
   {
-    title: 'Nothing is wasted',
-    body: 'Game care is guiding work, not a chore left to the end of the day. Meat is handled cleanly, cooled properly and either travels home with the guest or goes to the lodge kitchen. Guests who do not want it can name a household that does.',
+    title: 'Game care belongs in the plan',
+    body: 'Recovery and game care are treated as part of the field day. The site makes no claim about real processing, distribution or facilities.',
   },
   {
-    title: 'When we stand down',
-    body: 'Weather that closes a basin, a river that comes up, a guest who is not right, or an animal that is not right: any of these stops the day. Standing down is written into the price rather than argued about on the hill, and a guide who calls it is backed by the house.',
+    title: 'Walking away is allowed',
+    body: 'Bad weather, rising water, tired legs or the wrong animal can all stop the day. The fictional itineraries treat that as sound judgement, not a failed outing.',
   },
 ];
 
 const whatIsReal = [
-  'The site itself: the Astro build, the components, the routing and the deploy.',
-  'The design system — palette, type scale, spacing tokens and shared components.',
-  'The interaction design: the journey planner, the store, the cart and the checkout, all working end to end as mockups.',
-  'The accessibility work: landmarks, focus handling, labelled controls, live regions and reduced-motion support.',
-  'The image pipeline that derives every product tile and journey scene from the source boards.',
+  'The website, including its pages, components and deployment.',
+  'The visual system: colour, type, spacing and reusable interface patterns.',
+  'The browser interactions in the planner, store, cart and checkout.',
+  'The accessibility features, including labelled controls, focus handling and reduced-motion support.',
+  'The repeatable image process used to make product tiles and journey scenes from three source boards.',
 ];
 
 const whatIsInvented = [
-  'Harry, the house, the guides, the lodges and the huts. None of them exists.',
-  'All five journeys, their seasons, itineraries and inclusions.',
-  'Every indicative figure. They are planning illustrations, not prices, quotes or offers.',
-  'Every testimonial and guest note, which are labelled as demonstration copy where they appear.',
-  'The store: the products, the variants, the delivery estimates and the order confirmation.',
-  'Any impression of availability. Nothing on this site can be reserved, held or bought.',
+  'Harry, the operator, the guides and every place to stay.',
+  'All five journeys, including their itineraries and inclusions.',
+  'Every indicative price and delivery figure.',
+  'The field-kit products, options and stock states.',
+  'The confirmation references produced by the planner and checkout.',
+  'Any suggestion of availability. Nothing can be reserved, ordered or bought.',
 ];
 ---
 
 <Base
-  title="The house"
-  description="How Harry's Hunts is meant to work — field values, guides and lodges, a non-functional contact form, and a plain explanation of what is real and what is invented on this demonstration site."
+  title="About Harry's Hunts"
+  description="The idea behind fictional outfitter Harry's Hunts, its field principles, demonstration enquiry and a clear account of what is real and invented."
   pageId="about"
 >
   <!-- ------------------------------------------------------- page header -->
   <section class="hh-section hh-section--tight" aria-labelledby="about-title">
     <div class="hh-container hh-pagehead">
       <div class="hh-pagehead__lead hh-stack-m">
-        <p class="hh-eyebrow">The house</p>
-        <h1 id="about-title">Everything here was built backwards from one week.</h1>
+        <p class="hh-eyebrow">About the concept</p>
+        <h1 id="about-title">A small outfitter, made up in full.</h1>
         <p class="hh-lede">
-          Harry&rsquo;s Hunts was imagined as a small operation with an unusual constraint: it may
-          only run as many journeys as its guides can personally stand behind. Six weeks a season,
-          five landscapes, and a diary that fills or does not.
+          Harry&rsquo;s Hunts is a fictional New Zealand hunting-tour brand. The idea is deliberately
+          narrow: five small, guide-led journeys shaped around distinct kinds of country.
         </p>
         <p>
-          That constraint decides almost everything else. It is why the party sizes are small enough
-          to fit around one table, why a guide can afford to spend a morning teaching a guest to read
-          a face rather than hurrying them across it, and why an unproductive week is treated as an
-          ordinary result instead of a failure to be explained away.
+          That narrow catalogue gives the site its character. Parties stay small, the pace is set by
+          the ground, and the copy leaves room for weather, changed plans and days when no animal is taken.
         </p>
         <p>
-          The brand is written to sound like the kind of operator who tells you the awkward thing
-          first &mdash; that the weather may take three of your days, that the animal you had in mind
-          may not be there, that the licensing is your responsibility and it takes longer than you
-          think. If a house is going to be trusted with a week of somebody&rsquo;s life, it should
-          start by being dull and accurate.
+          The voice aims to be direct about the awkward parts: mountain weather changes, animals do
+          not appear on cue, and real licensing, access and safety questions belong with real New
+          Zealand authorities and qualified operators.
         </p>
       </div>
 
@@ -117,11 +112,11 @@ const whatIsInvented = [
       <header class="hh-sectionhead hh-reveal">
         <div>
           <p class="hh-eyebrow">Field values</p>
-          <h2 id="values-title">Six things the house will not argue about</h2>
+          <h2 id="values-title">Six principles behind the journeys</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          Written as brand copy for a fictional operator. Nothing below is guidance for a real trip,
-          a real permit application or a real safety plan.
+          These are editorial principles for the demonstration, not instructions for a real trip,
+          permit application or safety plan.
         </p>
       </header>
 
@@ -143,12 +138,11 @@ const whatIsInvented = [
     <div class="hh-container">
       <header class="hh-sectionhead hh-reveal">
         <div>
-          <p class="hh-eyebrow">Guides, lodges, the table</p>
-          <h2 id="guides-title">The half of it that happens indoors</h2>
+          <p class="hh-eyebrow">Guides and places to stay</p>
+          <h2 id="guides-title">How the fictional operation is framed</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          Invented people and invented buildings, described the way a real operator would describe
-          them.
+          No guide, lodge, hut or property described here is real.
         </p>
       </header>
 
@@ -171,34 +165,27 @@ const whatIsInvented = [
         <div class="hh-guides__body hh-stack-m">
           <h3>The guides</h3>
           <p>
-            Seven of them, and the house is built around keeping the same seven. They are career
-            field guides rather than seasonal hires: people who have spent twenty seasons learning
-            which faces hold animals in a nor&rsquo;wester and which ones only look as though they
-            should. Two are alpine-qualified and carry the winter work; one runs the foundation
-            journey and is the only person permitted to teach it.
+            The concept puts the guide at the centre of the day. They read the ground, set the pace,
+            explain their calls and change the plan when the conditions demand it. No fictional
+            biography or credential is offered as proof of real experience.
           </p>
           <p>
-            What the house asks of them is unusual in one respect. A guide is expected to say no in
-            front of a paying guest &mdash; to a face, to a shot, to a whole day &mdash; and to be
-            supported for it afterwards without a conversation about the diary.
+            The useful trait is judgement, including the willingness to say no to a route, a shot or
+            a whole day. That restraint runs through every journey outline.
           </p>
 
           <h3>The lodges and the huts</h3>
           <p>
-            Two lodges, a station cottage, a homestead and a four-bunk alpine hut. None of them is
-            grand. What they share is a drying room that actually dries, a boot room that keeps the
-            hill out of the bedrooms, and enough hot water that a pre-dawn start is not a queue. The
-            alpine hut is resupplied by air and is the only place on the books where the bed is a
-            bunk and nobody minds.
+            The accommodation concepts range from a timber lodge to backcountry huts. They are plain
+            and practical on the page: somewhere warm, somewhere to dry gear and a bed suited to the
+            country. None represents a real building or booking.
           </p>
 
           <h3>The long table</h3>
           <p>
-            One kitchen, one sitting, everyone at it. Venison when the week has produced some,
-            something slow and unfashionable when it has not, and a pot of coffee on the range at
-            four in the morning for whoever is going out first. Guests who came alone tend to leave
-            having argued with a stranger about rifle calibres for two hours, which is the part
-            nobody puts in the brochure.
+            The long table is the off-hill centre of the brand: one meal, wet gear drying elsewhere,
+            and coffee ready before the first party heads out. It gives the journeys warmth without
+            pretending any guest has actually sat there.
           </p>
         </div>
       </div>
@@ -215,21 +202,20 @@ const whatIsInvented = [
     <div class="hh-container hh-contact">
       <div class="hh-contact__intro hh-stack-m">
         <p class="hh-eyebrow">Contact</p>
-        <h2 id="contact-title">A form that deliberately goes nowhere</h2>
+        <h2 id="contact-title">Try the enquiry form</h2>
         <p class="hh-lede">
-          A real operator would put a person and a phone number here. This one puts a working,
-          fully labelled enquiry form that is wired to nothing at all.
+          This working form demonstrates validation and confirmation. There is no person, phone
+          number or inbox behind it.
         </p>
         <div class="hh-notice">
           <span>
-            <strong>Nothing is sent.</strong> There is no address behind this form, no server to receive
-            it, and no record kept. Everything you type stays in the browser tab until you close it. Please
-            do not enter anything you would not paste into a public page.
+            <strong>Nothing is sent.</strong> There is no server or inbox behind this form. What you
+            type stays in the browser tab until you close it. Use made-up details only.
           </span>
         </div>
         <p class="hh-contact__aside">
-          We never ask for payment details, identity documents or firearms-licensing information
-          anywhere on this site.
+          Do not enter payment details, identity documents or firearms-licensing information anywhere
+          on this site.
         </p>
       </div>
 
@@ -319,12 +305,11 @@ const whatIsInvented = [
     <div class="hh-container">
       <header class="hh-sectionhead hh-reveal">
         <div>
-          <p class="hh-eyebrow">About this demonstration</p>
-          <h2 id="demonstration-title">What is real here, and what is not</h2>
+          <p class="hh-eyebrow">How the demo works</p>
+          <h2 id="demonstration-title">What is real and what is invented</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          The short version: the software is real, the company is not. The longer version is below,
-          in plain English.
+          The software works. The company does not exist.
         </p>
       </header>
 
@@ -365,10 +350,9 @@ const whatIsInvented = [
       <div class="hh-demonote hh-reveal hh-stack-m">
         <h3>No booking or payment service exists</h3>
         <p>
-          The journey planner produces a written summary in your browser and stops there. The store
-          keeps a cart in local storage and ends at a confirmation screen that no one receives. There
-          is no payment provider connected to this site, no card field will ever accept a real
-          number, and no order, booking or enquiry is created anywhere.
+          The planner produces a summary in your browser and stops. The store keeps its cart in local
+          storage and ends at a demo confirmation. There is no payment provider, no working card
+          field and no order, booking or enquiry.
         </p>
         <p>
           Nothing you type on this site is transmitted. It is a static build served as files, so
@@ -376,10 +360,9 @@ const whatIsInvented = [
         </p>
         <h3>Not advice, not an offer</h3>
         <p>
-          Descriptions of seasons, permissions, licensing, safety practice and game care are brand
-          copy written to sound plausible for a fictional operator. They are not legal advice, not
-          regulatory guidance and not a substitute for talking to a real licensed guide or the
-          relevant New Zealand authorities.
+          Journey details about seasons, access, licensing, safety and game care are fictional
+          editorial material. They are not legal or regulatory guidance. For a real trip, use the
+          relevant New Zealand authorities and a qualified operator.
         </p>
       </div>
     </div>
@@ -396,11 +379,10 @@ const whatIsInvented = [
       <header class="hh-sectionhead hh-reveal">
         <div>
           <p class="hh-eyebrow">Asset provenance</p>
-          <h2 id="assets-title">Where the pictures and the mark came from</h2>
+          <h2 id="assets-title">How the pictures and mark were made</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          Stated openly, because a demonstration that hides its own materials is not much of a
-          demonstration.
+          The project records where its visual material came from.
         </p>
       </header>
 
@@ -415,37 +397,30 @@ const whatIsInvented = [
             decoding="async"
           />
           <figcaption>
-            The brand concept board, generated with AI as a design input for this fictional
-            demonstration. It is a mood reference, not the production logo &mdash; the mark used
-            across the site is hand-built SVG.
+            An AI-generated concept board used as visual reference. The production mark is original SVG,
+            not a trace of the board.
           </figcaption>
         </figure>
 
         <div class="hh-assets__body hh-stack-m">
           <p>
-            Three source boards were generated with AI specifically for this fictional
-            demonstration: a brand concept board, a wide South Island landscape, and a merchandise
-            concept sheet. They are the only generated images in the project, and none of them
-            depicts a real place, a real product or a real person.
+            Three images were generated with AI for this project: a brand board, a wide South Island
+            scene and a merchandise sheet. None depicts a real place, product or person.
           </p>
           <p>
-            Everything else is derived from those three. The product tiles in the store and the scene
-            images on the journey cards are deterministic crops produced by
+            The remaining raster images are reproducible crops of those sources, produced by
             <code>scripts/derive-images.mjs</code>, which reads the boards, extracts a named region
-            for each asset and writes the result into the repository. Re-running the script is the
-            only way those files change, so the image set is reproducible rather than hand-edited.
+            for each asset and writes it into the repository.
           </p>
           <p>
-            The logo is not a trace of anything on the board. The mark and the lockup are original
-            code-native SVG, drawn as geometry in <code>src/components/BrandMark.astro</code> so the
-            same shapes serve a sixteen-pixel favicon and a hero-sized lockup without a raster asset
-            in between.
+            The mark and lockup are original code-native SVG in
+            <code>src/components/BrandMark.astro</code>. The same geometry is used from favicon to
+            large lockup without a raster logo in between.
           </p>
           <p>
-            No photograph of a real hunt, a real animal or a real guest appears anywhere on this
-            site, and none will. The brand does not imitate, reference or trade on any existing
-            company: the name, the mark, the voice and the journeys were invented for this project,
-            and any resemblance to a real operator is coincidental.
+            No photograph of a real hunt, animal or guest appears on the site. Harry&rsquo;s Hunts,
+            its mark and every journey were invented for this project and are not presented as a
+            real operator.
           </p>
         </div>
       </div>
