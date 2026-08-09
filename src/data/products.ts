@@ -95,7 +95,7 @@ export const products: Product[] = [
     summary:
       'A fictional low-crown cap in boiled wool, with an unstructured front and brass rear slide.',
     description: [
-      'The concept sits low under a hood and packs flat in a lid pocket. Boiled wool gives it the right cold-weather character without turning the description into a performance claim.',
+      'The concept sits low under a hood and packs flat in a lid pocket. Boiled wool gives it the right cold-weather character.',
       'A small bone-coloured mark sits on the left panel. That is all the branding it needs.',
     ],
     specs: [
@@ -239,7 +239,7 @@ export const products: Product[] = [
       'A fictional steel-core enamel mug in warm bone with a forest rim and the house mark.',
     description: [
       'The concept is drawn with a rolled, glazed rim and two sizes. It belongs on a hut table or clipped outside a pack.',
-      'Enamel chips. The copy does not pretend otherwise.',
+      'Enamel chips. That is part of owning one.',
     ],
     specs: [
       { label: 'Body', value: 'Vitreous enamel over carbon steel' },

@@ -222,7 +222,7 @@ export const tours: Tour[] = [
     summary:
       'The most demanding journey in the catalogue: winter basins, steep sidling and a fictional helicopter approach.',
     story: [
-      'The concept places tahr above the bushline in winter, where cold, steep ground and quick weather changes matter more than polished brochure language.',
+      'The concept places tahr above the bushline in winter, where cold, steep ground and quick weather changes set the terms.',
       'The itinerary begins at a fictional alpine hut and works nearby basins on foot. Long days, exposed sidling and snow-covered ground make this a specialist outline, not a promise that a trip is suitable or available.',
       'A real journey in this country would require qualified people, current conditions and a proper alpine safety plan. This page supplies none of those; it only shows how such a catalogue entry might read.',
     ],
