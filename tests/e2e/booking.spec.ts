@@ -75,7 +75,7 @@ test.describe('journey planner', () => {
     const confirmation = page.getByTestId('booking-confirmation');
     await expect(confirmation).toBeVisible();
     await expect(page.getByTestId('booking-reference')).toHaveText(/^HH-PLAN-[A-Z2-9]{4}$/);
-    await expect(confirmation).toContainText('No reservation has been made');
+    await expect(confirmation).toContainText('No booking or enquiry was made');
     await expect(page.getByTestId('confirm-accommodation')).toHaveText('Serviced alpine hut');
   });
 
@@ -192,7 +192,7 @@ test.describe('journey planner', () => {
 
   test('states on every stage that nothing is booked', async ({ page }) => {
     await page.goto('book/');
-    await expect(page.getByRole('main')).toContainText('This planner makes no booking');
-    await expect(page.locator('.hh-demobar')).toContainText('fictional demonstration site');
+    await expect(page.getByRole('main')).toContainText('This planner cannot make a booking');
+    await expect(page.locator('.hh-demobar')).toContainText('fictional demonstration');
   });
 });

@@ -93,7 +93,7 @@ export default function ProductPurchase({ slug }: { slug: string }) {
     <form class="hh-buy" onSubmit={submit} data-testid="product-purchase">
       <p class="hh-buy__price" data-testid="product-price">
         <span class="hh-price hh-num">{formatMoney(price)}</span>
-        <span class="hh-buy__pricenote">NZD · indicative demo price</span>
+        <span class="hh-buy__pricenote">NZD · indicative only</span>
       </p>
 
       {product.options.map((group) => {
@@ -158,7 +158,7 @@ export default function ProductPurchase({ slug }: { slug: string }) {
           testId="product-quantity"
         />
         <button type="submit" class="hh-button hh-buy__add" data-testid="add-to-cart">
-          Add to demo cart
+          Add to demonstration cart
         </button>
       </div>
 
@@ -168,15 +168,15 @@ export default function ProductPurchase({ slug }: { slug: string }) {
 
       <p class="hh-notice hh-buy__notice">
         <span>
-          <strong>Nothing is sold here.</strong> Adding items updates a cart held only in this
-          browser. Checkout ends in a demonstration confirmation with no payment and no order.
+          <strong>This product is not for sale.</strong> Adding it updates a browser-only cart.
+          Checkout takes no payment and creates no order.
         </span>
       </p>
 
       <ul class="hh-buy__reassurance">
-        <li>Complimentary urban New Zealand delivery over {formatMoney(freeOver)} (demo rate)</li>
-        <li>Delivery estimate shown at the cart and checkout stages</li>
-        <li>Fictional product — specifications are illustrative</li>
+        <li>Demo urban-delivery rate shown as included over {formatMoney(freeOver)}</li>
+        <li>Indicative delivery estimate in the cart</li>
+        <li>Invented product and specification</li>
       </ul>
     </form>
   );

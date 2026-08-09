@@ -46,24 +46,24 @@ const steps: Step[] = [
     id: 'island',
     nav: 'Island',
     eyebrow: 'Step one',
-    title: 'Which island are you drawn to?',
-    intro: 'This sets the terrain, the travel and most of the character of the week.',
-    validate: (state) => (state.island ? {} : { island: 'Choose an island, or tell us you are open to either.' }),
+    title: 'Which island?',
+    intro: 'This choice narrows the terrain and the journeys shown later.',
+    validate: (state) => (state.island ? {} : { island: 'Choose an island or select “Open to either”.' }),
   },
   {
     id: 'country',
     nav: 'Country',
     eyebrow: 'Step two',
-    title: 'What kind of country suits you?',
-    intro: 'Sightlines change everything: how you move, how you find animals, how tired you get.',
+    title: 'What sort of country?',
+    intro: 'Think about the sightlines, footing and amount of climbing you want.',
     validate: (state) => (state.country ? {} : { country: 'Pick the terrain you have in mind, or choose “Not sure yet”.' }),
   },
   {
     id: 'experience',
     nav: 'Experience',
     eyebrow: 'Step three',
-    title: 'What are you hoping the week is about?',
-    intro: 'Species categories shape the season and the skills. Not every week has to be about taking an animal.',
+    title: 'What should the week centre on?',
+    intro: 'Choose a species, an instructional trip, or a camera-only journey.',
     validate: (state) => (state.experience ? {} : { experience: 'Choose the kind of experience you want.' }),
   },
   {
@@ -71,7 +71,7 @@ const steps: Step[] = [
     nav: 'Timing',
     eyebrow: 'Step four',
     title: 'When could you travel?',
-    intro: 'Season matters more than dates. If you have a specific window, tell us; if not, flexibility is worth a lot.',
+    intro: 'Choose a season, then add exact dates only if they matter to your outline.',
     validate: (state) => {
       const errors: Errors = {};
       if (!state.timing) errors.timing = 'Choose a season, or tell us you are fully flexible.';
@@ -88,8 +88,8 @@ const steps: Step[] = [
     id: 'party',
     nav: 'Party',
     eyebrow: 'Step five',
-    title: 'Who is coming?',
-    intro: 'Small parties are the whole model. Companions who are not on the hill are always welcome.',
+    title: 'Who is in the party?',
+    intro: 'Count guests on the hill separately from non-hunting companions.',
     validate: (state) =>
       state.guests >= 1 ? {} : { guests: 'A journey needs at least one guest on the hill.' },
   },
@@ -97,8 +97,8 @@ const steps: Step[] = [
     id: 'accommodation',
     nav: 'Accommodation',
     eyebrow: 'Step six',
-    title: 'Where would you rather sleep?',
-    intro: 'This is often the honest limit on where a journey can go.',
+    title: 'Where would you prefer to stay?',
+    intro: 'Accommodation helps set the comfort level and the shape of the route.',
     validate: (state) =>
       state.accommodation ? {} : { accommodation: 'Choose the accommodation style you would prefer.' },
   },
@@ -107,26 +107,26 @@ const steps: Step[] = [
     nav: 'Guiding',
     eyebrow: 'Step seven',
     title: 'How much guiding do you want?',
-    intro: 'Every journey is guided. The question is the ratio and how much teaching you want with it.',
+    intro: 'Choose a guide ratio and how much instruction the fictional outline should include.',
     validate: (state) => (state.guiding ? {} : { guiding: 'Choose a guiding arrangement.' }),
   },
   {
     id: 'extras',
     nav: 'Add-ons',
     eyebrow: 'Step eight',
-    title: 'Anything to add?',
-    intro: 'All optional. Choose as many as you like, or none at all.',
+    title: 'Add anything else?',
+    intro: 'These are optional demonstration choices. Leave them blank if none fit.',
     validate: () => ({}),
   },
   {
     id: 'details',
     nav: 'Your details',
     eyebrow: 'Step nine',
-    title: 'How should we reply?',
-    intro: 'Only a name and an email. Nothing is transmitted — this stays in your browser.',
+    title: 'Add details for the summary',
+    intro: 'Use made-up details. Nothing is transmitted or kept beyond this browser.',
     validate: (state) => {
       const errors: Errors = {};
-      if (!state.name.trim()) errors.name = 'Please add a name so the summary has someone to belong to.';
+      if (!state.name.trim()) errors.name = 'Add a name for the demonstration summary.';
       if (!state.email.trim()) errors.email = 'Please add an email address.';
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(state.email.trim()))
         errors.email = 'That does not look like an email address.';
@@ -138,8 +138,8 @@ const steps: Step[] = [
     id: 'review',
     nav: 'Review',
     eyebrow: 'Last step',
-    title: 'Read it back',
-    intro: 'Check anything you want to change, then produce the demonstration summary.',
+    title: 'Review the outline',
+    intro: 'Check your choices, edit anything that is wrong, then create the demonstration summary.',
     validate: () => ({}),
   },
 ];
@@ -500,7 +500,7 @@ export default function BookingWizard() {
       <section class="hh-confirm" data-testid="booking-confirmation" aria-labelledby="confirm-title">
         <p class="hh-eyebrow">Demonstration summary</p>
         <h2 id="confirm-title" class="hh-confirm__title" ref={headingRef} tabIndex={-1}>
-          Your journey outline is ready
+          Your demonstration outline is ready
         </h2>
         <p class="hh-confirm__reference">
           Reference <strong data-testid="booking-reference">{confirmation}</strong>
@@ -508,9 +508,8 @@ export default function BookingWizard() {
 
         <div class="hh-notice hh-confirm__notice" role="status">
           <span>
-            <strong>No reservation has been made.</strong> Nothing was sent, no enquiry was created
-            and no record exists anywhere but this browser. Harry&rsquo;s Hunts is a fictional
-            company built to demonstrate this interface.
+            <strong>No booking or enquiry was made.</strong> Nothing was sent, and no record exists
+            outside this browser. Harry&rsquo;s Hunts is a fictional company.
           </span>
         </div>
 
@@ -581,7 +580,7 @@ export default function BookingWizard() {
         <div class="hh-wizard__main">
           {restored && stepIndex > 0 && (
             <p class="hh-wizard__restored" data-testid="booking-restored">
-              Picked up where you left off. <button type="button" onClick={startAgain}>Start again</button>
+              Your saved demo outline is open. <button type="button" onClick={startAgain}>Start again</button>
             </p>
           )}
 
@@ -700,7 +699,7 @@ export default function BookingWizard() {
                     <span class="hh-choice__text">
                       <span class="hh-choice__label">My dates are flexible</span>
                       <span class="hh-choice__detail">
-                        We will suggest the best window in your chosen season.
+                        Leave exact dates out of the demonstration outline.
                       </span>
                     </span>
                   </label>
@@ -760,7 +759,7 @@ export default function BookingWizard() {
                 </div>
                 <div class="hh-wizard__counter">
                   <span class="hh-label" id="companions-label">Companions</span>
-                  <p class="hh-hint">Travelling with you but not on the hill. Reduced rate.</p>
+                  <p class="hh-hint">Travelling with you but not joining the field days.</p>
                   <QuantityStepper
                     value={state.companions}
                     label="non-hunting companions"
@@ -851,7 +850,7 @@ export default function BookingWizard() {
                     onInput={(event) => update({ email: (event.currentTarget as HTMLInputElement).value })}
                   />
                   <span class="hh-hint" id="email-hint">
-                    Kept in this browser only. Nothing is sent.
+                    Use a made-up address. Nothing is sent.
                   </span>
                   <FieldError id="error-email" message={errors.email} />
                 </p>
@@ -908,8 +907,8 @@ export default function BookingWizard() {
                     }
                   />
                   <span class="hh-hint">
-                    Fitness, dietary needs, mobility, who you are travelling with. Please do not
-                    enter identity or payment details &mdash; this is a demonstration.
+                    Add any fictional planning note you want. Do not enter identity or payment
+                    details &mdash; this is a demonstration.
                   </span>
                 </p>
               </div>
@@ -945,9 +944,8 @@ export default function BookingWizard() {
                 )}
                 <p class="hh-notice">
                   <span>
-                    <strong>Producing the summary sends nothing.</strong> There is no enquiry
-                    endpoint, no inbox and no record. The next screen is a demonstration of what a
-                    confirmation would look like.
+                    <strong>Creating the summary sends nothing.</strong> There is no enquiry endpoint
+                    or inbox. The next screen is only a demonstration confirmation.
                   </span>
                 </p>
               </div>
@@ -965,13 +963,13 @@ export default function BookingWizard() {
               Back
             </button>
             <button type="button" class="hh-button" onClick={next} data-testid="booking-next">
-              {stepIndex === steps.length - 1 ? 'Produce the demo summary' : 'Continue'}
+              {stepIndex === steps.length - 1 ? 'Create demo summary' : 'Continue'}
             </button>
           </div>
         </div>
 
         <aside class="hh-wizard__rail" aria-labelledby="rail-title">
-          <h2 class="hh-wizard__railtitle" id="rail-title">Your outline</h2>
+          <h2 class="hh-wizard__railtitle" id="rail-title">Outline so far</h2>
           <dl class="hh-wizard__summary" data-testid="booking-summary">
             {summary.map((item) => (
               <div key={item.id} data-filled={Boolean(item.value)}>

@@ -119,11 +119,11 @@ export default function CartPage({ thumbs }: { thumbs: ThumbMap }) {
 
       {lines.length === 0 ? (
         <div class="hh-emptystate" data-testid="cart-empty">
-          <p class="hh-eyebrow">An empty pack</p>
+          <p class="hh-eyebrow">Nothing added</p>
           <h2 class="hh-emptystate__title">There is nothing in the cart yet</h2>
           <p class="hh-emptystate__body">
-            Five things, chosen because we would carry them ourselves. Wool, merino, waxed
-            canvas, enamel and paper — take a look and add whatever earns its place.
+            Browse five fictional pieces in wool, merino, waxed canvas, enamel and paper. Add one
+            to try the cart and checkout flow.
           </p>
           <a class="hh-button" href={href('/shop/')} data-testid="cart-empty-shop">
             Browse the field kit
@@ -241,8 +241,7 @@ export default function CartPage({ thumbs }: { thumbs: ThumbMap }) {
                   ))}
                 </select>
                 <p class="hh-hint" data-testid="cart-zone-estimate">
-                  {totals.zone.estimate} once dispatched — which, being a demonstration, never
-                  happens. Figures are indicative.
+                  Indicative delivery window: {totals.zone.estimate}. Nothing is actually dispatched.
                 </p>
               </div>
 
@@ -284,7 +283,7 @@ export default function CartPage({ thumbs }: { thumbs: ThumbMap }) {
                   href={href('/checkout/')}
                   data-testid="cart-checkout"
                 >
-                  Demo checkout
+                  Try demo checkout
                 </a>
                 <a
                   class="hh-button hh-button--secondary hh-button--block"
@@ -297,9 +296,8 @@ export default function CartPage({ thumbs }: { thumbs: ThumbMap }) {
 
               <p class="hh-notice" data-testid="cart-demo-notice">
                 <span>
-                  <strong>This cart is a demonstration.</strong> It lives only in this browser,
-                  in local storage. Nothing is reserved, nothing is charged and nothing is sent
-                  anywhere.
+                  <strong>This cart is a demonstration.</strong> It is stored locally in this browser.
+                  Nothing is reserved, ordered, charged or sent.
                 </span>
               </p>
             </div>

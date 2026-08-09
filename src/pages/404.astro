@@ -7,7 +7,7 @@ const ways = [
   {
     label: 'Home',
     path: '/',
-    note: 'The whole house, from the top.',
+    note: 'Start again from the home page.',
     testid: 'not-found-home',
   },
   {
@@ -25,7 +25,7 @@ const ways = [
   {
     label: 'The planner',
     path: '/book/',
-    note: 'Sketch a week and see it written back to you.',
+    note: 'Choose a few preferences and build a demo outline.',
     testid: 'not-found-book',
   },
 ];
@@ -33,7 +33,7 @@ const ways = [
 
 <Base
   title="Page not found"
-  description="That page is not here. Find your way back to the journeys, the store or the journey planner on the Harry's Hunts demonstration site."
+  description="That page is not here. Return to the fictional journeys, demonstration store or journey planner at Harry's Hunts."
   pageId="404"
 >
   <section class="hh-section hh-notfound" aria-labelledby="notfound-title" data-testid="not-found">
@@ -41,11 +41,10 @@ const ways = [
       <BrandMark variant="monogram" height="3.25rem" decorative class="hh-notfound__mark" />
 
       <p class="hh-eyebrow hh-notfound__eyebrow">Off the track &mdash; error 404</p>
-      <h1 id="notfound-title">You have walked off the edge of the map.</h1>
+      <h1 id="notfound-title">That track ends here.</h1>
       <p class="hh-lede">
-        There is nothing at this address. It may have been renamed, or the link that brought you here
-        was written by somebody in a hurry. No harm done &mdash; the country is small and everything
-        is a minute away.
+        There is nothing at this address. The page may have moved, or the link may be wrong. Pick a
+        route below and you will be back on the site in a moment.
       </p>
 
       <ul class="hh-notfound__ways">
@@ -72,9 +71,9 @@ const ways = [
 
       <div class="hh-notice hh-notfound__notice">
         <span>
-          <strong>Still a demonstration.</strong> Harry&rsquo;s Hunts is a fictional brand. Even the
-          pages that do exist take no bookings, orders or payments &mdash;
-          <a class="hh-link" href={href('/about/#demonstration')}>what that means</a>.
+          <strong>This is still a demonstration.</strong> Harry&rsquo;s Hunts is fictional, and the
+          working pages cannot take bookings, orders or payments &mdash;
+          <a class="hh-link" href={href('/about/#demonstration')}>read how the demo works</a>.
         </span>
       </div>
     </div>

@@ -71,13 +71,13 @@ export const tours: Tour[] = [
     region: 'Central North Island high country',
     category: 'red-deer',
     categoryLabel: 'Red stag',
-    tagline: 'Six mornings inside the roar',
+    tagline: 'Six autumn mornings on the plateau',
     summary:
-      'Pumice country, beech edges and open tops in the first week of April, when the valleys carry sound for miles and every ridge is worth a listen.',
+      'Pumice ridges, beech margins and open tops in early April, with the field days built around listening before moving.',
     story: [
-      'The plateau in autumn is a listening country. Cold air settles into the pumice gullies overnight and holds sound, so a stag two basins away can arrive at your ear like he is standing in the next clearing. The work is patience: sit, listen, triangulate, and only then commit to a face.',
-      'We run this journey as a small, unhurried party. Mornings start in the dark and finish mid-morning; afternoons are for maps, rest, and a second listen from a different aspect. Your guide sets the pace, calls the wind, and makes the shot decision with you — not for you.',
-      'Every party is briefed on identification, safe firearm handling, and the permissions covering the ground we walk. If conditions or animal condition are wrong, we let it go and come back tomorrow. That is the whole point of a six-morning trip.',
+      'Autumn on the plateau is about listening. Cold air can hold sound in the pumice gullies, so the outline favours long pauses and careful bearings before anyone crosses a face.',
+      'Mornings begin before daylight. Afternoons leave time for rest, maps and another listen from a different aspect. The fictional guide sets the pace and makes the call when wind or ground rules out a stalk.',
+      'The six-day format allows for poor weather and quiet mornings. Identification, safe handling and lawful access would need to be settled by a real operator before any real trip.',
     ],
     season: 'Autumn — the roar',
     seasonMonths: 'Late March to early May',
@@ -87,19 +87,19 @@ export const tours: Tour[] = [
     partySize: '2–4 guests, 1 guide per 2 guests',
     accommodation: 'Timber lodge',
     accommodationDetail:
-      'Private room in a six-guest lodge with drying room, boot room and a long table that everyone eats at.',
+      'A fictional small lodge with private rooms, space to dry gear and one shared table.',
     guidingIntensity: 'Fully guided, one guide per two guests',
     fitness: 3,
     fitnessLabel: 'Moderate',
     fitnessGuidance:
       'Expect 6–12 km a day on uneven ground with 400–700 m of climbing, carrying a light day pack. Comfortable if you walk hill country most weekends.',
     included: [
-      'Six days guided fieldcraft with a NZ-licensed guide',
+      'Six guide-led field days',
       'Lodge accommodation, all meals and non-alcoholic drinks',
       'Transfers from the nearest regional airport',
-      'Permit administration and access permissions for the ground we use',
+      'Illustrative access and permit planning',
       'Loan of optics, packs and wet-weather shells',
-      'Game care, chiller access and processing coordination',
+      'Game-care planning in the fictional itinerary',
     ],
     notIncluded: [
       'Flights to New Zealand and domestic connections',
@@ -141,13 +141,13 @@ export const tours: Tour[] = [
     region: 'Eastern North Island ranges',
     category: 'sika',
     categoryLabel: 'Sika',
-    tagline: 'The quiet deer, on their terms',
+    tagline: 'A slow week in tight eastern bush',
     summary:
-      'A hut-to-hut week in tight bush and manuka scrub, learning to move slowly enough that sika stop leaving before you arrive.',
+      'A hut-to-hut outline through bush and mānuka scrub, built around sign, wind and moving slowly.',
     story: [
-      'Sika reward the patient and humble the confident. They live in thick country, they move on their own schedule, and they will exit a face before most people register they were there. This journey is built around the skill rather than the outcome: reading sign, wind discipline, still-hunting at a genuinely slow pace.',
-      'We work a hut-to-hut line through bush and scrub with light packs, moving camp twice across the week. It is the most technical of our foot journeys and the one guests most often book a second time.',
-      'Guides carry the navigation and the safety plan. You carry your own gear and your own attention. Some parties take an animal on day two; some take none. Both are ordinary weeks in sika country.',
+      'Sika country rewards patience. The bush is tight, sightlines are short and the useful work is reading sign, minding the wind and slowing down before the next step.',
+      'This fictional route moves between simple huts with light packs. It is the most exacting journey in the catalogue for footwork and concentration, without promising an outcome.',
+      'A real guide would own the navigation and safety plan. The guest would carry personal gear and be ready for a week in which seeing nothing is entirely possible.',
     ],
     season: 'Late summer through winter',
     seasonMonths: 'February to July',
@@ -164,10 +164,10 @@ export const tours: Tour[] = [
     fitnessGuidance:
       'Steep, trackless ground for 5–8 hours a day carrying 12–15 kg on move days. Suited to guests who tramp regularly with a full pack.',
     included: [
-      'Seven days guided fieldcraft with a NZ-licensed guide',
+      'Seven guide-led field days',
       'Hut fees, all backcountry meals and cooking gear',
       'Transfers from the nearest town and road-end logistics',
-      'Permit administration for the ground we use',
+      'Illustrative access and permit planning',
       'Loan of packs, shells, and a personal locator beacon',
       'Pre-trip fitness and kit consultation',
     ],
@@ -218,13 +218,13 @@ export const tours: Tour[] = [
     region: 'Southern Alps, Main Divide country',
     category: 'tahr',
     categoryLabel: 'Himalayan tahr',
-    tagline: 'Winter coats, high basins, real mountains',
+    tagline: 'Winter basins above the bushline',
     summary:
-      'Our most serious alpine journey: bluff systems, snow-line basins and a helicopter lift into country you would otherwise spend two days reaching.',
+      'The most demanding journey in the catalogue: winter basins, steep sidling and a fictional helicopter approach.',
     story: [
-      'Tahr live where the map runs out of contour lines. Winter is when their capes are heaviest and the light is at its best, and it is also when the mountains ask the most of everyone in the party. This is a genuine alpine trip with a genuine alpine safety plan.',
-      'We fly in, establish at a serviced alpine hut, and work basins on foot from there. Days are long and cold and involve exposed sidling on steep ground. Guides are avalanche-trained and carry the call on when a basin is off the table.',
-      'Shot discipline matters more here than anywhere else we operate. If the animal, the angle, or the recovery ground is wrong, we do not shoot. We would rather bring you back next winter.',
+      'The concept places tahr above the bushline in winter, where cold, steep ground and quick weather changes set the terms.',
+      'The itinerary begins at a fictional alpine hut and works nearby basins on foot. Long days, exposed sidling and snow-covered ground make this a specialist outline, not a promise that a trip is suitable or available.',
+      'A real journey in this country would require qualified people, current conditions and a proper alpine safety plan. This page supplies none of those; it only shows how such a catalogue entry might read.',
     ],
     season: 'Winter',
     seasonMonths: 'May to August',
@@ -234,18 +234,18 @@ export const tours: Tour[] = [
     partySize: '2 guests, 1 guide per guest',
     accommodation: 'Serviced alpine hut',
     accommodationDetail:
-      'A four-bunk alpine hut with diesel heat, hot food and a drying rack, resupplied by air.',
+      'A fictional four-bunk alpine hut with heat, hot food and room to dry gear.',
     guidingIntensity: 'One guide per guest',
     fitness: 5,
     fitnessLabel: 'Very demanding',
     fitnessGuidance:
-      'Sustained climbing of 800–1,200 m on steep, exposed, often snow-covered ground in cold conditions. We ask for a frank fitness conversation and a recent alpine day under your belt before confirming.',
+      'Sustained climbing of 800–1,200 m on steep, exposed and often snow-covered ground. The concept assumes strong hill fitness and recent alpine experience; it is not a fitness assessment.',
     included: [
-      'Eight days guided alpine fieldcraft, one guide per guest',
+      'Eight guide-led alpine field days, one-to-one in the concept',
       'Return helicopter transfer and in-trip repositioning',
       'Alpine hut accommodation and all meals',
       'Avalanche safety equipment and briefing',
-      'Permit administration for the ground we use',
+      'Illustrative access and permit planning',
       'Loan of alpine boots, crampons, ice axe and optics',
     ],
     notIncluded: [
@@ -297,13 +297,13 @@ export const tours: Tour[] = [
     region: 'Inland Canterbury high country',
     category: 'chamois',
     categoryLabel: 'Chamois',
-    tagline: 'Big country, small animal, long glass',
+    tagline: 'Long glass above a braided river',
     summary:
-      'Five days of spotting-scope work above a braided river system, where the animals are found with patience and the walking is earned rather than long.',
+      'Five fictional days above a braided river, using a spotting scope before committing to the climb.',
     story: [
-      'Chamois are a glassing animal. You find them by sitting still behind good glass for longer than feels reasonable, then you earn the last four hundred metres on your hands and knees. It is the most technical shooting we guide and the most rewarding to get right.',
-      'The river country gives us broad sightlines and a lot of aspects to work. We move by vehicle to a new vantage each morning and spend the day on foot from there, which keeps the walking honest without making it a slog.',
-      'This journey suits guests who like the finding as much as the taking, and it pairs well with a camera. Several parties each season book it without any intention of taking an animal at all.',
+      'The work begins behind the glass. A long look across broad country is followed, if the ground allows, by a short and steeper approach.',
+      'The fictional itinerary uses a different vantage each morning, with the rest of the day on foot. It keeps the walking purposeful without presenting the route as easy.',
+      'This concept suits visitors interested in finding and observing as much as taking an animal. A camera-only version is included as an option, without claims about real demand.',
     ],
     season: 'Autumn and early winter',
     seasonMonths: 'April to July',
@@ -320,12 +320,12 @@ export const tours: Tour[] = [
     fitnessGuidance:
       'Short, steep pushes of 300–600 m with long stationary periods in cold wind. Being comfortable sitting still in the cold matters as much as the climbing.',
     included: [
-      'Five days guided fieldcraft with a NZ-licensed guide',
+      'Five guide-led field days',
       'Cottage accommodation, all meals and a stocked pantry',
       'Vehicle transfers to daily vantage points',
       'Use of spotting scopes, tripods and shooting supports',
-      'Permit administration for the ground we use',
-      'Game care and chiller access',
+      'Illustrative access and permit planning',
+      'Game-care planning in the fictional itinerary',
     ],
     notIncluded: [
       'Flights and domestic connections',
@@ -364,13 +364,13 @@ export const tours: Tour[] = [
     region: 'Southern high-country station',
     category: 'mixed-foundation',
     categoryLabel: 'Foundation journey',
-    tagline: 'For the first trip, not the tenth',
+    tagline: 'A practical first look at fieldcraft',
     summary:
-      'A three-day introduction to guided fieldcraft for newcomers, returning hunters and families: navigation, safety, glassing and game care, at a civilised pace.',
+      'A three-day fictional introduction for newcomers and returning hunters, with a gentler pace and more time for instruction.',
     story: [
-      'Most people who want to learn this properly have nowhere sensible to start. This journey is that start. It is deliberately short, deliberately comfortable, and deliberately heavy on the parts that matter — safe handling, identification, terrain reading, and what actually happens after an animal is taken.',
-      'We run it from a station homestead with a real bed and real coffee, and we keep the days to a length that a fifteen-year-old and a sixty-five-year-old can both enjoy. Non-shooting companions are welcome and pay a reduced rate.',
-      'Guests finish with a written field log, a clear picture of the licensing and permission process, and an honest read on whether the longer journeys are for them.',
+      'This is the catalogue entry for people who want a clear starting point. It is short, comfortable and weighted towards the basics: handling, identification, reading terrain and understanding game care.',
+      'The outline uses a fictional station homestead and moderate field days. Non-hunting companions can be included in the planner, but no real rate or suitability is promised.',
+      'The demonstration ends with a field-log concept and a discussion of next steps. Real licensing, access and instruction must come from the proper authorities and qualified providers.',
     ],
     season: 'Late spring through summer',
     seasonMonths: 'November to March',
@@ -385,9 +385,9 @@ export const tours: Tour[] = [
     fitness: 2,
     fitnessLabel: 'Gentle',
     fitnessGuidance:
-      'Two to five kilometres a day on tracks and gentle faces, with no compulsory climbing. Suitable for most reasonably active guests aged 14 and over.',
+      'Two to five kilometres a day on tracks and gentle faces, with no compulsory climbing. Presented as the gentlest option in this fictional catalogue; it is not an assessment of individual suitability.',
     included: [
-      'Three days of instruction with a NZ-licensed guide',
+      'Three guide-led instructional field days',
       'Homestead accommodation and all meals',
       'Transfers from the nearest regional airport',
       'Safety, identification and game-care modules',
@@ -445,23 +445,23 @@ export const islandLabels: Record<Island, string> = {
 
 export const islandBlurbs: Record<Island, { heading: string; body: string; notes: string[] }> = {
   north: {
-    heading: 'Sound, scrub and volcanic ground',
-    body: 'The North Island is close, warm and deceptively difficult. Bush is thicker, animals are quieter, and the country rewards a hunter who can slow down. Journeys here are shorter to reach and longer to master.',
+    heading: 'Volcanic ground and tight bush',
+    body: 'The North Island journeys use shorter sightlines and a slower pace. One works open pumice ridges; the other stays close in bush and scrub.',
     notes: [
       'Bush and scrub with short sightlines',
       'Sika and red deer country',
       'Lodges and backcountry huts',
-      'Shorter travel from Auckland and Napier',
+      'Fictional regional transfer points',
     ],
   },
   south: {
-    heading: 'Distance, altitude and open glass',
-    body: 'The South Island is a landscape of long sightlines and real consequence. Tops are higher, weather turns faster, and finding an animal is an act of patience behind a spotting scope rather than a walk into cover.',
+    heading: 'Open country and higher ground',
+    body: 'The South Island concepts use long sightlines, bigger climbs and faster-changing weather. Glassing does more of the finding before the walking begins.',
     notes: [
       'Alpine basins and braided river systems',
       'Tahr, chamois and high-country red deer',
       'Station cottages and serviced alpine huts',
-      'Helicopter access on the alpine journeys',
+      'Fictional helicopter approach on the alpine journey',
     ],
   },
 };

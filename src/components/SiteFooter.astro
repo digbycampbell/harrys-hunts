@@ -19,12 +19,12 @@ const columns = [
     ],
   },
   {
-    title: 'The house',
+    title: 'About',
     links: [
       { label: 'Field values', path: '/about/#values' },
       { label: 'Guides and lodges', path: '/about/#guides' },
       { label: 'Contact', path: '/about/#contact' },
-      { label: 'About this demonstration', path: '/about/#demonstration' },
+      { label: 'How the demo works', path: '/about/#demonstration' },
     ],
   },
 ];
@@ -36,9 +36,9 @@ const columns = [
       <div class="hh-footer__brand">
         <BrandLockup orientation="stack" size="md" tone="inverse" />
         <p class="hh-footer__blurb">
-          Guide-led field journeys across both islands, run at the pace the country asks for.
+          Small, guide-led hunting journeys shaped around New Zealand country.
         </p>
-        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Plan a journey</a>
+        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Try the planner</a>
       </div>
 
       <nav class="hh-footer__nav" aria-label="Footer">
@@ -61,18 +61,17 @@ const columns = [
 
     <div class="hh-notice hh-footer__notice">
       <span>
-        <strong>This is a demonstration.</strong> Harry&rsquo;s Hunts is a fictional brand built to
-        show what a small AI-assisted team can design and ship. No enquiry is transmitted, no
-        booking is held, no order is placed and no payment is processed anywhere on this site.
-        Imagery was generated with AI for this demonstration &mdash;
+        <strong>This is a demonstration.</strong> Harry&rsquo;s Hunts is not a real operator. The
+        planner and store work in your browser, but nothing is sent, reserved, ordered or paid for.
+        The imagery was generated with AI for this project &mdash;
         <a href={href('/about/#assets')}>asset provenance</a>.
       </span>
     </div>
 
     <div class="hh-footer__base">
-      <p>&copy; {year} Harry&rsquo;s Hunts &mdash; a fictional demonstration brand.</p>
+      <p>&copy; {year} Harry&rsquo;s Hunts &mdash; a fictional brand demonstration.</p>
       <p>
-        Field journeys are described for illustration only and are not offers, quotes or advice.
+        Journey details are illustrative, not offers, quotes or advice.
       </p>
     </div>
   </div>

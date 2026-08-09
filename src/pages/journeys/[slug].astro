@@ -33,7 +33,7 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
 
 <Base
   title={tour.name}
-  description={`${tour.tagline} — ${tour.summary} A fictional journey on the Harry's Hunts demonstration site.`}
+  description={`${tour.name}: ${tour.summary} A fictional Harry's Hunts journey that cannot be booked.`}
   pageId="journey"
   padTop={false}
 >
@@ -70,7 +70,7 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
       <div class="hh-jmain">
         <header class="hh-jmain__head">
           <p class="hh-eyebrow">The journey</p>
-          <h2 id="story-title">What this one actually is</h2>
+          <h2 id="story-title">The outline</h2>
           <p class="hh-lede hh-jmain__summary">{tour.summary}</p>
         </header>
 
@@ -127,12 +127,11 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
             <span class="hh-jrail__priceunit">per guest</span>
           </p>
           <p class="hh-jrail__pricenote">
-            An indicative planning figure, not a quote. Nothing on this site is priced, held or
-            bookable.
+            An indicative demonstration figure, not a quote. Nothing is available or bookable.
           </p>
 
           <a class="hh-button hh-button--block" href={href(`/book/?journey=${tour.slug}`)}>
-            Plan this journey
+            Try this journey in the planner
           </a>
         </div>
       </aside>
@@ -148,8 +147,8 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
           <h2 id="itinerary-title">Day by day</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          Written as an intention rather than a timetable. Weather, ground and animal condition move
-          it around, and the guide makes that call.
+          This is a fictional outline, not a timetable. A real guide would change it for conditions,
+          access and the party.
         </p>
       </header>
 
@@ -176,8 +175,8 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
           <h2 id="included-title">What the figure covers</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          Set out plainly so there is nothing to discover later. Licensing, insurance and freight sit
-          outside every journey we run.
+          A fictional breakdown of the indicative figure. Licensing, insurance and freight remain
+          outside every concept.
         </p>
       </header>
 
@@ -217,9 +216,8 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
 
       <div class="hh-notice hh-lists__notice hh-reveal" data-testid="journey-demo-notice">
         <span>
-          <strong>Nothing here is bookable.</strong> This journey, its inclusions and its indicative figure
-          are written for a demonstration site. No availability exists, no enquiry is transmitted and
-          no payment can be taken.
+          <strong>Nothing here is bookable.</strong> The journey, inclusions and indicative figure are
+          demonstration copy. There is no availability, enquiry or payment service.
         </span>
       </div>
     </div>
@@ -230,11 +228,10 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
     <div class="hh-container hh-jcta hh-reveal" data-testid="journey-cta">
       <div>
         <p class="hh-eyebrow">Next step</p>
-        <h2 id="journey-cta-title">Start the planner with {tour.name} already in it.</h2>
+        <h2 id="journey-cta-title">Use {tour.name} as a starting point.</h2>
         <p class="hh-lede">
-          The planner walks through island, season, party and guiding intensity, then writes the week
-          back to you as a summary. In this demonstration it stops at the summary &mdash; nothing is
-          sent and nothing is held.
+          The planner prefills this journey, then lets you change the season, party and guiding style.
+          It finishes with a browser-only summary; nothing is sent or reserved.
         </p>
       </div>
       <div class="hh-jcta__actions">
@@ -243,7 +240,7 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
           href={href(`/book/?journey=${tour.slug}`)}
           data-testid="journey-cta-book"
         >
-          Plan this journey
+          Try this journey in the planner
         </a>
         <a class="hh-button hh-button--outline-dark" href={href('/shop/')}>Browse the field kit</a>
       </div>
@@ -259,7 +256,7 @@ const fitnessDescription = `Effort: ${tour.fitness} of 5 — ${tour.fitnessLabel
           <h2 id="others-title">Other journeys</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          Four remaining, across both islands. Several guests run two in a single trip.
+          The other four fictional options, across both islands.
         </p>
       </header>
 

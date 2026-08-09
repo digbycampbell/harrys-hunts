@@ -18,17 +18,17 @@ export const islandChoices: Choice[] = [
   {
     id: 'north',
     label: 'North Island',
-    detail: 'Volcanic plateau, eastern ranges. Bush and scrub, shorter travel, sound-carrying country.',
+    detail: 'Volcanic plateau and eastern ranges, from open pumice to tight bush.',
   },
   {
     id: 'south',
     label: 'South Island',
-    detail: 'Southern Alps and high-country basins. Long sightlines, real altitude, faster weather.',
+    detail: 'High-country basins, braided rivers, longer sightlines and bigger climbs.',
   },
   {
     id: 'either',
     label: 'Open to either',
-    detail: 'Tell us the week and the appetite and we will match the island to it.',
+    detail: 'Leave the island open and build the rest of the outline first.',
   },
 ];
 
@@ -79,36 +79,36 @@ export const experienceChoices: Choice[] = [
   {
     id: 'sika',
     label: 'Sika in the bush',
-    detail: 'The most technical foot journey we run. Slow, quiet, humbling.',
+    detail: 'Short sightlines and slow footwork, with close attention to wind and sign.',
   },
   {
     id: 'tahr',
     label: 'Himalayan tahr',
-    detail: 'Winter alpine work with a genuine alpine safety plan.',
+    detail: 'A demanding fictional winter-alpine outline above the bushline.',
   },
   {
     id: 'chamois',
     label: 'Chamois',
-    detail: 'Long glassing, short technical stalks, precise shooting.',
+    detail: 'Long glassing followed by a shorter, steeper approach if the ground allows.',
   },
   {
     id: 'mixed-foundation',
     label: 'Foundation and instruction',
-    detail: 'Safety, identification, terrain reading and game care at a civilised pace.',
+    detail: 'An introductory pace, with more time for fieldcraft and instruction.',
   },
   {
     id: 'photography',
     label: 'Glass and camera only',
-    detail: 'Same country, same guides, nothing taken. More common than people expect.',
+    detail: 'Use the same journey outline for observation and photography only.',
   },
 ];
 
 export const timingChoices: Choice[] = [
-  { id: 'summer', label: 'Summer — Dec to Feb', detail: 'Long light, gentle conditions, foundation journeys.' },
-  { id: 'autumn', label: 'Autumn — Mar to May', detail: 'The roar, chamois in coat, the busiest weeks we run.' },
-  { id: 'winter', label: 'Winter — Jun to Aug', detail: 'Tahr country at its best and its most demanding.' },
-  { id: 'spring', label: 'Spring — Sep to Nov', detail: 'Quiet ranges, unsettled weather, good value.' },
-  { id: 'flexible', label: 'Fully flexible', detail: 'Give us the appetite and we will pick the window.' },
+  { id: 'summer', label: 'Summer — Dec to Feb', detail: 'Longer daylight and the foundation-journey concept.' },
+  { id: 'autumn', label: 'Autumn — Mar to May', detail: 'The roar and the fictional chamois itinerary.' },
+  { id: 'winter', label: 'Winter — Jun to Aug', detail: 'The most demanding alpine concept in the catalogue.' },
+  { id: 'spring', label: 'Spring — Sep to Nov', detail: 'A shoulder-season option with changeable weather.' },
+  { id: 'flexible', label: 'Fully flexible', detail: 'Leave the exact window open in the demonstration outline.' },
 ];
 
 export const accommodationChoices: Choice[] = [
@@ -124,22 +124,22 @@ export const guidingChoices: Choice[] = [
   {
     id: 'one-to-one',
     label: 'One guide per guest',
-    detail: 'Maximum attention and the widest choice of country. The alpine standard.',
+    detail: 'The one-to-one option used by the fictional alpine journey.',
   },
   {
     id: 'one-to-two',
     label: 'One guide per two guests',
-    detail: 'Our usual arrangement. Sociable without slowing the day down.',
+    detail: 'The shared-guide option used by several catalogue journeys.',
   },
   {
     id: 'instructional',
     label: 'Instructional, small group',
-    detail: 'Teaching first. Best for first seasons and mixed-ability parties.',
+    detail: 'More time for instruction and a gentler fictional itinerary.',
   },
   {
     id: 'light-touch',
     label: 'Light touch',
-    detail: 'For experienced parties: access, permissions, logistics and a guide on call.',
+    detail: 'A planning option for an experienced fictional party, with less direct instruction.',
   },
 ];
 
@@ -153,7 +153,7 @@ export const addOns: AddOn[] = [
   {
     id: 'heli',
     label: 'Helicopter repositioning',
-    detail: 'An extra lift mid-journey to open a second catchment.',
+    detail: 'Add a fictional mid-journey lift to the outline.',
   },
   {
     id: 'extra-day',
@@ -168,12 +168,12 @@ export const addOns: AddOn[] = [
   {
     id: 'game-care',
     label: 'Extended game care',
-    detail: 'Butchery, chilling and packing coordinated end to end.',
+    detail: 'Add more time for game-care planning to the outline.',
   },
   {
     id: 'rifle-hire',
     label: 'Rifle hire coordination',
-    detail: 'We arrange licensed hire and range time. Licensing remains your responsibility.',
+    detail: 'Marks hire and range time for discussion only. No service or legal guidance is provided.',
   },
   {
     id: 'companion',
@@ -183,7 +183,7 @@ export const addOns: AddOn[] = [
   {
     id: 'transfers',
     label: 'City transfers',
-    detail: 'Door-to-door from Auckland or Christchurch instead of the regional airport.',
+    detail: 'Add fictional Auckland or Christchurch transfers to the outline.',
   },
 ];
 

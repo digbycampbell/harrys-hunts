@@ -15,23 +15,23 @@ const freeOver = deliveryZones[0].freeOver ?? 0;
 /** Short editorial note that closes out each collection row. */
 const collectionNotes: Record<string, { label: string; body: string }> = {
   'field-wear': {
-    label: 'On sizing',
-    body: 'Order your usual size for a close layering fit, or one up if you wear a shirt underneath. Everything is cut to be worn with something else.',
+    label: 'The sizing concept',
+    body: 'The fictional range uses a close layering fit, with room to size up for a shirt underneath.',
   },
   carry: {
-    label: 'Made to order',
-    body: 'Six weeks from sketch to shipping, in the fiction we have written for it. Waxed canvas is finished by hand, so no two panels take the wax the same way.',
+    label: 'The carry concept',
+    body: 'Waxed canvas, leather trim and straightforward hardware give the fictional duffel its field character.',
   },
   camp: {
     label: 'On the small things',
-    body: 'A mug that survives a hut table and a notebook that survives the rain. Neither is exciting. Both come on every trip.',
+    body: 'A camp mug and a pocket notebook: ordinary gear that earns its place by being useful.',
   },
 };
 ---
 
 <Base
   title="The field kit"
-  description="A fictional demonstration storefront: wool field cap, merino quarter-zip, waxed canvas duffel, enamel mug and field notebook. No payment is ever processed."
+  description="Browse five fictional Harry's Hunts field-kit concepts: wool, merino, waxed canvas, enamel and paper. Demonstration only; no payment is processed."
   pageId="shop"
 >
   <section class="hh-section hh-section--tight" aria-labelledby="shop-title">
@@ -39,17 +39,15 @@ const collectionNotes: Record<string, { label: string; body: string }> = {
       <div class="hh-shophead">
         <div class="hh-shophead__text">
           <p class="hh-eyebrow">The field kit</p>
-          <h1 id="shop-title">Five things, made to be used up</h1>
+          <h1 id="shop-title">Five pieces of field kit</h1>
           <p class="hh-lede">
-            Wool, merino, waxed canvas, enamel and paper. Everything here is chosen because it works
-            harder the longer you keep it &mdash; and everything here is invented for this
-            demonstration.
+            Wool, merino, waxed canvas, enamel and paper. A small fictional range built around useful
+            materials and quiet branding.
           </p>
           <p class="hh-notice">
             <span>
-              <strong>Demonstration store.</strong> Prices are illustrative, stock is fictional, and
-              checkout ends in a mock confirmation. No payment method is collected and no order is
-              created.
+              <strong>Demonstration store.</strong> Prices and stock are fictional. Checkout collects
+              no payment method and ends without creating an order.
             </span>
           </p>
         </div>
@@ -155,11 +153,11 @@ const collectionNotes: Record<string, { label: string; body: string }> = {
           />
         </div>
         <div class="hh-deliverypanel__body">
-          <p class="hh-eyebrow">Delivery, in theory</p>
-          <h2 id="delivery-title">What the estimator would tell you</h2>
+          <p class="hh-eyebrow">Indicative delivery</p>
+          <h2 id="delivery-title">Try the delivery estimator</h2>
           <p class="hh-muted">
-            The cart and checkout run a working delivery estimator against these demonstration
-            rates. Complimentary urban New Zealand delivery applies over {formatMoney(freeOver)}.
+            The cart and checkout use these invented rates. The demo shows urban New Zealand
+            delivery as included over {formatMoney(freeOver)}.
           </p>
           <table class="hh-ratetable">
             <caption class="hh-visually-hidden">Indicative demonstration delivery rates</caption>
@@ -183,7 +181,7 @@ const collectionNotes: Record<string, { label: string; body: string }> = {
             </tbody>
           </table>
           <p class="hh-hint">
-            Rates are invented for the demonstration and are never charged.
+            These rates are demonstration figures only. Nothing is dispatched or charged.
           </p>
           <p>
             <a class="hh-button hh-button--secondary" href={href('/cart/')}>Open the cart</a>

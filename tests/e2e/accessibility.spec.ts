@@ -150,7 +150,7 @@ test.describe('accessibility', () => {
 
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     // Sections below the fold must not depend on the reveal observer.
-    await expect(page.getByRole('heading', { name: /four things we will not trade/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /what shapes each journey/i })).toBeVisible();
     await expect(page.getByTestId('site-footer')).toContainText('This is a demonstration');
     await context.close();
   });

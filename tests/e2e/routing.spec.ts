@@ -15,7 +15,7 @@ const routes = [
   { path: 'journeys/alpine-tahr-traverse/', heading: /alpine tahr traverse/i },
   { path: 'journeys/braided-river-chamois/', heading: /braided river chamois/i },
   { path: 'journeys/high-country-first-season/', heading: /high country first season/i },
-  { path: 'shop/', heading: /five things/i },
+  { path: 'shop/', heading: /five pieces of field kit/i },
   { path: 'shop/wool-field-cap/', heading: /wool field cap/i },
   { path: 'shop/merino-quarter-zip/', heading: /merino quarter-zip/i },
   { path: 'shop/waxed-canvas-duffel/', heading: /waxed canvas duffel/i },
@@ -23,7 +23,7 @@ const routes = [
   { path: 'shop/field-notebook/', heading: /field notebook/i },
   { path: 'cart/', heading: /.+/ },
   { path: 'checkout/', heading: /.+/ },
-  { path: 'book/', heading: /tell us the week/i },
+  { path: 'book/', heading: /start with the week/i },
   { path: 'about/', heading: /.+/ },
 ];
 
@@ -77,7 +77,7 @@ test.describe('routes under the Pages base path', () => {
     await header.getByRole('link', { name: 'Store', exact: true }).click();
     await expect(page).toHaveURL(/\/harrys-hunts\/shop\/$/);
 
-    await header.getByRole('link', { name: /plan a journey/i }).click();
+    await header.getByRole('link', { name: /try the planner/i }).click();
     await expect(page).toHaveURL(/\/harrys-hunts\/book\/$/);
   });
 

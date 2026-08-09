@@ -22,64 +22,61 @@ const featuredProducts = products.filter((product) => product.featured).slice(0,
 const values = [
   {
     number: '01',
-    title: 'Guide-led, always',
-    body: 'Every journey runs with a New Zealand licensed guide who carries the safety plan, the permissions and the call on when to stand down.',
+    title: 'A guide sets the day',
+    body: 'The journey concepts put a guide in charge of the route, the pace and the decision to turn back when the country changes.',
   },
   {
     number: '02',
-    title: 'Legal ground, properly arranged',
-    body: 'We only walk country we have permission to be on, and we handle the permit administration before you land.',
+    title: 'Access comes first',
+    body: 'No itinerary makes sense until access and permissions are sorted. The site names no real property, block or access point.',
   },
   {
     number: '03',
-    title: 'The shot you can live with',
-    body: 'Identification, angle, backstop and recovery ground are settled before anything else. If any of them is wrong, we let it go.',
+    title: 'Know when to leave it',
+    body: 'Identification, angle, backstop and recovery ground all matter. If the situation is wrong, the fictional plan is to walk away.',
   },
   {
     number: '04',
-    title: 'Nothing wasted',
-    body: 'Game care is part of the guiding, not an afterthought. Meat is handled properly, chilled properly and goes home with you or to the table.',
+    title: 'Game care is part of the day',
+    body: 'The journey outlines treat recovery and game care as field work, not as a footnote after the hunt.',
   },
 ];
 
 const notes = [
   {
-    quote:
-      'Three mornings of nothing, then a stag answered from the next basin and the whole week made sense. The guides never once made the weather feel like a failure.',
-    name: 'Demonstration testimonial',
-    detail: 'Illustrative copy — not a real guest',
+    title: 'A quiet morning still counts',
+    body:
+      'Some days produce only weather, a long sit and a better read on the next basin. The journey copy leaves room for that.',
   },
   {
-    quote:
-      'I came to learn rather than to take something home. I left with a field log, a much better idea of what I do not know, and a booking for next winter.',
-    name: 'Demonstration testimonial',
-    detail: 'Illustrative copy — not a real guest',
+    title: 'Learning is a valid outcome',
+    body:
+      'The foundation journey is built around fieldcraft and good decisions. Taking an animal is not presented as the only measure of the week.',
   },
   {
-    quote:
-      'What surprised me was the food. Long table, one pot, everyone at it. That is the part I keep describing to people.',
-    name: 'Demonstration testimonial',
-    detail: 'Illustrative copy — not a real guest',
+    title: 'The table matters',
+    body:
+      'A warm room, dry gear and one shared meal give the off-hill hours a proper place in each fictional itinerary.',
   },
 ];
 
 const atmosphere = [
   {
     title: 'The lodges',
-    body: 'Timber, wool blankets and a drying room that actually works. Never more than six guests, so nobody is queuing for hot water at five in the morning.',
+    body: 'The lodge concept is simple: warm rooms, dry gear and enough space for a small party before an early start.',
     image: valleyDawn,
     alt: 'Dawn light spilling into a high-country valley below the ranges.',
   },
   {
     title: 'The long table',
-    body: 'One kitchen, one table, one sitting. Venison when we have it, and the kind of breakfast that makes a pre-dawn start survivable.',
+    body: 'One kitchen and one table. A solid breakfast before first light, then a shared meal when everyone is back inside.',
     image: enamelMug,
     alt: 'Bone enamel camp mug with a forest green rim.',
     contain: true,
   },
   {
     title: 'The guides',
-    body: 'Career field guides who grew up on this country. They will tell you honestly when a plan is wrong, which is the entire reason to hire one.',
+    body: 'The guides in this fictional house are there to read the ground and say plainly when the day needs a different plan.',
     image: tussockRidge,
     alt: 'Guided party moving along a tussock ridge in evening light.',
   },
@@ -88,7 +85,7 @@ const atmosphere = [
 
 <Base
   title="Harry's Hunts — New Zealand Field Journeys"
-  description="A fictional demonstration site for Harry's Hunts — guide-led New Zealand field journeys across the North and South Islands, with a mock booking flow and mock store."
+  description="Harry's Hunts is a fictional demonstration of small, guide-led New Zealand hunting journeys, with an interactive planner and mock field-kit store."
   pageId="home"
   padTop={false}
 >
@@ -112,19 +109,19 @@ const atmosphere = [
         The country sets<br />the pace.
       </h1>
       <p class="hh-hero__lede">
-        Small, guide-led hunting journeys across both islands &mdash; volcanic plateau to alpine
-        basin, run with the patience the ground asks for and the discipline it deserves.
+        Small, guide-led hunting journeys across both islands, from volcanic plateau to alpine
+        basin. The ground decides how the day goes.
       </p>
       <div class="hh-hero__actions">
-        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Plan a bespoke journey</a>
-        <a class="hh-button hh-button--outline-dark" href={href('/journeys/')}>See the five journeys</a>
+        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Try the journey planner</a>
+        <a class="hh-button hh-button--outline-dark" href={href('/journeys/')}>Browse all five journeys</a>
       </div>
       <p class="hh-hero__note">
-        Demonstration site &mdash; the booking flow and store are fully interactive mockups.
+        Fictional operator, working demo. Nothing can be booked or bought.
       </p>
     </div>
 
-    <a class="hh-hero__scroll" href="#story" aria-label="Skip to the brand story">
+    <a class="hh-hero__scroll" href="#story" aria-label="Skip to the Harry's Hunts story">
       <span aria-hidden="true"></span>
     </a>
   </section>
@@ -133,29 +130,26 @@ const atmosphere = [
   <section class="hh-section" id="story" aria-labelledby="story-title">
     <div class="hh-container hh-story hh-reveal">
       <div class="hh-story__lead">
-        <p class="hh-eyebrow">Since a made-up 1998</p>
+        <p class="hh-eyebrow">A fictional New Zealand outfitter</p>
         <h2 id="story-title">
           A house built on <em>patience</em>, not trophies.
         </h2>
       </div>
       <div class="hh-story__body hh-stack-m">
         <p class="hh-lede">
-          Harry&rsquo;s Hunts exists for people who want the whole thing done properly: the right
-          ground, the right guide, the right decision at the moment it matters.
+          Harry&rsquo;s Hunts is a made-up outfit for people who care as much about the country and the
+          decisions as they do about the hunt.
         </p>
         <p>
-          We run five journeys and no more. Each one is built around a landscape rather than an
-          animal &mdash; the sound-carrying gullies of the volcanic plateau, the tight sika bush of
-          the eastern ranges, the bluff systems above the Main Divide, the braided river country
-          where you find things with glass instead of legs.
+          The catalogue has five journeys, each built around a kind of country: volcanic gullies,
+          tight eastern bush, alpine bluffs or the long sightlines above a braided river.
         </p>
         <p>
-          Parties are small, guides are licensed and career-long, and nobody is ever pushed onto a
-          face they should not be on. If the week gives you nothing but weather and company, that is
-          a week in New Zealand and we will say so before you book.
+          The fictional parties are small and the guide makes the call when the weather or ground
+          changes. A week that yields only miles walked and country learned is still treated honestly.
         </p>
         <p>
-          <a class="hh-link" href={href('/about/')}>Read how the house works</a>
+          <a class="hh-link" href={href('/about/')}>Read about the concept</a>
         </p>
       </div>
     </div>
@@ -196,7 +190,7 @@ const atmosphere = [
       <header class="hh-sectionhead hh-reveal">
         <div>
           <p class="hh-eyebrow">Two islands</p>
-          <h2 id="islands-title">Same country, two entirely different arguments</h2>
+          <h2 id="islands-title">Two islands, two kinds of country</h2>
         </div>
       </header>
 
@@ -232,11 +226,10 @@ const atmosphere = [
       <header class="hh-sectionhead hh-reveal">
         <div>
           <p class="hh-eyebrow">Field values</p>
-          <h2 id="values-title">Four things we will not trade</h2>
+          <h2 id="values-title">What shapes each journey</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          Responsible, legal, guide-led fieldcraft. Described here as brand copy for a fictional
-          operator, not as guidance for any real trip.
+          These are principles for a fictional operator, not guidance for a real hunt.
         </p>
       </header>
 
@@ -289,32 +282,26 @@ const atmosphere = [
     </div>
   </section>
 
-  <!-- ------------------------------------------------------- social proof -->
+  <!-- ------------------------------------------------------- editorial notes -->
   <section class="hh-section" aria-labelledby="notes-title">
     <div class="hh-container">
       <header class="hh-sectionhead hh-reveal">
         <div>
-          <p class="hh-eyebrow">From the guest book</p>
-          <h2 id="notes-title">Written for the demonstration</h2>
+          <p class="hh-eyebrow">A note on outcomes</p>
+          <h2 id="notes-title">What the journeys make room for</h2>
         </div>
         <p class="hh-sectionhead__aside">
-          These are invented quotes shown to illustrate the layout. No real guest has stayed with
-          Harry&rsquo;s Hunts, because Harry&rsquo;s Hunts does not exist.
+          Harry&rsquo;s Hunts has no guests or testimonials. These are editorial notes for the concept.
         </p>
       </header>
 
       <div class="hh-notes hh-reveal">
         {
           notes.map((note) => (
-            <figure class="hh-note">
-              <blockquote>
-                <p>{note.quote}</p>
-              </blockquote>
-              <figcaption>
-                <span class="hh-note__name">{note.name}</span>
-                <span class="hh-note__detail">{note.detail}</span>
-              </figcaption>
-            </figure>
+            <article class="hh-note">
+              <h3 class="hh-note__name">{note.title}</h3>
+              <p>{note.body}</p>
+            </article>
           ))
         }
       </div>
@@ -347,15 +334,14 @@ const atmosphere = [
 
         <div class="hh-storeteaser__body hh-stack-m">
           <p class="hh-eyebrow">The field kit</p>
-          <h2 id="store-title">Five things, made to be used up</h2>
+          <h2 id="store-title">Five useful-looking things</h2>
           <p class="hh-lede">
-            Wool, merino, waxed canvas, enamel and paper. No technical claims we cannot keep and no
-            logo bigger than it needs to be.
+            Wool, merino, waxed canvas, enamel and paper. A restrained fictional kit, with the mark
+            kept small.
           </p>
           <p>
-            The store is a working mockup: variants, cart, delivery estimate and a checkout that
-            ends in a demonstration confirmation. No payment panel accepts real details and no order
-            is ever created.
+            The store is a working mockup with variants, a cart and a delivery estimate. Checkout
+            finishes with a demo confirmation; it never accepts payment details or creates an order.
           </p>
           <p>
             <a class="hh-button" href={href('/shop/')}>Browse the store</a>
@@ -382,16 +368,15 @@ const atmosphere = [
     />
     <div class="hh-cta__scrim"></div>
     <div class="hh-container hh-cta__content hh-reveal">
-      <p class="hh-eyebrow">Bespoke by default</p>
-      <h2 id="cta-title">Tell us the week you have, and we will tell you what it can be.</h2>
+      <p class="hh-eyebrow">Build an outline</p>
+      <h2 id="cta-title">Start with the week you have.</h2>
       <p class="hh-lede">
-        The planner walks through island, country, season, party, accommodation and guiding
-        intensity, then produces a written summary. In this demonstration it stops there &mdash;
-        nothing is sent and nothing is held.
+        Choose an island, terrain, season and party, then read the choices back as one outline. The
+        demo stops there: nothing is sent or reserved.
       </p>
       <div class="hh-cta__actions">
-        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Open the journey planner</a>
-        <a class="hh-button hh-button--outline-dark" href={href('/about/#contact')}>How to reach a real person</a>
+        <a class="hh-button hh-button--on-dark" href={href('/book/')}>Try the journey planner</a>
+        <a class="hh-button hh-button--outline-dark" href={href('/about/#contact')}>Try the demo enquiry</a>
       </div>
     </div>
   </section>
@@ -794,31 +779,9 @@ const atmosphere = [
     gap: var(--hh-space-s);
   }
 
-  .hh-note blockquote {
-    margin: 0;
-    flex: 1;
-  }
-
-  .hh-note blockquote p {
-    font-family: var(--hh-font-display);
-    font-size: var(--hh-step-1);
-    line-height: 1.35;
-    color: var(--hh-ink-brand);
-  }
-
-  .hh-note blockquote p::before {
-    content: open-quote;
-  }
-
-  .hh-note blockquote p::after {
-    content: close-quote;
-  }
-
-  .hh-note figcaption {
-    display: grid;
-    gap: 0.15rem;
-    padding-top: var(--hh-space-xs);
-    border-top: 1px solid var(--hh-line);
+  .hh-note > p {
+    font-size: var(--hh-step--1);
+    color: var(--hh-ink-muted);
   }
 
   .hh-note__name {

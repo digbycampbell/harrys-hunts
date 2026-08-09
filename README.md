@@ -7,7 +7,7 @@ A demonstration website for a **fictional** premium hunting-tour company operati
 > [!IMPORTANT]
 > Harry's Hunts is not a real company.
 > No booking can be made, no order can be placed and no payment can be taken anywhere on this site.
-> Every guide, lodge, journey, testimonial, product and price is invented.
+> Every guide, lodge, journey, product and price is invented, and the site carries no testimonials.
 > The interaction design is real; the business behind it is not.
 
 ## What this is
