@@ -23,6 +23,8 @@ Content rules: no graphic hunting imagery, no dead animals or trophy poses, no i
 
 ## Working on this repo
 
+**Plans and lessons:** `digio-planning:harrys-hunts/` (`PLAN.md`, `lessons.md`).
+
 - Dev server: `npm run dev` (Astro 7 daemonises it; manage with `astro dev stop|status|logs`). If islands fail to hydrate with a 504 "Outdated Optimize Dep", stop the server, delete `node_modules/.vite` and `node_modules/.astro`, and restart. Regenerating images also needs that restart before they appear.
 - `npm test` builds the site and serves `dist/` with `scripts/serve-dist.mjs`, which mirrors GitHub Pages. Tests must drive visible controls, never grep source.
 - Image derivation is a committed artefact: change `scripts/derive-images.mjs` and re-run it rather than editing files in `src/assets/products` or `src/assets/scenes` by hand. Provenance lives in [`src/assets/README.md`](src/assets/README.md).
