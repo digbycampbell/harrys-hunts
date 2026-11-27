@@ -23,7 +23,7 @@
     "@nanostores/preact": "^1.1.1",
     "astro": "^7.4.13",
     "nanostores": "^1.5.5",
-    "preact": "^10.29.8",
+    "preact": "^11.2.0",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
